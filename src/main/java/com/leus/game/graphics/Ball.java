@@ -39,10 +39,6 @@ public class Ball {
         this.y = y;
     }
 
-    public ColorBalls getColorBall() {
-        return colorBall;
-    }
-
     public boolean isFrozen() {
         if ((matrix[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] > 0) ||
                 (y == GameFrame.HEIGHT_GAME_FRAME)) {

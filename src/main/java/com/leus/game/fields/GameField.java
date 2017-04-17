@@ -13,9 +13,10 @@ public class GameField implements Runnable {
 
     public static final int TILE_WIDTH = 32;
     public static final int TILE_HEIGHT = 32;
-    public static int START_POSITION_BALL_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
-    public static int START_POSITION_BALL_Y = 0;
+    public static final int START_POSITION_BALL_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
+    public static final int START_POSITION_BALL_Y = 0;
     public static final long DELAY = 500;
+    public static final int BALLS_FOR_CLEAR = 6;
 
     private static List<Ball> ballList = new LinkedList<Ball>();
     private static int[][] matrix = new int[GameFrame.HEIGHT_GAME_FRAME][GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH];
@@ -91,7 +92,24 @@ public class GameField implements Runnable {
     }
 
     private void checkLines() {
-        //TODO: Need implement check lines
+        int count = 0;
+        for (int i = 0; i < matrix.length; i += TILE_HEIGHT) {
+            for (int j = 0; j < matrix[i].length; j += TILE_WIDTH) {
+                if (matrix[i][j] > 0) {
+                    count++;
+                }
+            }
+
+            if (count == BALLS_FOR_CLEAR) {
+                clearLine();
+            }
+
+            count = 0;
+        }
+    }
+
+    private void clearLine() {
+        System.out.println("Line was cleared");
     }
 
 }

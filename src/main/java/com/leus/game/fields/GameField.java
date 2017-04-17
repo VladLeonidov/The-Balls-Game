@@ -49,7 +49,7 @@ public class GameField implements Runnable {
 
         figure = new Figure
                 (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
-                 Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
+                        Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
         ballList.add(figure.getFirstBall());
         ballList.add(figure.getSecondBall());
@@ -76,7 +76,7 @@ public class GameField implements Runnable {
 
                 figure = new Figure
                         (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
-                         Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
+                                Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
                 ballList.add(figure.getFirstBall());
                 ballList.add(figure.getSecondBall());
@@ -91,6 +91,7 @@ public class GameField implements Runnable {
     }
 
     private void checkLines() {
-        //Not realize
+        //TODO: Need implement check lines
     }
+
 }

@@ -31,7 +31,7 @@ public class Figure {
     }
 
     public void rotate() {
-        //Not realize
+        //TODO: Need implement rotate figure
     }
 
     public void move(int description) {

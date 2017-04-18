@@ -6,8 +6,8 @@ import com.leus.game.graphics.Ball;
 import com.leus.game.graphics.Figure;
 import com.leus.panels.GamePanel;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameField implements Runnable {
 
@@ -18,7 +18,7 @@ public class GameField implements Runnable {
     public static final long DELAY = 500;
     public static final int BALLS_FOR_CLEAR = 6;
 
-    private static List<Ball> ballList = new LinkedList<Ball>();
+    private static Map<Integer, Ball> ballMapOnField = new HashMap<Integer, Ball>();
     private static int[][] matrix = new int[GameFrame.HEIGHT_GAME_FRAME][GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH];
 
     private boolean isGameOver = false;
@@ -30,8 +30,8 @@ public class GameField implements Runnable {
         return matrix;
     }
 
-    public static List<Ball> getBallList() {
-        return ballList;
+    public static Map<Integer, Ball> getBallMapOnField() {
+        return ballMapOnField;
     }
 
     public boolean isGameOver() {
@@ -52,8 +52,8 @@ public class GameField implements Runnable {
                 (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
                         Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-        ballList.add(figure.getFirstBall());
-        ballList.add(figure.getSecondBall());
+        ballMapOnField.put(figure.getFirstBall().getCountId(), figure.getFirstBall());
+        ballMapOnField.put(figure.getSecondBall().getCountId(), figure.getSecondBall());
 
         while (!isGameOver) {
             try {
@@ -79,8 +79,8 @@ public class GameField implements Runnable {
                         (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
                                 Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-                ballList.add(figure.getFirstBall());
-                ballList.add(figure.getSecondBall());
+                ballMapOnField.put(figure.getFirstBall().getCountId(), figure.getFirstBall());
+                ballMapOnField.put(figure.getSecondBall().getCountId(), figure.getSecondBall());
 
                 isGameOver = figure.getFirstBall().isOutField() || figure.getSecondBall().isOutField();
             } else {

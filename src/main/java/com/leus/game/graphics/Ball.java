@@ -9,18 +9,24 @@ import java.awt.*;
 
 public class Ball {
 
-    private ColorBalls colorBall;
+    private static int id;
+    private int countId = id++;
 
     private int x;
     private int y;
-
     private boolean isFrosen;
+
+    private ColorBalls colorBall;
     private int[][] matrix = GameField.getMatrix();
 
     public Ball(int x, int y, ColorBalls colorBall) {
         this.x = x;
         this.y = y;
         this.colorBall = colorBall;
+    }
+
+    public int getCountId() {
+        return countId;
     }
 
     public int getX() {

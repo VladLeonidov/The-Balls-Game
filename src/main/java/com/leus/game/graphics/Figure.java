@@ -31,7 +31,21 @@ public class Figure {
     }
 
     public void rotate() {
-        //TODO: Need implement rotate figure
+        //if(!isWall(description)){
+        if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
+            secondBall.setX(firstBall.getX());
+            secondBall.setY(firstBall.getY() + GameField.TILE_HEIGHT);
+        } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
+            secondBall.setX(firstBall.getX());
+            secondBall.setY(firstBall.getY() - GameField.TILE_HEIGHT);
+        } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            secondBall.setY(firstBall.getY());
+            secondBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
+        } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            secondBall.setY(firstBall.getY());
+            secondBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
+        }
+       // }
     }
 
     public void move(int description) {

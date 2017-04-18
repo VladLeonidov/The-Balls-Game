@@ -92,24 +92,6 @@ public class GameField implements Runnable {
     }
 
     private void checkLines() {
-        int count = 0;
-        for (int i = 0; i < matrix.length; i += TILE_HEIGHT) {
-            for (int j = 0; j < matrix[i].length; j += TILE_WIDTH) {
-                if (matrix[i][j] > 0) {
-                    count++;
-                }
-            }
-
-            if (count == BALLS_FOR_CLEAR) {
-                clearLine();
-            }
-
-            count = 0;
-        }
+        //TODO: need implement check Lines
     }
-
-    private void clearLine() {
-        System.out.println("Line was cleared");
-    }
-
 }

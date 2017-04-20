@@ -39,41 +39,17 @@ public class Figure {
     }
 
     public void rotate() {
-        //if(!isWall(description)){
-        if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
-            secondBall.setX(firstBall.getX());
-            secondBall.setY(firstBall.getY() + GameField.TILE_HEIGHT);
-            x = firstBall.getX();
-            y = firstBall.getY();
-            isLeftSecondBall = false;
-            isRightSecondBall = false;
-            isVertical = true;
-        } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
-            secondBall.setX(firstBall.getX());
-            secondBall.setY(firstBall.getY() - GameField.TILE_HEIGHT);
-            x = secondBall.getX();
-            y = secondBall.getY();
-            isLeftSecondBall = false;
-            isRightSecondBall = false;
-            isVertical = true;
-        } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
-            secondBall.setY(firstBall.getY());
-            secondBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
-            x = secondBall.getX();
-            y = secondBall.getY();
-            isLeftSecondBall = true;
-            isRightSecondBall = false;
-            isVertical = false;
-        } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
-            secondBall.setY(firstBall.getY());
-            secondBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
-            x = firstBall.getX();
-            y = firstBall.getY();
-            isLeftSecondBall = false;
-            isRightSecondBall = true;
-            isVertical = false;
+        if (isRotate()) {
+            if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
+                rotateDawn();
+            } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
+                rotateTop();
+            } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+                rotateLeft();
+            } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+                rotateRight();
+            }
         }
-       // }
     }
 
     public void move(int description) {
@@ -100,12 +76,86 @@ public class Figure {
     }
 
     private boolean isWall(int description) {
-        if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+        if (isLeftWall(description)) {
             return true;
-
-        if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+        } else if (isRightWall(description)) {
             return true;
+        }
 
         return false;
+    }
+
+    private boolean isLeftWall(int description) {
+        if (isVertical) {
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+                return true;
+        } else if (isRightSecondBall) {
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+                return true;
+        } else if (isLeftSecondBall) {
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean isRightWall(int description) {
+        if (isVertical) {
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH || matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+                return true;
+        } else if (isRightSecondBall) {
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+                return true;
+        } else if (isLeftSecondBall) {
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean isRotate() {
+        return true;
+    }
+
+    private void rotateDawn() {
+        secondBall.setX(firstBall.getX());
+        secondBall.setY(firstBall.getY() + GameField.TILE_HEIGHT);
+        x = firstBall.getX();
+        y = firstBall.getY();
+        isLeftSecondBall = false;
+        isRightSecondBall = false;
+        isVertical = true;
+    }
+
+    private void rotateTop() {
+        secondBall.setX(firstBall.getX());
+        secondBall.setY(firstBall.getY() - GameField.TILE_HEIGHT);
+        x = secondBall.getX();
+        y = secondBall.getY();
+        isLeftSecondBall = false;
+        isRightSecondBall = false;
+        isVertical = true;
+    }
+
+    private void rotateLeft() {
+        secondBall.setY(firstBall.getY());
+        secondBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
+        x = secondBall.getX();
+        y = secondBall.getY();
+        isLeftSecondBall = true;
+        isRightSecondBall = false;
+        isVertical = false;
+    }
+
+    private void rotateRight() {
+        secondBall.setY(firstBall.getY());
+        secondBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
+        x = firstBall.getX();
+        y = firstBall.getY();
+        isLeftSecondBall = false;
+        isRightSecondBall = true;
+        isVertical = false;
     }
 }

@@ -19,7 +19,7 @@ public class GameField implements Runnable {
     public static final int BALLS_FOR_CLEAR = 6;
 
     private static Map<Integer, Ball> ballMapOnField = new HashMap<Integer, Ball>();
-    private static int[][] matrix = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE];
+    private static int[][] matrix = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();

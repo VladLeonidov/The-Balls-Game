@@ -13,7 +13,7 @@ public class GamePanel extends JPanel {
     private static final int POSITION_LOGO_Y = 70;
     private static Image logo = ImgLoader.getImage(PathsToResources.LOGO.getPath());
     */
-    private Map<Integer, Ball> ballList = GameField.getBallMapOnField();
+    private Map<Integer, Ball> ballsOnField = GameField.getBallsOnField();
 
     @Override
     public void paint(Graphics g) {
@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
 
     private void paintGame(Graphics g) {
 
-        for (Map.Entry<Integer, Ball> entry : ballList.entrySet()) {
+        for (Map.Entry<Integer, Ball> entry : ballsOnField.entrySet()) {
             entry.getValue().paint(g);
         }
     }

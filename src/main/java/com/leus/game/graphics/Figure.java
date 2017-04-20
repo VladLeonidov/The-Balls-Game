@@ -116,6 +116,30 @@ public class Figure {
     }
 
     private boolean isRotate() {
+        if (secondBall.getY() > firstBall.getY()) {
+            return isRotateLeft();
+        } else if (secondBall.getY() < firstBall.getY()) {
+            return isRotateRight();
+        }
+
+        return true;
+    }
+
+    private boolean isRotateLeft() {
+        if ((secondBall.getX() / GameField.TILE_WIDTH - 1 < 0) ||
+            (matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isRotateRight() {
+        if ((secondBall.getX() / GameField.TILE_WIDTH + 1 > GameFrame.FIELD_WIDTH_IN_TILE - 1) ||
+            (matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0)) {
+            return false;
+        }
+
         return true;
     }
 

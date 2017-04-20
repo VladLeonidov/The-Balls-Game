@@ -19,7 +19,7 @@ public class GameField implements Runnable {
     public static final int BALLS_FOR_CLEAR = 6;
 
     private static Map<Integer, Ball> ballMapOnField = new HashMap<Integer, Ball>();
-    private static int[][] matrix = new int[GameFrame.HEIGHT_GAME_FRAME][GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH];
+    private static int[][] matrix = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE];
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();
@@ -65,11 +65,15 @@ public class GameField implements Runnable {
             if (figure.getFirstBall().isFrozen() && !figure.getSecondBall().isFrozen()) {
                 checkLines();
                 figure.getFirstBall().leaveOnTheField();
-                figure.getSecondBall().moveDown();
+                if (!figure.isVertical()) {
+                    figure.getSecondBall().moveDown();
+                }
             } else if (!figure.getFirstBall().isFrozen() && figure.getSecondBall().isFrozen()) {
                 checkLines();
                 figure.getSecondBall().leaveOnTheField();
-                figure.getFirstBall().moveDown();
+                if (!figure.isVertical()) {
+                    figure.getFirstBall().moveDown();
+                }
             } else if (figure.getFirstBall().isFrozen() && figure.getSecondBall().isFrozen()) {
                 checkLines();
                 figure.getFirstBall().leaveOnTheField();

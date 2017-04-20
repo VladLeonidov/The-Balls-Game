@@ -47,7 +47,7 @@ public class Ball {
 
     public boolean isFrozen() {
         if ((matrix[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] > 0) ||
-                (y == GameFrame.HEIGHT_GAME_FRAME)) {
+                ((y / GameField.TILE_HEIGHT) == GameFrame.FIELD_HEIGHT_IN_TILE)) {
             return true;
         }
 

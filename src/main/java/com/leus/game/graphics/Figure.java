@@ -13,7 +13,15 @@ public class Figure {
     private int x;
     private int y;
 
+    private boolean isLeftSecondBall = true;
+    private boolean isRightSecondBall = true;
+    private boolean isVertical;
+
     private int[][] matrix = GameField.getMatrix();
+
+    public boolean isVertical() {
+        return isVertical;
+    }
 
     public Ball getFirstBall() {
         return firstBall;
@@ -27,7 +35,7 @@ public class Figure {
         this.firstBall = firstBall;
         this.secondBall = secondBall;
         this.x = firstBall.getX();
-        this.y = secondBall.getY();
+        this.y = firstBall.getY();
     }
 
     public void rotate() {
@@ -35,15 +43,35 @@ public class Figure {
         if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
             secondBall.setX(firstBall.getX());
             secondBall.setY(firstBall.getY() + GameField.TILE_HEIGHT);
+            x = firstBall.getX();
+            y = firstBall.getY();
+            isLeftSecondBall = false;
+            isRightSecondBall = false;
+            isVertical = true;
         } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
             secondBall.setX(firstBall.getX());
             secondBall.setY(firstBall.getY() - GameField.TILE_HEIGHT);
+            x = secondBall.getX();
+            y = secondBall.getY();
+            isLeftSecondBall = false;
+            isRightSecondBall = false;
+            isVertical = true;
         } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
             secondBall.setY(firstBall.getY());
             secondBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
+            x = secondBall.getX();
+            y = secondBall.getY();
+            isLeftSecondBall = true;
+            isRightSecondBall = false;
+            isVertical = false;
         } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
             secondBall.setY(firstBall.getY());
             secondBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
+            x = firstBall.getX();
+            y = firstBall.getY();
+            isLeftSecondBall = false;
+            isRightSecondBall = true;
+            isVertical = false;
         }
        // }
     }
@@ -51,8 +79,16 @@ public class Figure {
     public void move(int description) {
         if (!isWall(description)) {
             x += (description - 38) * GameField.TILE_WIDTH;
-            firstBall.setX(x);
-            secondBall.setX(x + GameField.TILE_WIDTH);
+            if (isRightSecondBall) {
+                firstBall.setX(x);
+                secondBall.setX(x + GameField.TILE_WIDTH);
+            } else if (isLeftSecondBall) {
+                firstBall.setX(x + GameField.TILE_WIDTH);
+                secondBall.setX(x);
+            } else if (isVertical) {
+                firstBall.setX(x);
+                secondBall.setX(x);
+            }
         }
     }
 

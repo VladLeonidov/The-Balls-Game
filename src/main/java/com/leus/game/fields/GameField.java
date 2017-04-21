@@ -1,6 +1,7 @@
 package com.leus.game.fields;
 
 import com.leus.displays.GameFrame;
+import com.leus.enums.ColorBalls;
 import com.leus.game.factories.RandBallsFactory;
 import com.leus.game.graphics.Ball;
 import com.leus.game.graphics.Figure;
@@ -96,22 +97,30 @@ public class GameField implements Runnable {
     }
 
     private void checkLines() {
-        if (isLineBlueBalls() || isLineRadBalls() || isLineGreenBalls() || isLineYellowBalls()) {
+        if (isLineFull(ColorBalls.BLUE.getNumber()) || isLineFull(ColorBalls.RAD.getNumber()) ||
+            isLineFull(ColorBalls.GREEN.getNumber()) || isLineFull(ColorBalls.YELLOW.getNumber())) {
             clearLine();
         }
     }
 
-    private boolean isLineBlueBalls() {
-        //TODO: need implement check vertical lines
+    private boolean isLineFull(int type) {
+        if (isHorizontalFull(type) || isVerticalFull(type)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isHorizontalFull(int type) {
         for (int i = 0; i < matrix.length; i++) {
             int count = 0;
             for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 1) {
+                if (matrix[i][j] == type) {
                     count++;
                 }
             }
 
-            if (count == BALLS_FOR_CLEAR) {
+            if (count >= BALLS_FOR_CLEAR) {
                 return true;
             }
         }
@@ -119,53 +128,16 @@ public class GameField implements Runnable {
         return false;
     }
 
-    private boolean isLineRadBalls() {
-        //TODO: need implement check vertical lines
-        for (int i = 0; i < matrix.length - 1; i++) {
+    private boolean isVerticalFull(int type) {
+        for (int j = 0; j < matrix[0].length; j++) {
             int count = 0;
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 2) {
+            for (int i = 0; i < matrix.length; i++) {
+                if (matrix[i][j] == type) {
                     count++;
                 }
             }
 
-            if (count == BALLS_FOR_CLEAR) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isLineGreenBalls() {
-        //TODO: need implement check vertical lines
-        for (int i = 0; i < matrix.length; i++) {
-            int count = 0;
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 3) {
-                    count++;
-                }
-            }
-
-            if (count == BALLS_FOR_CLEAR) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isLineYellowBalls() {
-        //TODO: need implement check vertical lines
-        for (int i = 0; i < matrix.length; i++) {
-            int count = 0;
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 4) {
-                    count++;
-                }
-            }
-
-            if (count == BALLS_FOR_CLEAR) {
+            if (count >= BALLS_FOR_CLEAR) {
                 return true;
             }
         }
@@ -175,5 +147,6 @@ public class GameField implements Runnable {
 
     private void clearLine() {
         //TODO: need implement clear Balls
+        System.out.println("Line was cleared");
     }
 }

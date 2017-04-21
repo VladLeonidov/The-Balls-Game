@@ -40,15 +40,9 @@ public class Figure {
 
     public void rotate() {
         if (isRotate()) {
-            if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
-                rotateDawn();
-            } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
-                rotateTop();
-            } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
-                rotateLeft();
-            } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
-                rotateRight();
-            }
+            rotateWithoutWall();
+        } else {
+            rotateAtWall();
         }
     }
 
@@ -143,6 +137,30 @@ public class Figure {
         return true;
     }
 
+    private void rotateAtWall() {
+        if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
+            rotateDawn();
+        } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
+            rotateTop();
+        } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            rotateLeftAtWall();
+        } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            rotateRightAtWall();
+        }
+    }
+
+    private void rotateWithoutWall() {
+        if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() > firstBall.getX())) {
+            rotateDawn();
+        } else if ((secondBall.getY() == firstBall.getY()) && (secondBall.getX() < firstBall.getX())) {
+            rotateTop();
+        } else if ((secondBall.getY() > firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            rotateLeft();
+        } else if ((secondBall.getY() < firstBall.getY()) && (secondBall.getX() == firstBall.getX())) {
+            rotateRight();
+        }
+    }
+
     private void rotateDawn() {
         secondBall.setX(firstBall.getX());
         secondBall.setY(firstBall.getY() + GameField.TILE_HEIGHT);
@@ -173,6 +191,15 @@ public class Figure {
         isVertical = false;
     }
 
+    private void rotateLeftAtWall() {
+        if (!(matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0) ||
+            !(matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] > 0)) {
+            firstBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
+            secondBall.setX(secondBall.getX() + GameField.TILE_WIDTH);
+            rotateLeft();
+        }
+    }
+
     private void rotateRight() {
         secondBall.setY(firstBall.getY());
         secondBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
@@ -181,5 +208,14 @@ public class Figure {
         isLeftSecondBall = false;
         isRightSecondBall = true;
         isVertical = false;
+    }
+
+    private void rotateRightAtWall() {
+        if (!(matrix[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0) ||
+            !(matrix[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0)) {
+            firstBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
+            secondBall.setX(secondBall.getX() - GameField.TILE_WIDTH);
+            rotateRight();
+        }
     }
 }

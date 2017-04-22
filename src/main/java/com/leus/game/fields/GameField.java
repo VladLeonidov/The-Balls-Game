@@ -7,8 +7,8 @@ import com.leus.game.graphics.Ball;
 import com.leus.game.graphics.Figure;
 import com.leus.panels.GamePanel;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameField implements Runnable {
 
@@ -17,21 +17,21 @@ public class GameField implements Runnable {
     public static final int START_POSITION_BALL_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
     public static final int START_POSITION_BALL_Y = 0;
     public static final long DELAY = 500;
-    public static final int BALLS_FOR_CLEAR = 4;
+    public static final int COUNT_BALLS_FOR_CLEAR = 4;
 
-    private static Map<Integer, Ball> ballsOnField = new HashMap<Integer, Ball>();
-    private static int[][] matrix = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
+    private static List<Ball> ballsOnField = new LinkedList<Ball>();
+    private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();
     private Figure figure;
     private GamePanel gamePanel = new GamePanel();
 
-    public static int[][] getMatrix() {
-        return matrix;
+    public static int[][] getGlass() {
+        return glass;
     }
 
-    public static Map<Integer, Ball> getBallsOnField() {
+    public static List<Ball> getBallsOnField() {
         return ballsOnField;
     }
 
@@ -53,8 +53,8 @@ public class GameField implements Runnable {
         (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
         Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-        ballsOnField.put(figure.getFirstBall().getCountId(), figure.getFirstBall());
-        ballsOnField.put(figure.getSecondBall().getCountId(), figure.getSecondBall());
+        ballsOnField.add(figure.getFirstBall());
+        ballsOnField.add(figure.getSecondBall());
 
         while (!isGameOver) {
             try {
@@ -84,8 +84,8 @@ public class GameField implements Runnable {
                 (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
                 Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-                ballsOnField.put(figure.getFirstBall().getCountId(), figure.getFirstBall());
-                ballsOnField.put(figure.getSecondBall().getCountId(), figure.getSecondBall());
+                ballsOnField.add(figure.getFirstBall());
+                ballsOnField.add(figure.getSecondBall());
 
                 isGameOver = figure.getFirstBall().isOutField() || figure.getSecondBall().isOutField();
             } else {
@@ -95,6 +95,9 @@ public class GameField implements Runnable {
             gamePanel.repaint();
         }
     }
+
+    private int[][] coords = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
+    private int countBallsForClear = 0;
 
     private void checkLines() {
         if (isLineFull(ColorBalls.BLUE.getNumber()) || isLineFull(ColorBalls.RAD.getNumber()) ||
@@ -112,15 +115,21 @@ public class GameField implements Runnable {
     }
 
     private boolean isHorizontalFull(int type) {
-        for (int i = 0; i < matrix.length; i++) {
+        for (int i = 0; i < glass.length; i++) {
             int count = 0;
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == type) {
+            for (int j = 0; j < glass[i].length; j++) {
+                if (glass[i][j] == type) {
                     count++;
                 }
             }
 
-            if (count >= BALLS_FOR_CLEAR) {
+            if (count >= COUNT_BALLS_FOR_CLEAR) {
+                /*while (count > 0) {
+                    coords[countBallsForClear][0] = i * TILE_HEIGHT;
+                    coords[countBallsForClear][1] = count * TILE_WIDTH;
+                    countBallsForClear++;
+                    count--;
+                }*/
                 return true;
             }
         }
@@ -129,15 +138,21 @@ public class GameField implements Runnable {
     }
 
     private boolean isVerticalFull(int type) {
-        for (int j = 0; j < matrix[0].length; j++) {
+        for (int j = 0; j < glass[0].length; j++) {
             int count = 0;
-            for (int i = 0; i < matrix.length; i++) {
-                if (matrix[i][j] == type) {
+            for (int i = 0; i < glass.length; i++) {
+                if (glass[i][j] == type) {
                     count++;
                 }
             }
 
-            if (count >= BALLS_FOR_CLEAR) {
+            if (count >= COUNT_BALLS_FOR_CLEAR) {
+                /*while (count > 0) {
+                    coords[countBallsForClear][0] = count * TILE_HEIGHT;
+                    coords[countBallsForClear][1] = j * TILE_WIDTH;
+                    countBallsForClear++;
+                    count--;
+                }*/
                 return true;
             }
         }
@@ -146,7 +161,6 @@ public class GameField implements Runnable {
     }
 
     private void clearLine() {
-        //TODO: need implement clear Balls
-        System.out.println("Line was cleared");
+        System.out.println("Line as cleared");
     }
 }

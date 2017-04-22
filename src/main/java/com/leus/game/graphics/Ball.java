@@ -10,23 +10,21 @@ import java.awt.*;
 public class Ball {
 
     private static int id;
-    private int countId = id++;
+    private final int countId = id++;
+
+    private static int[][] coordinateBalls = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
 
     private int x;
     private int y;
     private boolean isFrosen;
 
     private ColorBalls colorBall;
-    private int[][] matrix = GameField.getMatrix();
+    private static int[][] glass = GameField.getGlass();
 
     public Ball(int x, int y, ColorBalls colorBall) {
         this.x = x;
         this.y = y;
         this.colorBall = colorBall;
-    }
-
-    public int getCountId() {
-        return countId;
     }
 
     public int getX() {
@@ -46,7 +44,7 @@ public class Ball {
     }
 
     public boolean isFrozen() {
-        if ((matrix[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] > 0) ||
+        if ((glass[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] > 0) ||
                 ((y / GameField.TILE_HEIGHT) == GameFrame.FIELD_HEIGHT_IN_TILE)) {
             return true;
         }
@@ -55,7 +53,7 @@ public class Ball {
     }
 
     public boolean isOutField() {
-        if (matrix[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] > 0) {
+        if (glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] > 0) {
             return true;
         }
 
@@ -63,7 +61,9 @@ public class Ball {
     }
 
     public void leaveOnTheField() {
-        matrix[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = colorBall.getNumber();
+        glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = colorBall.getNumber();
+        coordinateBalls[countId][0] = y;
+        coordinateBalls[countId][1] = x;
     }
 
     public void moveDown() {

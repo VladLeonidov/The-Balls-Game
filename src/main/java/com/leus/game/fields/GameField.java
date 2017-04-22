@@ -21,6 +21,9 @@ public class GameField implements Runnable {
 
     private static List<Ball> ballsOnField = new LinkedList<Ball>();
     private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
+    private static int[][] coordinateBalls = Ball.getCoordinateBalls();
+    private static int[][] coordinateForClearBalls = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
+
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();
@@ -29,6 +32,10 @@ public class GameField implements Runnable {
 
     public static int[][] getGlass() {
         return glass;
+    }
+
+    public static int[][] getCoordinateForClearBalls() {
+        return coordinateForClearBalls;
     }
 
     public static List<Ball> getBallsOnField() {
@@ -96,7 +103,6 @@ public class GameField implements Runnable {
         }
     }
 
-    private int[][] coords = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
     private int countBallsForClear = 0;
 
     private void checkLines() {
@@ -161,6 +167,8 @@ public class GameField implements Runnable {
     }
 
     private void clearLine() {
-        System.out.println("Line as cleared");
+        for (Ball ball : ballsOnField) {
+            ball.dispose();
+        }
     }
 }

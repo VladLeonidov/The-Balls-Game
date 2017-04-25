@@ -17,6 +17,8 @@ public class Ball {
     private boolean isFrosen;
 
     private ColorBalls colorBall;
+
+    private static Ball[][] ballsOnField = GameField.getBallsOnField();
     private static int[][] glass = GameField.getGlass();
 
     public Ball(int x, int y, ColorBalls colorBall) {
@@ -60,6 +62,7 @@ public class Ball {
 
     public void leaveOnTheField() {
         glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = colorBall.getNumber();
+        ballsOnField[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = this;
     }
 
     public void moveDown() {

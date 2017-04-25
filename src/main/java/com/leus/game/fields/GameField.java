@@ -7,9 +7,6 @@ import com.leus.game.graphics.Ball;
 import com.leus.game.graphics.Figure;
 import com.leus.panels.GamePanel;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class GameField implements Runnable {
 
     public static final int TILE_WIDTH = 32;
@@ -19,7 +16,7 @@ public class GameField implements Runnable {
     public static final long DELAY = 500;
     public static final int COUNT_BALLS_FOR_CLEAR = 4;
 
-    private static List<Ball> ballsOnField = new LinkedList<Ball>();
+    private static Ball[][] ballsOnField = new Ball[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
     private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
 
     private boolean isGameOver = false;
@@ -31,7 +28,7 @@ public class GameField implements Runnable {
         return glass;
     }
 
-    public static List<Ball> getBallsOnField() {
+    public static Ball[][] getBallsOnField() {
         return ballsOnField;
     }
 
@@ -53,8 +50,8 @@ public class GameField implements Runnable {
         (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
         Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-        ballsOnField.add(figure.getFirstBall());
-        ballsOnField.add(figure.getSecondBall());
+        ballsOnField[figure.getFirstBall().getY() / TILE_HEIGHT][figure.getFirstBall().getX() / TILE_WIDTH] = figure.getFirstBall();
+        ballsOnField[figure.getSecondBall().getY() / TILE_HEIGHT][figure.getSecondBall().getX() / TILE_WIDTH] = figure.getSecondBall();
 
         while (!isGameOver) {
             try {
@@ -84,8 +81,8 @@ public class GameField implements Runnable {
                 (Ball.createBall(START_POSITION_BALL_X, START_POSITION_BALL_Y, factory),
                 Ball.createBall(START_POSITION_BALL_X + TILE_WIDTH, START_POSITION_BALL_Y, factory));
 
-                ballsOnField.add(figure.getFirstBall());
-                ballsOnField.add(figure.getSecondBall());
+                ballsOnField[figure.getFirstBall().getY() / TILE_HEIGHT][figure.getFirstBall().getX() / TILE_WIDTH] = figure.getFirstBall();
+                ballsOnField[figure.getSecondBall().getY() / TILE_HEIGHT][figure.getSecondBall().getX() / TILE_WIDTH] = figure.getSecondBall();
 
                 isGameOver = figure.getFirstBall().isOutField() || figure.getSecondBall().isOutField();
             } else {
@@ -95,8 +92,6 @@ public class GameField implements Runnable {
             gamePanel.repaint();
         }
     }
-
-    private int countBallsForClear = 0;
 
     private void checkLines() {
         if (isLineFull(ColorBalls.BLUE.getNumber()) || isLineFull(ColorBalls.RAD.getNumber()) ||
@@ -123,6 +118,12 @@ public class GameField implements Runnable {
             }
 
             if (count >= COUNT_BALLS_FOR_CLEAR) {
+                /*count--;
+                while (count >= 0) {
+                    ballsOnField[i][count] = null;
+                    glass[i][count] = 0;
+                    count--;
+                }*/
                 return true;
             }
         }

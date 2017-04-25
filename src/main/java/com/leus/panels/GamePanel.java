@@ -5,7 +5,6 @@ import com.leus.game.graphics.Ball;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class GamePanel extends JPanel {
 
@@ -13,7 +12,7 @@ public class GamePanel extends JPanel {
     private static final int POSITION_LOGO_Y = 70;
     private static Image logo = ImgLoader.getImage(PathsToResources.LOGO.getPath());
     */
-    private List<Ball> ballsOnField = GameField.getBallsOnField();
+    private static Ball[][] ballsOnField = GameField.getBallsOnField();
 
     @Override
     public void paint(Graphics g) {
@@ -27,9 +26,12 @@ public class GamePanel extends JPanel {
     }*/
 
     private void paintGame(Graphics g) {
-
-        for (Ball ball : ballsOnField) {
-            ball.paint(g);
+        for (int i = 0; i < ballsOnField.length; i++) {
+            for (int j = 0; j < ballsOnField[i].length; j++) {
+                if (ballsOnField[i][j] != null) {
+                    ballsOnField[i][j].paint(g);
+                }
+            }
         }
     }
 }

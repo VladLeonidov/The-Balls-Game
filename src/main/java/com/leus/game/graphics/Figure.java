@@ -17,7 +17,7 @@ public class Figure {
     private boolean isRightSecondBall = true;
     private boolean isVertical;
 
-    private int[][] glass = GameField.getGlass();
+    private Ball[][] ballsOnField = GameField.getBallsOnField();
 
     public boolean isVertical() {
         return isVertical;
@@ -81,13 +81,13 @@ public class Figure {
 
     private boolean isLeftWall(int description) {
         if (isVertical) {
-            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || glass[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || ballsOnField[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] != null))
                 return true;
         } else if (isRightSecondBall) {
-            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || glass[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || ballsOnField[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] != null))
                 return true;
         } else if (isLeftSecondBall) {
-            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0))
+            if (description == KeyEvent.VK_LEFT && (x < 0 + GameField.TILE_WIDTH || ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] != null))
                 return true;
         }
 
@@ -96,13 +96,13 @@ public class Figure {
 
     private boolean isRightWall(int description) {
         if (isVertical) {
-            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH || glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH || ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] != null))
                 return true;
         } else if (isRightSecondBall) {
-            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] != null))
                 return true;
         } else if (isLeftSecondBall) {
-            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || glass[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] > 0))
+            if (description == KeyEvent.VK_RIGHT && (x > GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH * 2 || ballsOnField[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] != null))
                 return true;
         }
 
@@ -121,7 +121,7 @@ public class Figure {
 
     private boolean isRotateLeft() {
         if ((secondBall.getX() / GameField.TILE_WIDTH - 1 < 0) ||
-            (glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0)) {
+            (ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] != null)) {
             return false;
         }
 
@@ -130,7 +130,7 @@ public class Figure {
 
     private boolean isRotateRight() {
         if ((secondBall.getX() / GameField.TILE_WIDTH + 1 > GameFrame.FIELD_WIDTH_IN_TILE - 1) ||
-            (glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0)) {
+            (ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] != null)) {
             return false;
         }
 
@@ -192,8 +192,8 @@ public class Figure {
     }
 
     private void rotateLeftAtWall() {
-        if (!(glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] > 0) ||
-            !(glass[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] > 0)) {
+        if (!(ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH + 1] != null) ||
+            !(ballsOnField[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH + 1] != null)) {
             firstBall.setX(firstBall.getX() + GameField.TILE_WIDTH);
             secondBall.setX(secondBall.getX() + GameField.TILE_WIDTH);
             rotateLeft();
@@ -211,8 +211,8 @@ public class Figure {
     }
 
     private void rotateRightAtWall() {
-        if (!(glass[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] > 0) ||
-            !(glass[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] > 0)) {
+        if (!(ballsOnField[secondBall.getY() / GameField.TILE_HEIGHT][secondBall.getX() / GameField.TILE_WIDTH - 1] != null) ||
+            !(ballsOnField[firstBall.getY() / GameField.TILE_HEIGHT][firstBall.getX() / GameField.TILE_WIDTH - 1] != null)) {
             firstBall.setX(firstBall.getX() - GameField.TILE_WIDTH);
             secondBall.setX(secondBall.getX() - GameField.TILE_WIDTH);
             rotateRight();

@@ -19,12 +19,15 @@ public class Ball {
     private ColorBalls colorBall;
 
     private static Ball[][] ballsOnField = GameField.getBallsOnField();
-    private static int[][] glass = GameField.getGlass();
 
     public Ball(int x, int y, ColorBalls colorBall) {
         this.x = x;
         this.y = y;
         this.colorBall = colorBall;
+    }
+
+    public ColorBalls getColorBalls() {
+        return colorBall;
     }
 
     public int getX() {
@@ -44,7 +47,7 @@ public class Ball {
     }
 
     public boolean isFrozen() {
-        if ((glass[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] > 0) ||
+        if ((ballsOnField[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] != null) ||
                 ((y / GameField.TILE_HEIGHT) == GameFrame.FIELD_HEIGHT_IN_TILE)) {
             return true;
         }
@@ -53,15 +56,14 @@ public class Ball {
     }
 
     public boolean isOutField() {
-        if (glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] > 0) {
+       /* if (ballsOnField[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] != null) {
             return true;
-        }
+        }*/
 
         return false;
     }
 
     public void leaveOnTheField() {
-        glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = colorBall.getNumber();
         ballsOnField[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = this;
     }
 

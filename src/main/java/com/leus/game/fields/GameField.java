@@ -17,16 +17,16 @@ public class GameField implements Runnable {
     public static final int COUNT_BALLS_FOR_CLEAR = 4;
 
     private static Ball[][] ballsOnField = new Ball[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
-    private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
+    //private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();
     private Figure figure;
     private GamePanel gamePanel = new GamePanel();
 
-    public static int[][] getGlass() {
+   /* public static int[][] getGlass() {
         return glass;
-    }
+    }*/
 
     public static Ball[][] getBallsOnField() {
         return ballsOnField;
@@ -109,10 +109,10 @@ public class GameField implements Runnable {
     }
 
     private boolean isHorizontalFull(int type) {
-        for (int i = 0; i < glass.length; i++) {
+        for (int i = 0; i < ballsOnField.length; i++) {
             int count = 0;
-            for (int j = 0; j < glass[i].length; j++) {
-                if (glass[i][j] == type) {
+            for (int j = 0; j < ballsOnField[i].length; j++) {
+                if (ballsOnField[i][j] != null && ballsOnField[i][j].getColorBalls().getNumber() == type) {
                     count++;
                 }
             }
@@ -132,10 +132,10 @@ public class GameField implements Runnable {
     }
 
     private boolean isVerticalFull(int type) {
-        for (int j = 0; j < glass[0].length; j++) {
+        for (int j = 0; j < ballsOnField[0].length; j++) {
             int count = 0;
-            for (int i = 0; i < glass.length; i++) {
-                if (glass[i][j] == type) {
+            for (int i = 0; i < ballsOnField.length; i++) {
+                if (ballsOnField[i][j] != null && ballsOnField[i][j].getColorBalls().getNumber() == type) {
                     count++;
                 }
             }

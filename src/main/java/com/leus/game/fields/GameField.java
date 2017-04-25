@@ -21,9 +21,6 @@ public class GameField implements Runnable {
 
     private static List<Ball> ballsOnField = new LinkedList<Ball>();
     private static int[][] glass = new int[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE + 1];
-    private static int[][] coordinateBalls = Ball.getCoordinateBalls();
-    private static int[][] coordinateForClearBalls = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
-
 
     private boolean isGameOver = false;
     private RandBallsFactory factory = new RandBallsFactory();
@@ -32,10 +29,6 @@ public class GameField implements Runnable {
 
     public static int[][] getGlass() {
         return glass;
-    }
-
-    public static int[][] getCoordinateForClearBalls() {
-        return coordinateForClearBalls;
     }
 
     public static List<Ball> getBallsOnField() {
@@ -130,12 +123,6 @@ public class GameField implements Runnable {
             }
 
             if (count >= COUNT_BALLS_FOR_CLEAR) {
-                /*while (count > 0) {
-                    coords[countBallsForClear][0] = i * TILE_HEIGHT;
-                    coords[countBallsForClear][1] = count * TILE_WIDTH;
-                    countBallsForClear++;
-                    count--;
-                }*/
                 return true;
             }
         }
@@ -153,12 +140,6 @@ public class GameField implements Runnable {
             }
 
             if (count >= COUNT_BALLS_FOR_CLEAR) {
-                /*while (count > 0) {
-                    coords[countBallsForClear][0] = count * TILE_HEIGHT;
-                    coords[countBallsForClear][1] = j * TILE_WIDTH;
-                    countBallsForClear++;
-                    count--;
-                }*/
                 return true;
             }
         }
@@ -167,8 +148,6 @@ public class GameField implements Runnable {
     }
 
     private void clearLine() {
-        for (Ball ball : ballsOnField) {
-            ball.dispose();
-        }
+        System.out.println("Line was cleared");
     }
 }

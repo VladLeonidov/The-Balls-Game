@@ -6,16 +6,11 @@ import com.leus.game.factories.BallsFactory;
 import com.leus.game.fields.GameField;
 
 import java.awt.*;
-import java.util.List;
 
 public class Ball {
 
     private static int id;
     private final int countId = id++;
-
-    private static int[][] coordinateBalls = new int[GameFrame.FIELD_HEIGHT_IN_TILE * GameFrame.FIELD_WIDTH_IN_TILE][2];
-    private static int[][] coordinateForClearBalls = GameField.getCoordinateForClearBalls();
-    private static List<Ball> ballsOnField = GameField.getBallsOnField();
 
     private int x;
     private int y;
@@ -28,10 +23,6 @@ public class Ball {
         this.x = x;
         this.y = y;
         this.colorBall = colorBall;
-    }
-
-    public static int[][] getCoordinateBalls() {
-        return coordinateBalls;
     }
 
     public int getX() {
@@ -69,8 +60,6 @@ public class Ball {
 
     public void leaveOnTheField() {
         glass[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = colorBall.getNumber();
-        coordinateBalls[countId][0] = y;
-        coordinateBalls[countId][1] = x;
     }
 
     public void moveDown() {
@@ -79,22 +68,6 @@ public class Ball {
 
     public void paint(Graphics g) {
         g.drawImage(colorBall.getImg(), x, y, null);
-    }
-
-    public void dispose() {
-        for (int i = 0; i < coordinateBalls.length; i++) {
-            for (int j = 0; j < coordinateForClearBalls.length; j++) {
-                if ((coordinateBalls[i][0] == coordinateForClearBalls[i][0]) &&
-                    (coordinateBalls[i][1] == coordinateForClearBalls[i][1])) {
-                     for (Ball ball : ballsOnField) {
-                         if (coordinateForClearBalls[i][0] == ball.getY() &&
-                             coordinateForClearBalls[i][0] == ball.getX()) {
-                             ballsOnField.remove(ball);
-                         }
-                     }
-                }
-            }
-        }
     }
 
     public static Ball createBall(int x, int y, BallsFactory factory) {

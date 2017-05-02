@@ -9,9 +9,6 @@ import java.awt.*;
 
 public class Ball {
 
-    private static int id;
-    private final int countId = id++;
-
     private int x;
     private int y;
     private boolean isFrosen;
@@ -56,9 +53,9 @@ public class Ball {
     }
 
     public boolean isOutField() {
-       /* if (ballsOnField[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] != null) {
+        if (ballsOnField[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] != null && ballsOnField[y / GameField.TILE_HEIGHT + 1][x / GameField.TILE_WIDTH] != null) {
             return true;
-        }*/
+        }
 
         return false;
     }

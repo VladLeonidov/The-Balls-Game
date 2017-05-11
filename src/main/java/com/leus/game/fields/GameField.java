@@ -1,7 +1,6 @@
 package com.leus.game.fields;
 
 import com.leus.displays.GameFrame;
-import com.leus.enums.ColorBalls;
 import com.leus.game.factories.RandBallsFactory;
 import com.leus.game.graphics.Ball;
 import com.leus.game.graphics.Figure;
@@ -89,49 +88,6 @@ public class GameField implements Runnable {
     }
 
     private void checkLines() {
-        clearHorizontalLine(ColorBalls.BLUE.getNumber());
-        clearHorizontalLine(ColorBalls.RAD.getNumber());
-        clearHorizontalLine(ColorBalls.GREEN.getNumber());
-        clearHorizontalLine(ColorBalls.YELLOW.getNumber());
-        ClearVerticalLine(ColorBalls.BLUE.getNumber());
-        ClearVerticalLine(ColorBalls.RAD.getNumber());
-        ClearVerticalLine(ColorBalls.GREEN.getNumber());
-        ClearVerticalLine(ColorBalls.YELLOW.getNumber());
-    }
-
-    private void clearHorizontalLine(int type) {
-        for (int i = 0; i < ballsOnField.length; i++) {
-            int count = 0;
-            for (int j = 0; j < ballsOnField[i].length; j++) {
-                if ((ballsOnField[i][j] != null && ballsOnField[i][j].getColorBalls().getNumber() == type) &&
-                    ((count == 0 || count == 1) || (ballsOnField[i][j - 1] != null && ballsOnField[i][j - 1].getColorBalls().getNumber() == type))) {
-                    count++;
-                }
-            }
-
-            if (count >= COUNT_BALLS_FOR_CLEAR) {
-                System.out.println("Horizontal Line was cleared");
-            }
-        }
-    }
-
-    private void ClearVerticalLine(int type) {
-        for (int j = 0; j < ballsOnField[0].length; j++) {
-            int count = 0;
-            for (int i = 0; i < ballsOnField.length; i++) {
-                if ((ballsOnField[i][j] != null && ballsOnField[i][j].getColorBalls().getNumber() == type) &&
-                    ((count == 0 || count == 1) || (ballsOnField[i - 1][j] != null && ballsOnField[i - 1][j].getColorBalls().getNumber() == type))) {
-                    count++;
-                }
-            }
-
-            if (count >= COUNT_BALLS_FOR_CLEAR) {
-                System.out.println("Vertical Line was cleared");
-            }
-        }
-    }
-
-    private void clearLine() {
-        System.out.println("Line was cleared");
+        //TODO: Need Wave or A* algoritm
     }
 }

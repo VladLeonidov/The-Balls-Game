@@ -1,4 +1,4 @@
-package com.leus.enums;
+package com.leus.paths;
 
 public enum PathsToResources {
     BLUE_BALL("img/balls/Blue.png"),

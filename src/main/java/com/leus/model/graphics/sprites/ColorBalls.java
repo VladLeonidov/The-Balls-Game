@@ -1,5 +1,6 @@
-package com.leus.enums;
+package com.leus.model.graphics.sprites;
 
+import com.leus.paths.PathsToResources;
 import com.leus.utils.ImgLoader;
 
 import java.awt.*;

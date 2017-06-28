@@ -1,14 +1,14 @@
-package com.leus.displays;
+package com.leus.view.displays;
 
-import com.leus.game.controllers.BallsController;
-import com.leus.game.fields.GameField;
-import com.leus.panels.GamePanel;
+import com.leus.controller.BallsController;
+import com.leus.model.fields.GameField;
+import com.leus.view.panels.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static com.leus.game.fields.GameField.TILE_HEIGHT;
-import static com.leus.game.fields.GameField.TILE_WIDTH;
+import static com.leus.model.fields.GameField.TILE_HEIGHT;
+import static com.leus.model.fields.GameField.TILE_WIDTH;
 
 public final class GameFrame {
 
@@ -30,7 +30,8 @@ public final class GameFrame {
         return gameField;
     }
 
-    private GameFrame() {
+    public static void setGameField(GameField gameField) {
+        GameFrame.gameField = gameField;
     }
 
     public static void createFrame() {

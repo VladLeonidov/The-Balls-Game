@@ -8,8 +8,8 @@ import com.leus.view.displays.GameFrame;
 
 public abstract class Figure {
 
-    public static final int START_POSITION_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
-    public static final int START_POSITION_Y = 0;
+    public static int START_POSITION_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
+    public static int START_POSITION_Y = 0;
 
     private int figureCoordX = START_POSITION_X;
     private int figureCoordY = START_POSITION_Y;

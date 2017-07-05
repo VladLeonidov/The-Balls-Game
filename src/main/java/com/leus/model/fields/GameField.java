@@ -12,7 +12,7 @@ public class GameField implements Runnable {
 
     public static final int TILE_WIDTH = 32;
     public static final int TILE_HEIGHT = 32;
-    public static final long DELAY = 750;
+    public static final long DELAY = 500;
     public static final int MINIMAL_COUNT_BALLS_FOR_CLEAR = 4;
 
     private static Sprite[][] spritesOnField = new Sprite[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE];
@@ -43,11 +43,11 @@ public class GameField implements Runnable {
     }
 
     public void run() {
-        initialize();
-        startGame();
+        initializeGameLoop();
+        gameLoop();
     }
 
-    protected void initialize() {
+    protected void initializeGameLoop() {
         figure = Creator.createFigure(new TwoBallFigure());
 
         spritesInFigure = figure.getSpritesInFigure();
@@ -57,7 +57,7 @@ public class GameField implements Runnable {
         }
     }
 
-    private void startGame() {
+    protected void gameLoop() {
         while (!isGameOver()) {
             try {
                 Thread.sleep(DELAY);
@@ -65,50 +65,59 @@ public class GameField implements Runnable {
                 e.printStackTrace();
             }
 
-            for (Sprite sprite : spritesInFigure) {
-                if (!sprite.isFrozen()) {
-                    figure.moveDownFigure();
-                } else {
-                    sprite.leaveOnTheField();
+            if (isAllFrosenSprite(spritesInFigure)) {
+                leaveFrosenSprite(spritesInFigure);
+                initializeGameLoop();
+            } else if (isFrosenSprite(spritesInFigure)) {
+                for (Sprite sprite : spritesInFigure) {
+                    if (sprite.isFrozen()) {
+                        sprite.leaveOnTheField();
+                    } else {
+                        sprite.moveDown();
+                    }
                 }
-            }
-
-            int count = 0;
-            for (Sprite sprite : spritesInFigure) {
-                if (sprite.isFrozen()) {
-                    count++;
-                }
-            }
-
-            if (count == spritesInFigure.length) {
-                initialize();
-            }
-            /*if (figure.getFirstBall().isFrozen() && !figure.getSecondBall().isFrozen()) {
-                figure.getFirstBall().leaveOnTheField();
-                checkLines();
-                if (!figure.isVertical()) {
-                    figure.getSecondBall().moveDown();
-                }
-            } else if (!figure.getFirstBall().isFrozen() && figure.getSecondBall().isFrozen()) {
-                figure.getSecondBall().leaveOnTheField();
-                checkLines();
-                if (!figure.isVertical()) {
-                    figure.getFirstBall().moveDown();
-                }
-            } else if (figure.getFirstBall().isFrozen() && figure.getSecondBall().isFrozen()) {
-                figure.getFirstBall().leaveOnTheField();
-                figure.getSecondBall().leaveOnTheField();
-                checkLines();
-                initialize();
             } else {
-                figure.getFirstBall().moveDown();
-                figure.getSecondBall().moveDown();
-            }*/
+                figure.moveDownFigure();
+            }
+
             gamePanel.repaint();
         }
     }
 
     private void checkLines() {
         //TODO: Need Wave or A* algorithm
+    }
+
+    private boolean isFrosenSprite(Sprite[] spritesInFigure) {
+        for (Sprite sprite : spritesInFigure) {
+            if (sprite.isFrozen()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isAllFrosenSprite(Sprite[] spritesInFigure) {
+        int count = 0;
+        for (Sprite sprite : spritesInFigure) {
+            if (sprite.isFrozen()) {
+                count++;
+            }
+        }
+
+        if (count == spritesInFigure.length) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void leaveFrosenSprite(Sprite[] spritesInFigure) {
+        for (Sprite sprite : spritesInFigure) {
+            if (sprite.isFrozen()) {
+                sprite.leaveOnTheField();
+            }
+        }
     }
 }

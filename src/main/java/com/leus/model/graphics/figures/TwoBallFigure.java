@@ -2,6 +2,7 @@ package com.leus.model.graphics.figures;
 
 import com.leus.model.factories.RandBallFactory;
 import com.leus.model.fields.GameField;
+import com.leus.model.graphics.sprites.Sprite;
 import com.leus.utils.Creator;
 
 public class TwoBallFigure extends Figure {
@@ -18,27 +19,22 @@ public class TwoBallFigure extends Figure {
     }
 
     public void moveLeft() {
-        setFigureCoordX(getFigureCoordX() - GameField.TILE_WIDTH);
+        setFigureCoordX(getFigureCoordX() - GameField.TILE_WIDTH / 2);
         spritesInFigure[0].setX(getFigureCoordX());
         spritesInFigure[1].setX(getFigureCoordX() + GameField.TILE_WIDTH);
     }
 
     public void moveRight() {
-        setFigureCoordX(getFigureCoordX() + GameField.TILE_WIDTH);
+        setFigureCoordX(getFigureCoordX() + GameField.TILE_WIDTH / 2);
         spritesInFigure[0].setX(getFigureCoordX());
         spritesInFigure[1].setX(getFigureCoordX() + GameField.TILE_WIDTH);
     }
 
     public void moveDownFigure() {
-        setFigureCoordY(spritesInFigure[0].getY() + GameField.TILE_HEIGHT);
-        spritesInFigure[0].setY(getFigureCoordY());
-        spritesInFigure[1].setY(getFigureCoordY());
-    }
-
-    /*public void fastMoveDown() {
-        while (!(spritesInFigure[0].isFrozen() || spritesInFigure[1].isFrozen())) {
-            spritesInFigure[0].moveDown();
-            spritesInFigure[1].moveDown();
+        for (Sprite sprite : spritesInFigure) {
+            sprite.moveDown();
         }
-    }*/
+
+        //setFigureCoordY(spritesInFigure[0].getY());
+    }
 }

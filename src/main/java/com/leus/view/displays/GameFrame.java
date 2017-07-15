@@ -1,6 +1,6 @@
 package com.leus.view.displays;
 
-import com.leus.controller.BallsController;
+import com.leus.controller.BallsKeyController;
 import com.leus.model.fields.GameField;
 import com.leus.view.panels.GamePanel;
 
@@ -29,14 +29,14 @@ public final class GameFrame {
     }
 
     public static void setGameField(GameField gameField) {
-        GameFrame.gameField = gameField;
+        gameField = gameField;
     }
 
     public static void createFrame() {
         mFrame = new JFrame(title);
         mFrame.setSize(WIDTH_GAME_FRAME + FIELD_DX, HEIGHT_GAME_FRAME + FIELD_DY);
         mFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mFrame.addKeyListener(new BallsController());
+        mFrame.addKeyListener(new BallsKeyController());
         gamePanel = gameField.getGamePanel();
         gamePanel.setBackground(Color.white);
         mFrame.getContentPane().add(gamePanel);

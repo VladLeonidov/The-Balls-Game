@@ -29,10 +29,10 @@ public class Ball extends Sprite {
     }
 
     public boolean isOutField() {
-        if (ballsOnField[getY() / GameField.TILE_HEIGHT][getX() / GameField.TILE_WIDTH] != null &&
+        /*if (ballsOnField[getY() / GameField.TILE_HEIGHT][getX() / GameField.TILE_WIDTH] != null &&
             ballsOnField[getY() / GameField.TILE_HEIGHT + 1][getX() / GameField.TILE_WIDTH] != null) {
             return true;
-        }
+        }*/
 
         return false;
     }

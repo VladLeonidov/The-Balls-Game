@@ -18,7 +18,7 @@ public abstract class Figure {
 
     protected Sprite[] spritesInFigure;
 
-    protected static Sprite[][] spritesOnField = GameField.getSpritesOnField();
+    protected Sprite[][] spritesOnField = GameField.getSpritesOnField();
 
     public Figure() {
         this(new Sprite[2]);

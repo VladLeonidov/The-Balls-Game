@@ -9,7 +9,7 @@ import com.leus.view.panels.GamePanel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class BallsController extends KeyAdapter {
+public class BallsKeyController extends KeyAdapter {
 
     private GameField gameField = GameFrame.getGameField();
     private GamePanel gamePanel = gameField.getGamePanel();
@@ -33,26 +33,41 @@ public class BallsController extends KeyAdapter {
 
 
             if (e.getKeyCode() == KeyEvent.VK_UP) {
+                int countUnfrosenBalls = 0;
                 for (Sprite sprite : spritesInFigure) {
                     if (!sprite.isFrozen()) {
-                        figure.rotate();
+                        countUnfrosenBalls++;
                     }
+                }
+
+                if (countUnfrosenBalls == spritesInFigure.length) {
+                    figure.rotate();
                 }
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                int countUnfrozenBalls = 0;
                 for (Sprite sprite : spritesInFigure) {
                     if (!sprite.isFrozen()) {
-                        figure.moveLeft();
+                        countUnfrozenBalls++;
                     }
+                }
+
+                if (countUnfrozenBalls == spritesInFigure.length) {
+                    figure.moveLeft();
                 }
             }
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                int countUnfrozenBalls = 0;
                 for (Sprite sprite : spritesInFigure) {
                     if (!sprite.isFrozen()) {
-                        figure.moveRight();
+                        countUnfrozenBalls++;
                     }
+                }
+
+                if (countUnfrozenBalls == spritesInFigure.length) {
+                    figure.moveRight();
                 }
             }
         }

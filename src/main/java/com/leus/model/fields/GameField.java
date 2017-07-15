@@ -26,6 +26,10 @@ public class GameField implements Runnable {
         return spritesOnField;
     }
 
+    public static void setSpritesOnField(Sprite[][] spritesOnField) {
+        GameField.spritesOnField = spritesOnField;
+    }
+
     public boolean isGameOver() {
         for (Sprite sprite : spritesInFigure) {
             isGameOver = sprite.isOutField();
@@ -65,10 +69,10 @@ public class GameField implements Runnable {
                 e.printStackTrace();
             }
 
-            if (isAllFrosenSprite(spritesInFigure)) {
-                leaveFrosenSprite(spritesInFigure);
+            if (isAllFrozenSprite(spritesInFigure)) {
+                leaveFrozenSprite(spritesInFigure);
                 initializeGameLoop();
-            } else if (isFrosenSprite(spritesInFigure)) {
+            } else if (isFrozenSprite(spritesInFigure)) {
                 for (Sprite sprite : spritesInFigure) {
                     if (sprite.isFrozen()) {
                         sprite.leaveOnTheField();
@@ -88,7 +92,7 @@ public class GameField implements Runnable {
         //TODO: Need Wave or A* algorithm
     }
 
-    private boolean isFrosenSprite(Sprite[] spritesInFigure) {
+    private boolean isFrozenSprite(Sprite[] spritesInFigure) {
         for (Sprite sprite : spritesInFigure) {
             if (sprite.isFrozen()) {
                 return true;
@@ -98,7 +102,7 @@ public class GameField implements Runnable {
         return false;
     }
 
-    private boolean isAllFrosenSprite(Sprite[] spritesInFigure) {
+    private boolean isAllFrozenSprite(Sprite[] spritesInFigure) {
         int count = 0;
         for (Sprite sprite : spritesInFigure) {
             if (sprite.isFrozen()) {
@@ -113,7 +117,7 @@ public class GameField implements Runnable {
         return false;
     }
 
-    private void leaveFrosenSprite(Sprite[] spritesInFigure) {
+    private void leaveFrozenSprite(Sprite[] spritesInFigure) {
         for (Sprite sprite : spritesInFigure) {
             if (sprite.isFrozen()) {
                 sprite.leaveOnTheField();

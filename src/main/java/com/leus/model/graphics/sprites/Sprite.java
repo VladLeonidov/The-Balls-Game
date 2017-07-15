@@ -1,12 +1,13 @@
 package com.leus.model.graphics.sprites;
 
 import com.leus.model.fields.GameField;
+import com.leus.view.displays.GameFrame;
 
 import java.awt.*;
 
 public abstract class Sprite {
 
-    protected static Sprite[][] ballsOnField = GameField.getSpritesOnField();
+    protected Sprite[][] ballsOnField = GameField.getSpritesOnField();
 
     private int x;
     private int y;
@@ -37,6 +38,18 @@ public abstract class Sprite {
     public abstract boolean isOutField();
 
     public abstract void paint(Graphics g);
+
+    public void moveLeft() {
+        if (x != 0) {
+            x -= GameField.TILE_WIDTH;
+        }
+    }
+
+    public void moveRight() {
+        if (x != GameFrame.WIDTH_GAME_FRAME) {
+            x += GameField.TILE_WIDTH;
+        }
+    }
 
     public void moveDown() {
         y += GameField.TILE_HEIGHT;

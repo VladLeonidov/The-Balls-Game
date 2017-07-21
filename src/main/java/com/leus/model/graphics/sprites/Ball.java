@@ -6,17 +6,17 @@ import com.leus.view.displays.GameFrame;
 
 import java.awt.*;
 
-public class Ball extends Sprite {
+public class Ball extends AbstractSprite {
 
-    private ColorBalls colorBall;
+    private Image ballImg;
 
-    public Ball(int x, int y, ColorBalls colorBall) {
+    public Ball(int x, int y, Image ballImg) {
         super(x, y);
-        this.colorBall = colorBall;
+        this.ballImg = ballImg;
     }
 
-    public ColorBalls getColorBalls() {
-        return colorBall;
+    public Image getBallImg() {
+        return ballImg;
     }
 
     public boolean isFrozen() {
@@ -38,6 +38,6 @@ public class Ball extends Sprite {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(colorBall.getImg(), getX(), getY(), null);
+        g.drawImage(ballImg, getX(), getY(), null);
     }
 }

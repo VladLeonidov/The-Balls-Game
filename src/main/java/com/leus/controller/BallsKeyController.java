@@ -1,8 +1,8 @@
 package com.leus.controller;
 
 import com.leus.model.fields.GameField;
-import com.leus.model.graphics.figures.Figure;
-import com.leus.model.graphics.sprites.Sprite;
+import com.leus.model.graphics.figures.AbstractFigure;
+import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.view.displays.GameFrame;
 import com.leus.view.panels.GamePanel;
 
@@ -13,20 +13,20 @@ public class BallsKeyController extends KeyAdapter {
 
     private GameField gameField = GameFrame.getGameField();
     private GamePanel gamePanel = gameField.getGamePanel();
-    private Figure figure;
-    private Sprite[] spritesInFigure;
+    private AbstractFigure abstractFigure;
+    private AbstractSprite[] spritesInFigure;
 
     @Override
     public void keyPressed(KeyEvent e) {
 
-        figure = gameField.getFigure();
-        spritesInFigure = figure.getSpritesInFigure();
+        abstractFigure = gameField.getAbstractFigure();
+        spritesInFigure = abstractFigure.getSpritesInFigure();
 
         if (!gameField.isGameOver()) {
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                for (Sprite sprite : spritesInFigure) {
-                    if (!sprite.isFrozen()) {
-                        figure.fastMoveDown();
+                for (AbstractSprite abstractSprite : spritesInFigure) {
+                    if (!abstractSprite.isFrozen()) {
+                        abstractFigure.fastMoveDown();
                     }
                 }
             }
@@ -34,40 +34,40 @@ public class BallsKeyController extends KeyAdapter {
 
             if (e.getKeyCode() == KeyEvent.VK_UP) {
                 int countUnfrosenBalls = 0;
-                for (Sprite sprite : spritesInFigure) {
-                    if (!sprite.isFrozen()) {
+                for (AbstractSprite abstractSprite : spritesInFigure) {
+                    if (!abstractSprite.isFrozen()) {
                         countUnfrosenBalls++;
                     }
                 }
 
                 if (countUnfrosenBalls == spritesInFigure.length) {
-                    figure.rotate();
+                    abstractFigure.rotate();
                 }
             }
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 int countUnfrozenBalls = 0;
-                for (Sprite sprite : spritesInFigure) {
-                    if (!sprite.isFrozen()) {
+                for (AbstractSprite abstractSprite : spritesInFigure) {
+                    if (!abstractSprite.isFrozen()) {
                         countUnfrozenBalls++;
                     }
                 }
 
                 if (countUnfrozenBalls == spritesInFigure.length) {
-                    figure.moveLeft();
+                    abstractFigure.moveLeft();
                 }
             }
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 int countUnfrozenBalls = 0;
-                for (Sprite sprite : spritesInFigure) {
-                    if (!sprite.isFrozen()) {
+                for (AbstractSprite abstractSprite : spritesInFigure) {
+                    if (!abstractSprite.isFrozen()) {
                         countUnfrozenBalls++;
                     }
                 }
 
                 if (countUnfrozenBalls == spritesInFigure.length) {
-                    figure.moveRight();
+                    abstractFigure.moveRight();
                 }
             }
         }

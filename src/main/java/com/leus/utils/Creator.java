@@ -1,16 +1,16 @@
 package com.leus.utils;
 
 import com.leus.model.factories.SpriteFactory;
-import com.leus.model.graphics.sprites.Sprite;
-import com.leus.model.graphics.figures.Figure;
+import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.model.graphics.figures.AbstractFigure;
 
 public class Creator {
 
-    public static Sprite createBall(int x, int y, SpriteFactory factory) {
+    public static AbstractSprite createBall(int x, int y, SpriteFactory factory) {
         return factory.newSprite(x, y);
     }
 
-    public static Figure createFigure(Figure figure) {
-        return figure;
+    public static AbstractFigure createFigure(AbstractFigure abstractFigure) {
+        return abstractFigure;
     }
 }

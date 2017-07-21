@@ -3,10 +3,10 @@ package com.leus.model.graphics.figures;
 
 import com.leus.model.factories.SpriteFactory;
 import com.leus.model.fields.GameField;
-import com.leus.model.graphics.sprites.Sprite;
+import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.view.displays.GameFrame;
 
-public abstract class Figure {
+public abstract class AbstractFigure {
 
     public static int START_POSITION_X = (GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_DX) / 2 - GameField.TILE_WIDTH - 2;
     public static int START_POSITION_Y = 0;
@@ -16,19 +16,19 @@ public abstract class Figure {
 
     protected SpriteFactory spriteFactory;
 
-    protected Sprite[] spritesInFigure;
+    protected AbstractSprite[] spritesInFigure;
 
-    protected Sprite[][] spritesOnField = GameField.getSpritesOnField();
+    protected AbstractSprite[][] spritesOnField = GameField.getSpritesOnField();
 
-    public Figure() {
-        this(new Sprite[2]);
+    public AbstractFigure() {
+        this(new AbstractSprite[2]);
     }
 
-    public Figure(Sprite[] spritesInFigure) {
+    public AbstractFigure(AbstractSprite[] spritesInFigure) {
         this.spritesInFigure = spritesInFigure;
     }
 
-    public Sprite[] getSpritesInFigure() {
+    public AbstractSprite[] getSpritesInFigure() {
         return spritesInFigure;
     }
 
@@ -57,9 +57,9 @@ public abstract class Figure {
     public abstract void moveDownFigure();
 
     public void fastMoveDown() {
-        for (Sprite sprite : spritesInFigure) {
-            while (!sprite.isFrozen()) {
-                sprite.moveDown();
+        for (AbstractSprite abstractSprite : spritesInFigure) {
+            while (!abstractSprite.isFrozen()) {
+                abstractSprite.moveDown();
             }
         }
     }

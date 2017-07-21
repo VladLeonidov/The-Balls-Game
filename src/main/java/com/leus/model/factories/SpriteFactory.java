@@ -1,7 +1,7 @@
 package com.leus.model.factories;
 
-import com.leus.model.graphics.sprites.Sprite;
+import com.leus.model.graphics.sprites.AbstractSprite;
 
 public interface SpriteFactory {
-    Sprite newSprite(int x, int y);
+    AbstractSprite newSprite(int x, int y);
 }

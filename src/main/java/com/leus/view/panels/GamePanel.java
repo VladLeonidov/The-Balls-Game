@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private static AbstractSprite[][] ballsOnField = GameField.getSpritesOnField();
+    private AbstractSprite[][] ballsOnField = GameField.getGameFieldInstance().getSpritesOnField();
 
     @Override
     public void paint(Graphics g) {

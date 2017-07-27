@@ -1,18 +1,16 @@
 package com.leus.model.graphics.figures;
 
-import com.leus.model.factories.RandBallFactory;
 import com.leus.model.fields.GameField;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.utils.Creator;
+import com.leus.utils.CreatorOfSprites;
 import com.leus.view.displays.GameFrame;
 
-public class TwoBallAbstractFigure extends AbstractFigure {
+public class TwoBallFigure extends AbstractFigure {
 
-    public TwoBallAbstractFigure() {
+    public TwoBallFigure() {
         super();
-        spriteFactory = new RandBallFactory();
-        spritesInFigure[0] = Creator.createBall(START_POSITION_X, START_POSITION_Y, spriteFactory);
-        spritesInFigure[1] = Creator.createBall(START_POSITION_X + GameField.TILE_WIDTH, START_POSITION_Y, spriteFactory);
+        spritesInFigure[0] = CreatorOfSprites.createSprite(getStartPositionX(), getStartPositionY(), getSpriteFactory());
+        spritesInFigure[1] = CreatorOfSprites.createSprite(getStartPositionX() + GameField.TILE_WIDTH, getStartPositionY(), getSpriteFactory());
     }
 
     public void rotate() {

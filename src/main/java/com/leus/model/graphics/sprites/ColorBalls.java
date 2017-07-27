@@ -40,7 +40,7 @@ public enum ColorBalls {
             case 4:
                 return YELLOW;
             default:
-                return getColorBallFromNumber(new Random().nextInt(5));
+                return getColorBallFromNumber(new Random().nextInt(5) + 1);
         }
     }
 }

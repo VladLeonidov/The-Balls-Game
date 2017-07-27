@@ -6,7 +6,7 @@ import java.awt.*;
 
 public abstract class AbstractSprite {
 
-    protected AbstractSprite[][] ballsOnField = GameField.getSpritesOnField();
+    protected AbstractSprite[][] ballsOnField = GameField.getGameFieldInstance().getSpritesOnField();
 
     private int x;
     private int y;

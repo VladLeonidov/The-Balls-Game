@@ -1,4 +1,4 @@
-package com.leus.utils;
+package com.leus.model.service;
 
 public class ScoreManager {
 

@@ -8,11 +8,9 @@ import java.util.Random;
 
 public class RandBallFactory implements SpriteFactory {
 
-    private Random rand;
+    private Random rand = new Random();
 
     public AbstractSprite newSprite(int x, int y) {
-        rand = new Random();
-
-        return new Ball(x, y, ColorBalls.getColorBallFromNumber(rand.nextInt(5)).getImg());
+        return new Ball(x, y, ColorBalls.getColorBallFromNumber(rand.nextInt(5) + 1).getImg());
     }
 }

@@ -1,14 +1,14 @@
 package com.leus.view.panels;
 
-import com.leus.model.fields.GameField;
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.view.displays.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private AbstractSprite[][] ballsOnField = GameField.getGameFieldInstance().getSpritesOnField();
+    private AbstractSprite[][] ballsOnField = GameFrame.getGameFrame().getGameField().getSpritesOnField();
 
     @Override
     public void paint(Graphics g) {

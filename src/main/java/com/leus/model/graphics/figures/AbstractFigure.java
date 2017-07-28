@@ -3,7 +3,7 @@ package com.leus.model.graphics.figures;
 
 import com.leus.model.factories.RandBallFactory;
 import com.leus.model.factories.SpriteFactory;
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.view.displays.GameFrame;
 
@@ -14,7 +14,7 @@ public abstract class AbstractFigure {
     private SpriteFactory spriteFactory;
 
     protected AbstractSprite[] spritesInFigure;
-    protected AbstractSprite[][] spritesOnField = GameField.getGameFieldInstance().getSpritesOnField();
+    protected AbstractSprite[][] spritesOnField = GameFrame.getGameFrame().getGameField().getSpritesOnField();
 
     public AbstractFigure() {
         this((GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_ADD_TO_WIDTH) / 2 - GameField.TILE_WIDTH - 2, 0, new AbstractSprite[2], new RandBallFactory());

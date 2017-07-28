@@ -1,6 +1,6 @@
 package com.leus.model.graphics.figures;
 
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.utils.CreatorOfSprites;
 import com.leus.view.displays.GameFrame;

@@ -1,5 +1,5 @@
 package com.leus.model.service;
 
-public interface ClearerLines {
+public interface CleanerLines {
     void clearLines();
 }

@@ -1,14 +1,14 @@
 package com.leus.model.service;
 
-import com.leus.model.fields.GameField;
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.view.displays.GameFrame;
 
-public class FieldService {
+public class FieldManager {
 
-    private AbstractSprite[][] spritesOnField = GameField.getGameFieldInstance().getSpritesOnField();
+    private AbstractSprite[][] spritesOnField = GameFrame.getGameFrame().getGameField().getSpritesOnField();
 
-    public void clearLineFromField(ClearerLines clearer) {
-        clearer.clearLines();
+    public void clearLineFromField(CleanerLines cleaner) {
+        cleaner.clearLines();
     }
 
     public void moveDownSpriteForAir() {

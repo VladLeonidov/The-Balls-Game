@@ -1,10 +1,10 @@
-package com.leus.model.fields;
+package com.leus.model;
 
 
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.figures.TwoBallFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.model.service.FieldService;
+import com.leus.model.service.FieldManager;
 import com.leus.model.service.ScoreManager;
 import com.leus.view.displays.GameFrame;
 import com.leus.view.panels.GamePanel;
@@ -17,33 +17,23 @@ public class GameField {
     public static final int TILE_HEIGHT = 32;
     public static final long DELAY = 500;
 
-    public static GameField gameField;
-
-    private AbstractSprite[][] spritesOnField;
+    private final AbstractSprite[][] spritesOnField;
     private AbstractFigure figure;
     private JPanel gamePanel;
-    private FieldService fieldService;
+    private FieldManager fieldManager;
     private ScoreManager scoreManager;
     private AbstractSprite[] spritesInFigure;
 
-    private GameField() {
-        this(new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE], new TwoBallFigure(), new GamePanel(), new FieldService(), new ScoreManager());
+    public GameField() {
+        this(new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE], new TwoBallFigure(), new GamePanel(), new FieldManager(), new ScoreManager());
     }
 
-    private GameField(AbstractSprite[][] spritesOnField, AbstractFigure figure, JPanel gamePanel, FieldService fieldService, ScoreManager scoreManager) {
+    public GameField(AbstractSprite[][] spritesOnField, AbstractFigure figure, JPanel gamePanel, FieldManager fieldManager, ScoreManager scoreManager) {
         this.spritesOnField = spritesOnField;
         this.figure = figure;
-        this.fieldService = fieldService;
+        this.fieldManager = fieldManager;
         this.scoreManager = scoreManager;
         this.spritesInFigure = figure.getSpritesInFigure();
-    }
-
-    public static GameField getGameFieldInstance(AbstractSprite[][] spritesOnField, AbstractFigure figure, JPanel gamePanel, FieldService fieldService, ScoreManager scoreManager) {
-        if (gameField == null) {
-            gameField = new GameField(spritesOnField, figure, gamePanel, fieldService, scoreManager);
-        }
-
-        return gameField;
     }
 
     public JPanel getGamePanel() {
@@ -56,10 +46,6 @@ public class GameField {
 
     public AbstractSprite[][] getSpritesOnField() {
         return spritesOnField;
-    }
-
-    public void setSpritesOnField(AbstractSprite[][] spritesOnField) {
-        this.spritesOnField = spritesOnField;
     }
 
     public AbstractFigure getFigure() {

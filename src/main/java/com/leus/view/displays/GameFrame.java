@@ -1,13 +1,13 @@
 package com.leus.view.displays;
 
 import com.leus.controller.BallsKeyController;
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static com.leus.model.fields.GameField.TILE_HEIGHT;
-import static com.leus.model.fields.GameField.TILE_WIDTH;
+import static com.leus.model.GameField.TILE_HEIGHT;
+import static com.leus.model.GameField.TILE_WIDTH;
 
 public final class GameFrame {
 
@@ -18,42 +18,57 @@ public final class GameFrame {
     public static final int FIELD_ADD_TO_WIDTH = 15;
     public static final int FIELD_ADD_TO_HEIGHT = 64;
 
-    private JFrame mainFrame;
-    private String title;
-    private GameField gameField = GameField.getGameFieldInstance();
-    private JPanel gamePanel = gameField.getGamePanel();
+    private static GameFrame gameFrame;
 
-    public GameFrame(JFrame mainFrame, String title) {
-        this.mainFrame = mainFrame;
+    private final GameField gameField;
+    private final JFrame frameWorker;
+    private final String title;
+    private JPanel gamePanel;
+
+    /*private GameFrame() {
+        this(new GameField(), new JFrame(), "Balls");
+    }*/
+
+    private GameFrame(GameField gameField, JFrame frameWorker, String title) {
+        this.gameField = gameField;
+        this.frameWorker = frameWorker;
         this.title = title;
+        this.gamePanel = gameField.getGamePanel();
     }
 
-    public JFrame getMainFrame() {
-        return mainFrame;
+    public static GameFrame getGameFrame() {
+        return getGameFrame(new GameField(), new JFrame(), "Balls");
     }
 
-    public void setMainFrame(JFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public static GameFrame getGameFrame(GameField gameField, JFrame frameWorker, String title) {
+        if (gameFrame == null) {
+            gameFrame = new GameFrame(gameField, frameWorker, title);
+        }
+        return gameFrame;
+    }
+
+    public GameField getGameField() {
+        return gameField;
+    }
+
+    public JFrame getFrameWorker() {
+        return frameWorker;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void createFrame() {
-        mainFrame.setTitle(title);
-        mainFrame.setSize(WIDTH_GAME_FRAME + FIELD_ADD_TO_WIDTH, HEIGHT_GAME_FRAME + FIELD_ADD_TO_HEIGHT);
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.addKeyListener(new BallsKeyController());
+        frameWorker.setTitle(title);
+        frameWorker.setSize(WIDTH_GAME_FRAME + FIELD_ADD_TO_WIDTH, HEIGHT_GAME_FRAME + FIELD_ADD_TO_HEIGHT);
+        frameWorker.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frameWorker.addKeyListener(new BallsKeyController());
         gamePanel.setBackground(Color.white);
-        mainFrame.getContentPane().add(gamePanel);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setResizable(false);
-        mainFrame.setVisible(true);
+        frameWorker.getContentPane().add(gamePanel);
+        frameWorker.setLocationRelativeTo(null);
+        frameWorker.setResizable(false);
+        frameWorker.setVisible(true);
         gameField.startGameProcess();
     }
 }

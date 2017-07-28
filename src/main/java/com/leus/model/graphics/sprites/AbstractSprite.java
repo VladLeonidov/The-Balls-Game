@@ -1,12 +1,13 @@
 package com.leus.model.graphics.sprites;
 
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
+import com.leus.view.displays.GameFrame;
 
 import java.awt.*;
 
 public abstract class AbstractSprite {
 
-    protected AbstractSprite[][] ballsOnField = GameField.getGameFieldInstance().getSpritesOnField();
+    protected AbstractSprite[][] ballsOnField = GameFrame.getGameFrame().getGameField().getSpritesOnField();
 
     private int x;
     private int y;

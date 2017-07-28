@@ -1,8 +1,9 @@
 package com.leus.controller;
 
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.view.displays.GameFrame;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -10,7 +11,7 @@ import java.awt.event.KeyEvent;
 
 public class BallsKeyController extends KeyAdapter {
 
-    private GameField gameField = GameField.getGameFieldInstance();
+    private GameField gameField = GameFrame.getGameFrame().getGameField();
     private JPanel gamePanel = gameField.getGamePanel();
     private AbstractFigure abstractFigure;
     private AbstractSprite[] spritesInFigure;

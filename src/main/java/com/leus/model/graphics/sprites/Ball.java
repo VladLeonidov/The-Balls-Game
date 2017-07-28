@@ -1,7 +1,7 @@
 package com.leus.model.graphics.sprites;
 
 
-import com.leus.model.fields.GameField;
+import com.leus.model.GameField;
 import com.leus.view.displays.GameFrame;
 
 import java.awt.*;

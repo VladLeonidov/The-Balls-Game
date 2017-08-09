@@ -3,7 +3,7 @@ package com.leus.utils;
 import javax.swing.*;
 import java.awt.*;
 
-public class ImgLoader {
+public final class ImgLoader {
 
     private ImgLoader() {
     }

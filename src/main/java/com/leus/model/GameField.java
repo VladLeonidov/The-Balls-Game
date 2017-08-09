@@ -1,12 +1,12 @@
 package com.leus.model;
 
 
+import com.leus.model.factories.figuresFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
-import com.leus.model.graphics.figures.TwoBallFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.FieldManager;
-import com.leus.model.service.ScoreManager;
-import com.leus.view.displays.GameFrame;
+import com.leus.model.service.FigureManager;
+import com.leus.view.GameFrame;
 import com.leus.view.panels.GamePanel;
 
 import javax.swing.*;
@@ -17,23 +17,23 @@ public class GameField {
     public static final int TILE_HEIGHT = 32;
     public static final long DELAY = 500;
 
-    private final AbstractSprite[][] spritesOnField;
-    private AbstractFigure figure;
+    private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 1][GameFrame.FIELD_WIDTH_IN_TILE];
+    private static FigureManager figureManager = GameFrame.getFigureManager();
     private JPanel gamePanel;
-    private FieldManager fieldManager;
-    private ScoreManager scoreManager;
+    private AbstractFigure figure;
     private AbstractSprite[] spritesInFigure;
+    private FieldManager fieldManager;
 
-    public GameField() {
-        this(new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 2][GameFrame.FIELD_WIDTH_IN_TILE], new TwoBallFigure(), new GamePanel(), new FieldManager(), new ScoreManager());
+    public GameField(GamePanel gamePanel, FieldManager fieldManager, FigureFactory figureFactory) {
+        figureManager.registrationFigureFactory(figureFactory);
+        figure = figureManager.createFigure();
+        this.gamePanel = gamePanel;
+        this.fieldManager = fieldManager;
+        this.spritesInFigure = figure.getSpritesInFigure();
     }
 
-    public GameField(AbstractSprite[][] spritesOnField, AbstractFigure figure, JPanel gamePanel, FieldManager fieldManager, ScoreManager scoreManager) {
-        this.spritesOnField = spritesOnField;
-        this.figure = figure;
-        this.fieldManager = fieldManager;
-        this.scoreManager = scoreManager;
-        this.spritesInFigure = figure.getSpritesInFigure();
+    public static AbstractSprite[][] getGameFieldMatrix() {
+        return gameFieldMatrix;
     }
 
     public JPanel getGamePanel() {
@@ -44,21 +44,8 @@ public class GameField {
         this.gamePanel = gamePanel;
     }
 
-    public AbstractSprite[][] getSpritesOnField() {
-        return spritesOnField;
-    }
-
     public AbstractFigure getFigure() {
         return figure;
-    }
-
-    public void setFigure(AbstractFigure figure) {
-        this.figure = figure;
-    }
-
-    public void startGameProcess() {
-        initializeGameLoop();
-        gameLoop();
     }
 
     public boolean isGameOver() {
@@ -71,10 +58,8 @@ public class GameField {
         return false;
     }
 
-    private void initializeGameLoop() {
-        for (int i = 0; i < spritesInFigure.length; i++) {
-            spritesOnField[spritesInFigure[i].getY() / TILE_HEIGHT][spritesInFigure[i].getX() / TILE_WIDTH] = spritesInFigure[i];
-        }
+    public void startGameProcess() {
+        gameLoop();
     }
 
     private void gameLoop() {
@@ -85,63 +70,18 @@ public class GameField {
                 e.printStackTrace();
             }
 
-            if (isAllFrozenSprite(spritesInFigure)) {
-                leaveFrozenSprite(spritesInFigure);
-                initializeGameLoop();
-
-                try {
-                    figure = figure.getClass().newInstance();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            } else if (isFrozenSprite(spritesInFigure)) {
-                for (AbstractSprite abstractSprite : spritesInFigure) {
-                    if (abstractSprite.isFrozen()) {
-                        abstractSprite.leaveOnTheField();
-                    } else {
-                        abstractSprite.moveDown();
-                    }
-                }
+            if (figure.isFrozen()) {
+                figure.leaveOnTheField();
+                fieldManager.clearSpriteFromField(gameFieldMatrix);
+                fieldManager.moveDownSpritesInAir(gameFieldMatrix);
+                fieldManager.clearSpriteFromField(gameFieldMatrix);
+                figure = figureManager.createFigure();
+                spritesInFigure = figure.getSpritesInFigure();
             } else {
-                figure.moveDownFigure();
+                figure.moveDown();
             }
 
-            gamePanel.repaint();
-        }
-    }
-
-    private boolean isFrozenSprite(AbstractSprite[] spritesInFigure) {
-        for (AbstractSprite abstractSprite : spritesInFigure) {
-            if (abstractSprite.isFrozen()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isAllFrozenSprite(AbstractSprite[] spritesInFigure) {
-        int count = 0;
-        for (AbstractSprite abstractSprite : spritesInFigure) {
-            if (abstractSprite.isFrozen()) {
-                count++;
-            }
-        }
-
-        if (count == spritesInFigure.length) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private void leaveFrozenSprite(AbstractSprite[] spritesInFigure) {
-        for (AbstractSprite abstractSprite : spritesInFigure) {
-            if (abstractSprite.isFrozen()) {
-                abstractSprite.leaveOnTheField();
-            }
+            getGamePanel().repaint();
         }
     }
 }

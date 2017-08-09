@@ -1,36 +1,24 @@
 package com.leus.model.graphics.sprites;
 
 
-import com.leus.model.GameField;
-import com.leus.view.displays.GameFrame;
-
 import java.awt.*;
 
 public class Ball extends AbstractSprite {
 
-    private Image ballImg;
+    private ColorBalls color;
 
-    public Ball(int x, int y, Image ballImg) {
+    public Ball(int x, int y, ColorBalls color) {
         super(x, y);
-        this.ballImg = ballImg;
+        this.color = color;
     }
 
-    public Image getBallImg() {
-        return ballImg;
-    }
-
-    public boolean isFrozen() {
-        if ((ballsOnField[getY() / GameField.TILE_HEIGHT + 1][getX() / GameField.TILE_WIDTH] != null) ||
-            ((getY() / GameField.TILE_HEIGHT) == GameFrame.FIELD_HEIGHT_IN_TILE)) {
-            return true;
-        }
-
-        return false;
+    public ColorBalls getColor() {
+        return color;
     }
 
     public boolean isOutField() {
-        /*if (ballsOnField[getY() / GameField.TILE_HEIGHT][getX() / GameField.TILE_WIDTH] != null &&
-            ballsOnField[getY() / GameField.TILE_HEIGHT + 1][getX() / GameField.TILE_WIDTH] != null) {
+        /*if (gameFieldMatrix[getY() / GameField.TILE_HEIGHT][getX() / GameField.TILE_WIDTH] != null &&
+            gameFieldMatrix[getY() / GameField.TILE_HEIGHT + 1][getX() / GameField.TILE_WIDTH] != null) {
             return true;
         }*/
 
@@ -38,6 +26,22 @@ public class Ball extends AbstractSprite {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(ballImg, getX(), getY(), null);
+        g.drawImage(color.getImg(), getX(), getY(), null);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * getX() + 37 * getY();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Ball that = (Ball) obj;
+
+        return this.getX() == that.getX() && this.getY() == that.getY();
     }
 }

@@ -1,21 +1,26 @@
 package com.leus.model.service;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.view.displays.GameFrame;
 
 public class FieldManager {
 
-    private AbstractSprite[][] spritesOnField = GameFrame.getGameFrame().getGameField().getSpritesOnField();
+    private CleanerableSprites cleaner;
 
-    public void clearLineFromField(CleanerLines cleaner) {
-        cleaner.clearLines();
+    public FieldManager(CleanerableSprites cleaner) {
+        this.cleaner = cleaner;
     }
 
-    public void moveDownSpriteForAir() {
-        for (int i = 0; i < spritesOnField.length - 1; i++) {
-            for (int j = 0; j < spritesOnField[i].length; j++) {
-                if (spritesOnField[i + 1][j] != null) {
-                    spritesOnField[i][j].moveDown();
+    public void clearSpriteFromField(AbstractSprite[][] gameFieldMatrix) {
+        cleaner.clearSprites(gameFieldMatrix);
+    }
+
+    public void moveDownSpritesInAir(AbstractSprite[][] gameFieldMatrix) {
+        for (int i = 0; i < gameFieldMatrix.length - 1; i++) {
+            for (int j = 0; j < gameFieldMatrix[i].length; j++) {
+                if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i + 1][j] == null) {
+                    gameFieldMatrix[i][j].moveDown();
+                    gameFieldMatrix[i + 1][j] = gameFieldMatrix[i][j];
+                    gameFieldMatrix[i][j] = null;
                 }
             }
         }

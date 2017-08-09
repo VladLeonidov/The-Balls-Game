@@ -1,4 +1,4 @@
-package com.leus.model.factories;
+package com.leus.model.factories.spriteFactories;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
 

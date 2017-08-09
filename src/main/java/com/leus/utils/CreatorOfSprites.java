@@ -1,6 +1,6 @@
 package com.leus.utils;
 
-import com.leus.model.factories.SpriteFactory;
+import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
 
 public class CreatorOfSprites {

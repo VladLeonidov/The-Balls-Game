@@ -1,7 +1,8 @@
-package com.leus.view.displays;
+package com.leus.view;
 
-import com.leus.controller.BallsKeyController;
+import com.leus.controllers.BallsKeyController;
 import com.leus.model.GameField;
+import com.leus.model.service.FigureManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.*;
 import static com.leus.model.GameField.TILE_HEIGHT;
 import static com.leus.model.GameField.TILE_WIDTH;
 
-public final class GameFrame {
+public class GameFrame {
 
     public static final int FIELD_WIDTH_IN_TILE = 6;
     public static final int FIELD_HEIGHT_IN_TILE = 12;
@@ -19,15 +20,12 @@ public final class GameFrame {
     public static final int FIELD_ADD_TO_HEIGHT = 64;
 
     private static GameFrame gameFrame;
+    private static GameField gameField;
+    private static final FigureManager figureManager = new FigureManager();
 
-    private final GameField gameField;
     private final JFrame frameWorker;
     private final String title;
     private JPanel gamePanel;
-
-    /*private GameFrame() {
-        this(new GameField(), new JFrame(), "Balls");
-    }*/
 
     private GameFrame(GameField gameField, JFrame frameWorker, String title) {
         this.gameField = gameField;
@@ -36,15 +34,19 @@ public final class GameFrame {
         this.gamePanel = gameField.getGamePanel();
     }
 
-    public static GameFrame getGameFrame() {
-        return getGameFrame(new GameField(), new JFrame(), "Balls");
-    }
-
     public static GameFrame getGameFrame(GameField gameField, JFrame frameWorker, String title) {
         if (gameFrame == null) {
             gameFrame = new GameFrame(gameField, frameWorker, title);
         }
         return gameFrame;
+    }
+
+    public static FigureManager getFigureManager() {
+        return figureManager;
+    }
+
+    public JPanel getGamePanel() {
+        return gamePanel;
     }
 
     public GameField getGameField() {

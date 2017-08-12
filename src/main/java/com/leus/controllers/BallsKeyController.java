@@ -10,13 +10,13 @@ import java.awt.event.KeyEvent;
 
 public class BallsKeyController extends KeyAdapter {
 
-    private GameField gameField = GameFrame.getGameFrame(null, null, null).getGameField();
+    private GameFrame gameFrame = GameFrame.getGameFrame(null, null, null);
+    private GameField gameField = gameFrame.getGameField();
+    private JFrame canvas = gameFrame.getCanvas();
     private JPanel gamePanel = gameField.getGamePanel();
     private AbstractFigure figure = gameField.getFigure();
 
-    @Override
     public void keyPressed(KeyEvent e) {
-
         figure = gameField.getFigure();
 
         if (!gameField.isGameOver()) {

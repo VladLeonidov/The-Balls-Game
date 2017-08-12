@@ -1,9 +1,8 @@
 package com.leus.model.factories.spriteFactories;
 
+import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.graphics.sprites.Ball;
 import com.leus.model.graphics.sprites.ColorBalls;
-import com.leus.model.graphics.sprites.AbstractSprite;
-
 import java.util.Random;
 
 public class RandBallFactory implements SpriteFactory {

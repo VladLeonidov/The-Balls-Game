@@ -2,8 +2,7 @@ package com.leus.model.graphics.sprites;
 
 import com.leus.paths.PathsToResources;
 import com.leus.utils.ImgLoader;
-
-import java.awt.*;
+import java.awt.Image;
 import java.util.Random;
 
 public enum ColorBalls {

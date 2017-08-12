@@ -1,8 +1,7 @@
 package com.leus.model.graphics.sprites;
 
 import com.leus.model.GameField;
-
-import java.awt.*;
+import java.awt.Graphics;
 
 public abstract class AbstractSprite {
 

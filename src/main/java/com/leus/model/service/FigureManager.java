@@ -1,6 +1,6 @@
 package com.leus.model.service;
 
-import com.leus.model.factories.figuresFactories.FigureFactory;
+import com.leus.model.factories.figureFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
 
 public class FigureManager {

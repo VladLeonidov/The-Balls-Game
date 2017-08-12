@@ -1,6 +1,5 @@
 package com.leus.model.graphics.figures;
 
-
 import com.leus.model.GameField;
 import com.leus.model.factories.spriteFactories.RandBallFactory;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
@@ -20,7 +19,7 @@ public abstract class AbstractFigure {
     protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
 
     public AbstractFigure() {
-        this((GameFrame.WIDTH_GAME_FRAME + GameFrame.FIELD_ADD_TO_WIDTH) / 2 - GameField.TILE_WIDTH - 2, 0, new AbstractSprite[2], new RandBallFactory());
+        this((GameFrame.WIDTH_GAME_FRAME + GameFrame.ADD_TO_FRAME_SIZE_IN_WIDTH) / 2 - GameField.TILE_WIDTH - 2, 0, new AbstractSprite[2], new RandBallFactory());
     }
 
     public AbstractFigure(int startPositionX, int startPositionY, AbstractSprite[] spritesInFigure, SpriteFactory spriteFactory) {

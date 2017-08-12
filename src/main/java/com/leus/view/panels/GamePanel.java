@@ -3,6 +3,7 @@ package com.leus.view.panels;
 import com.leus.model.GameField;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.model.service.ScoreManager;
 import com.leus.view.GameFrame;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class GamePanel extends JPanel {
         figure = GameFrame.getGameFrame(null, null, null).getGameField().getFigure();
         paintFigure(g);
         paintBallsOnField(g);
+        ScoreManager.drowScore(g);
     }
 
     private void paintFigure(Graphics g) {

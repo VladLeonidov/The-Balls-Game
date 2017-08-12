@@ -1,15 +1,13 @@
 package com.leus.model;
 
-
-import com.leus.model.factories.figuresFactories.FigureFactory;
+import com.leus.model.factories.figureFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.FieldManager;
 import com.leus.model.service.FigureManager;
 import com.leus.view.GameFrame;
 import com.leus.view.panels.GamePanel;
-
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public class GameField {
 
@@ -19,10 +17,11 @@ public class GameField {
 
     private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 1][GameFrame.FIELD_WIDTH_IN_TILE];
     private static FigureManager figureManager = GameFrame.getFigureManager();
+
     private JPanel gamePanel;
     private AbstractFigure figure;
-    private AbstractSprite[] spritesInFigure;
     private FieldManager fieldManager;
+    private AbstractSprite[] spritesInFigure;
 
     public GameField(GamePanel gamePanel, FieldManager fieldManager, FigureFactory figureFactory) {
         figureManager.registrationFigureFactory(figureFactory);
@@ -64,6 +63,7 @@ public class GameField {
 
     private void gameLoop() {
         while (!isGameOver()) {
+
             try {
                 Thread.sleep(DELAY);
             } catch (InterruptedException e) {
@@ -73,7 +73,7 @@ public class GameField {
             if (figure.isFrozen()) {
                 figure.leaveOnTheField();
                 fieldManager.clearSpriteFromField(gameFieldMatrix);
-                fieldManager.moveDownSpritesInAir(gameFieldMatrix);
+                //fieldManager.moveDownSpritesInAir(gameFieldMatrix);
                 fieldManager.clearSpriteFromField(gameFieldMatrix);
                 figure = figureManager.createFigure();
                 spritesInFigure = figure.getSpritesInFigure();
@@ -81,7 +81,7 @@ public class GameField {
                 figure.moveDown();
             }
 
-            getGamePanel().repaint();
+            gamePanel.repaint();
         }
     }
 }

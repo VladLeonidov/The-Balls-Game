@@ -1,6 +1,5 @@
 package com.leus.model.graphics.sprites;
 
-
 import java.awt.*;
 
 public class Ball extends AbstractSprite {

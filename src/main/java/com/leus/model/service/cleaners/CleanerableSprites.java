@@ -1,4 +1,4 @@
-package com.leus.model.service;
+package com.leus.model.service.cleaners;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
 

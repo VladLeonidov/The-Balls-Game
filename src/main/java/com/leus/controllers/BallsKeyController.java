@@ -12,7 +12,6 @@ public class BallsKeyController extends KeyAdapter {
 
     private GameFrame gameFrame = GameFrame.getGameFrame(null, null, null);
     private GameField gameField = gameFrame.getGameField();
-    private JFrame canvas = gameFrame.getCanvas();
     private JPanel gamePanel = gameField.getGamePanel();
     private AbstractFigure figure = gameField.getFigure();
 

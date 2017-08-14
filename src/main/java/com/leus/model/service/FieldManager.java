@@ -1,6 +1,7 @@
 package com.leus.model.service;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.model.service.cleaners.CleanerableSprites;
 
 public class FieldManager {
 
@@ -21,6 +22,14 @@ public class FieldManager {
                     gameFieldMatrix[i][j].moveDown();
                     gameFieldMatrix[i + 1][j] = gameFieldMatrix[i][j];
                     gameFieldMatrix[i][j] = null;
+
+                    /*try {
+                        Thread.sleep(GameField.getDelay());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                   gamePanel.repaint();*/
                 }
             }
         }

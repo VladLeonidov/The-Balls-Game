@@ -1,7 +1,9 @@
-package com.leus.model.service;
+package com.leus.model.service.cleaners;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.graphics.sprites.Ball;
+import com.leus.model.service.scores.CounterScore;
+import com.leus.model.service.scores.ScoreManager;
 import com.leus.view.GameFrame;
 
 import java.util.HashSet;
@@ -10,9 +12,20 @@ import java.util.Set;
 public class CleanerBalls implements CleanerableSprites {
 
     private static final int countForClearBalls = 4;
-    private Set<Ball> ballsReadyToClear = new HashSet<Ball>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
-    private Set<Ball> setOfTmpBalls = new HashSet<Ball>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
+    private Set<Ball> ballsReadyToClear = new HashSet<>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
+    private Set<Ball> setOfTmpBalls = new HashSet<>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
     private AbstractSprite[][] gameFieldMatrix;
+
+    private CounterScore counter = () -> {
+        int scoreForFourBalls = 100;
+        if (setOfTmpBalls.size() == 4) {
+            ScoreManager.addScore(scoreForFourBalls);
+        } else if (setOfTmpBalls.size() > 4 && setOfTmpBalls.size() < 8) {
+            ScoreManager.addScore(scoreForFourBalls + 50 * (setOfTmpBalls.size() - 4));
+        } else {
+            ScoreManager.addScore(scoreForFourBalls + 100 * (setOfTmpBalls.size() - 4));
+        }
+    };
 
     public void clearSprites(AbstractSprite[][] gameFieldMatrix) {
         this.gameFieldMatrix = gameFieldMatrix;
@@ -34,6 +47,7 @@ public class CleanerBalls implements CleanerableSprites {
 
                     if (setOfTmpBalls.size() >= countForClearBalls) {
                         ballsReadyToClear.addAll(setOfTmpBalls);
+                        counter.countingScore();
                         setOfTmpBalls.clear();
                     } else {
                         setOfTmpBalls.clear();

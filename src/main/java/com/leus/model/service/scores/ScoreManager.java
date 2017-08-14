@@ -1,4 +1,4 @@
-package com.leus.model.service;
+package com.leus.model.service.scores;
 
 import com.leus.view.GameFrame;
 
@@ -40,8 +40,8 @@ public class ScoreManager {
         score = 0;
     }
 
-    public static void drowScore(Graphics g) {
+    public static void drawScore(Graphics g) {
         g.setFont(fontForScore);
-        g.drawString("Your score = " + score, POSITION_SCORE_ON_FRAME_X, POSITION_SCORE_ON_FRAME_Y);
+        g.drawString("Your scores = " + score, POSITION_SCORE_ON_FRAME_X, POSITION_SCORE_ON_FRAME_Y);
     }
 }

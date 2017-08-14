@@ -25,13 +25,13 @@ public class CleanerBalls implements CleanerableSprites {
             for (int j = 0; j < gameFieldMatrix[i].length; j++) {
                 if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i][j].getClass() == Ball.class) {
                     Ball currentBall = (Ball) gameFieldMatrix[i][j];
-                    setOfTmpBalls.add(currentBall);
                     if (!ballsReadyToClear.contains(currentBall)) {
                         findChainsBalls(currentBall, i, j + 1);
-                        //findChainsBalls(currentBall, i, j - 1);
-                        //findChainsBalls(currentBall, i - 1, j);
+                        findChainsBalls(currentBall, i, j - 1);
+                        findChainsBalls(currentBall, i - 1, j);
                         findChainsBalls(currentBall, i + 1, j);
                     }
+
                     if (setOfTmpBalls.size() >= countForClearBalls) {
                         ballsReadyToClear.addAll(setOfTmpBalls);
                         setOfTmpBalls.clear();
@@ -52,32 +52,26 @@ public class CleanerBalls implements CleanerableSprites {
     }
 
     private void findChainsBalls(Ball prefBall, int indexY, int indexX) {
-        if (indexX < 0 || indexY >= gameFieldMatrix.length - 1 || indexY < 0 || indexX >= gameFieldMatrix[indexY].length) {
-            return;
-        } else if (gameFieldMatrix[indexY][indexX] == null || gameFieldMatrix[indexY][indexX].getClass() != prefBall.getClass() || ((Ball) gameFieldMatrix[indexY][indexX]).getColor() != prefBall.getColor()) {
-            setOfTmpBalls.add(prefBall);
-            return;
+        if (isBoundOfGameFieldMatrix(indexX, indexY) || isNotBallOrDifferentColor(prefBall, indexX, indexY)) {
+            if (!setOfTmpBalls.contains(prefBall)) setOfTmpBalls.add(prefBall);
         } else {
             Ball currentBall = (Ball) gameFieldMatrix[indexY][indexX];
+            if (!setOfTmpBalls.contains(prefBall)) setOfTmpBalls.add(prefBall);
+
             if (!setOfTmpBalls.contains(currentBall)) {
                 findChainsBalls(currentBall, indexY, indexX + 1);
-                setOfTmpBalls.add(prefBall);
-            }
-
-            if (!setOfTmpBalls.contains(currentBall)) {
                 findChainsBalls(currentBall, indexY, indexX - 1);
-                setOfTmpBalls.add(prefBall);
-            }
-
-            if (!setOfTmpBalls.contains(currentBall)) {
-                findChainsBalls(currentBall, indexY - 1, indexX);
-                setOfTmpBalls.add(prefBall);
-            }
-
-            if (!setOfTmpBalls.contains(currentBall)) {
                 findChainsBalls(currentBall, indexY + 1, indexX);
-                setOfTmpBalls.add(prefBall);
+                findChainsBalls(currentBall, indexY - 1, indexX);
             }
         }
+    }
+
+    private boolean isBoundOfGameFieldMatrix(int indexX, int indexY) {
+        return indexX < 0 || indexY > gameFieldMatrix.length - 1 || indexY < 0 || indexX > gameFieldMatrix[indexY].length - 1;
+    }
+
+    private boolean isNotBallOrDifferentColor(Ball prefBall, int indexX, int indexY) {
+        return gameFieldMatrix[indexY][indexX] == null || gameFieldMatrix[indexY][indexX].getClass() != prefBall.getClass() || ((Ball) gameFieldMatrix[indexY][indexX]).getColor() != prefBall.getColor();
     }
 }

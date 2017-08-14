@@ -25,4 +25,16 @@ public class FieldManager {
             }
         }
     }
+
+    public boolean isSpritesInAir(AbstractSprite[][] gameFieldMatrix) {
+        for (int i = 0; i < gameFieldMatrix.length - 1; i++) {
+            for (int j = 0; j < gameFieldMatrix[i].length; j++) {
+                if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i + 1][j] == null) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

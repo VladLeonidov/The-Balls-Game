@@ -73,8 +73,10 @@ public class GameField {
             if (figure.isFrozen()) {
                 figure.leaveOnTheField();
                 fieldManager.clearSpriteFromField(gameFieldMatrix);
-                //fieldManager.moveDownSpritesInAir(gameFieldMatrix);
-                fieldManager.clearSpriteFromField(gameFieldMatrix);
+                while (fieldManager.isSpritesInAir(getGameFieldMatrix())) {
+                    fieldManager.moveDownSpritesInAir(gameFieldMatrix);
+                    fieldManager.clearSpriteFromField(gameFieldMatrix);
+                }
                 figure = figureManager.createFigure();
                 spritesInFigure = figure.getSpritesInFigure();
             } else {

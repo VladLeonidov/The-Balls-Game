@@ -1,14 +1,14 @@
 package com.leus.model.service.scores;
 
-import com.leus.view.GameFrame;
+import com.leus.view.PcGameFrameBuilder;
 
 import java.awt.*;
 
 public class ScoreManager {
     private static int POSITION_SCORE_ON_FRAME_X = 15;
-    private static int POSITION_SCORE_ON_FRAME_Y = GameFrame.HEIGHT_GAME_FRAME + GameFrame.ADD_TO_FRAME_SIZE_IN_HEIGHT - GameFrame.FIELD_SIZE_FOR_SCORE - (GameFrame.FIELD_SIZE_FOR_SCORE - 25);
+    private static int POSITION_SCORE_ON_FRAME_Y = PcGameFrameBuilder.getHeightGameFrame() + PcGameFrameBuilder.ADD_TO_FRAME_SIZE_IN_HEIGHT - PcGameFrameBuilder.FIELD_SIZE_FOR_SCORE - (PcGameFrameBuilder.FIELD_SIZE_FOR_SCORE - 25);
     private static long score = 0;
-    private static Font fontForScore = new Font("Gabriola", 8, 24);
+    private static Font fontForScore = new Font("Gabriola", Font.CENTER_BASELINE, 24);
 
     private ScoreManager() {
     }

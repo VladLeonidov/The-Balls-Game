@@ -1,18 +1,19 @@
 package com.leus.model.graphics.figures;
 
 import com.leus.model.GameField;
+import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.utils.CreatorOfSprites;
-import com.leus.view.GameFrame;
+import com.leus.view.PcGameFrameBuilder;
 
 public class TwoBallFigure extends AbstractFigure {
 
-    public TwoBallFigure() {
-        super();
-        spritesInFigure[0] = CreatorOfSprites.createSprite(getStartPositionX(), getStartPositionY(), getSpriteFactory());
-        spritesInFigure[1] = CreatorOfSprites.createSprite(getStartPositionX() + GameField.TILE_WIDTH, getStartPositionY(), getSpriteFactory());
+    public TwoBallFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
+        super(new AbstractSprite[2]);
+        initializeSpritesInFigure(startPositionX, startPositionY, factory);
     }
 
+    @Override
     public void rotate() {
         if (!isLeftWall() && !isRightWall()) {
             rotateWithoutWall();
@@ -21,6 +22,7 @@ public class TwoBallFigure extends AbstractFigure {
         }
     }
 
+    @Override
     public void moveLeft() {
         if (isCanMoveLeft()) {
             spritesInFigure[0].moveLeft();
@@ -28,6 +30,7 @@ public class TwoBallFigure extends AbstractFigure {
         }
     }
 
+    @Override
     public void moveRight() {
         if (isCanMoveRight()) {
             spritesInFigure[0].moveRight();
@@ -35,15 +38,17 @@ public class TwoBallFigure extends AbstractFigure {
         }
     }
 
+    @Override
     public void moveDown() {
         for (AbstractSprite abstractSprite : spritesInFigure) {
             abstractSprite.moveDown();
         }
     }
 
+    @Override
     public boolean isFrozen() {
         for (AbstractSprite sprite : spritesInFigure) {
-            if (sprite.getY() / GameField.TILE_HEIGHT == GameFrame.FIELD_HEIGHT_IN_TILE || gameFieldMatrix[sprite.getY() / GameField.TILE_HEIGHT + 1][sprite.getX() / GameField.TILE_WIDTH] != null) {
+            if (sprite.getY() / GameField.TILE_HEIGHT == PcGameFrameBuilder.getFieldHeightInTile() || gameFieldMatrix[sprite.getY() / GameField.TILE_HEIGHT + 1][sprite.getX() / GameField.TILE_WIDTH] != null) {
                 return true;
             }
         }
@@ -51,18 +56,21 @@ public class TwoBallFigure extends AbstractFigure {
         return false;
     }
 
+    @Override
     public void leaveOnTheField() {
         for (AbstractSprite sprite : spritesInFigure) {
             gameFieldMatrix[sprite.getY() / GameField.TILE_HEIGHT][sprite.getX() / GameField.TILE_WIDTH] = sprite;
         }
     }
 
-    private boolean isHorizontal() {
-        if (spritesInFigure[0].getY() != spritesInFigure[1].getY() && spritesInFigure[0].getX() == spritesInFigure[1].getX()) {
-            return false;
-        }
+    @Override
+    protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
+        spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, factory);
+        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + GameField.TILE_WIDTH, startPositionY, factory);
+    }
 
-        return true;
+    private boolean isHorizontal() {
+        return spritesInFigure[0].getY() == spritesInFigure[1].getY() || spritesInFigure[0].getX() != spritesInFigure[1].getX();
     }
 
     private void rotateWithoutWall() {
@@ -110,23 +118,17 @@ public class TwoBallFigure extends AbstractFigure {
     }
 
     private boolean isLeftWall() {
-        if ((spritesInFigure[0].getX() <= 5) || (spritesInFigure[1].getX() <= 5)
+        return (spritesInFigure[0].getX() <= 5) || (spritesInFigure[1].getX() <= 5)
                 || (gameFieldMatrix[spritesInFigure[0].getY() / GameField.TILE_HEIGHT][spritesInFigure[0].getX() / GameField.TILE_HEIGHT - 1] != null
-                || gameFieldMatrix[spritesInFigure[1].getY() / GameField.TILE_HEIGHT][spritesInFigure[1].getX() / GameField.TILE_HEIGHT - 1] != null)) {
-            return true;
-        }
+                || gameFieldMatrix[spritesInFigure[1].getY() / GameField.TILE_HEIGHT][spritesInFigure[1].getX() / GameField.TILE_HEIGHT - 1] != null);
 
-        return false;
     }
 
     private boolean isRightWall() {
-        if ((spritesInFigure[0].getX() >= GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH) || (spritesInFigure[1].getX() >= GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH)
+        return (spritesInFigure[0].getX() >= PcGameFrameBuilder.getWidthGameFrame() - GameField.TILE_WIDTH) || (spritesInFigure[1].getX() >= PcGameFrameBuilder.getWidthGameFrame() - GameField.TILE_WIDTH)
                 || (gameFieldMatrix[spritesInFigure[0].getY() / GameField.TILE_HEIGHT][spritesInFigure[0].getX() / GameField.TILE_HEIGHT + 1] != null
-                || gameFieldMatrix[spritesInFigure[1].getY() / GameField.TILE_HEIGHT][spritesInFigure[1].getX() / GameField.TILE_HEIGHT + 1] != null)) {
-            return true;
-        }
+                || gameFieldMatrix[spritesInFigure[1].getY() / GameField.TILE_HEIGHT][spritesInFigure[1].getX() / GameField.TILE_HEIGHT + 1] != null);
 
-        return false;
     }
 
     private boolean isCanMoveLeft() {
@@ -150,7 +152,7 @@ public class TwoBallFigure extends AbstractFigure {
     }
 
     private boolean isCanMoveRight() {
-        if ((spritesInFigure[0].getX() >= GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH) || (spritesInFigure[1].getX() >= GameFrame.WIDTH_GAME_FRAME - GameField.TILE_WIDTH)) {
+        if ((spritesInFigure[0].getX() >= PcGameFrameBuilder.getWidthGameFrame() - GameField.TILE_WIDTH) || (spritesInFigure[1].getX() >= PcGameFrameBuilder.getWidthGameFrame() - GameField.TILE_WIDTH)) {
             return false;
         } else {
             if (isHorizontal()) {

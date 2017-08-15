@@ -4,7 +4,7 @@ import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.graphics.sprites.Ball;
 import com.leus.model.service.scores.CounterScore;
 import com.leus.model.service.scores.ScoreManager;
-import com.leus.view.GameFrame;
+import com.leus.view.PcGameFrameBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +12,8 @@ import java.util.Set;
 public class CleanerBalls implements CleanerableSprites {
 
     private static final int countForClearBalls = 4;
-    private Set<Ball> ballsReadyToClear = new HashSet<>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
-    private Set<Ball> setOfTmpBalls = new HashSet<>((GameFrame.FIELD_HEIGHT_IN_TILE + 2) * GameFrame.FIELD_WIDTH_IN_TILE);
+    private Set<Ball> ballsReadyToClear = new HashSet<>((PcGameFrameBuilder.getFieldHeightInTile() + 1) * PcGameFrameBuilder.getFieldWidthInTile());
+    private Set<Ball> setOfTmpBalls = new HashSet<>((PcGameFrameBuilder.getFieldHeightInTile() + 1) * PcGameFrameBuilder.getFieldWidthInTile());
     private AbstractSprite[][] gameFieldMatrix;
 
     private CounterScore counter = () -> {

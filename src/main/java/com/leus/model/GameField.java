@@ -5,29 +5,32 @@ import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.FieldManager;
 import com.leus.model.service.FigureManager;
-import com.leus.view.GameFrame;
-import com.leus.view.panels.GamePanel;
+import com.leus.view.PcGameFrameBuilder;
 
-import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
 
 public class GameField {
 
     public static final int TILE_WIDTH = 32;
     public static final int TILE_HEIGHT = 32;
 
+    private static GameField gameField;
     private static long delay = 500;
-    private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[GameFrame.FIELD_HEIGHT_IN_TILE + 1][GameFrame.FIELD_WIDTH_IN_TILE];
-    private static FigureManager figureManager = GameFrame.getFigureManager();
+    private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[PcGameFrameBuilder.getFieldHeightInTile() + 1][PcGameFrameBuilder.getFieldWidthInTile()];
 
-    private JPanel gamePanel;
+    private FigureManager figureManager = new FigureManager();
     private AbstractFigure figure;
     private FieldManager fieldManager;
     private AbstractSprite[] spritesInFigure;
 
-    public GameField(GamePanel gamePanel, FieldManager fieldManager, FigureFactory figureFactory) {
-        figureManager.registrationFigureFactory(figureFactory);
+    private GameField(FieldManager fieldManager, FigureFactory... figureFactories) {
+        if (figureFactories.length == 0) {
+            throw new IllegalArgumentException("No FigureFactories" + Arrays.toString(figureFactories));
+        }
+
+        figureManager.registrationFigureFactories(figureFactories);
         figure = figureManager.createFigure();
-        this.gamePanel = gamePanel;
         this.fieldManager = fieldManager;
         this.spritesInFigure = figure.getSpritesInFigure();
     }
@@ -40,12 +43,12 @@ public class GameField {
         return delay;
     }
 
-    public JPanel getGamePanel() {
-        return gamePanel;
-    }
+    public static GameField getGameField(FieldManager fieldManager, FigureFactory... figureFactory) {
+        if (gameField == null) {
+            gameField = new GameField(fieldManager, figureFactory);
+        }
 
-    public void setGamePanel(JPanel gamePanel) {
-        this.gamePanel = gamePanel;
+        return gameField;
     }
 
     public AbstractFigure getFigure() {
@@ -53,8 +56,8 @@ public class GameField {
     }
 
     public boolean isGameOver() {
-        for (AbstractSprite abstractSprite : spritesInFigure) {
-            if (abstractSprite.isOutField()) {
+        for (AbstractSprite elem : spritesInFigure) {
+            if (elem.isOutField()) {
                 return true;
             }
         }
@@ -62,11 +65,11 @@ public class GameField {
         return false;
     }
 
-    public void startGameProcess() {
-        gameLoop();
+    public void startGameProcess(Component panel) {
+        gameLoop(panel);
     }
 
-    private void gameLoop() {
+    private void gameLoop(Component panel) {
         while (!isGameOver()) {
 
             try {
@@ -90,7 +93,7 @@ public class GameField {
                 figure.moveDown();
             }
 
-            gamePanel.repaint();
+            panel.repaint();
         }
     }
 

@@ -4,7 +4,6 @@ import com.leus.model.GameField;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.scores.ScoreManager;
-import com.leus.view.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,7 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        figure = GameFrame.getGameFrame(null, null, null).getGameField().getFigure();
+        figure = GameField.getGameField(null, null, null).getFigure();
         paintFigure(g);
         paintBallsOnField(g);
         ScoreManager.drawScore(g);

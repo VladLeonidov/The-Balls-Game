@@ -1,13 +1,20 @@
 package com.leus.model.service;
 
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.model.service.cleaners.CleanerableSprites;
+import com.leus.model.service.cleaners.CleanerBalls;
+import com.leus.model.service.cleaners.CleaningSpritesStrategy;
 
 public class FieldManager {
 
-    private CleanerableSprites cleaner;
+    private static final CleaningSpritesStrategy DEFAULT_CLEANER = new CleanerBalls();
 
-    public FieldManager(CleanerableSprites cleaner) {
+    private CleaningSpritesStrategy cleaner;
+
+    public FieldManager() {
+        this(DEFAULT_CLEANER);
+    }
+
+    public FieldManager(CleaningSpritesStrategy cleaner) {
         this.cleaner = cleaner;
     }
 
@@ -22,14 +29,6 @@ public class FieldManager {
                     gameFieldMatrix[i][j].moveDown();
                     gameFieldMatrix[i + 1][j] = gameFieldMatrix[i][j];
                     gameFieldMatrix[i][j] = null;
-
-                    /*try {
-                        Thread.sleep(GameField.getDelay());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                   gamePanel.repaint();*/
                 }
             }
         }

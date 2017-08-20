@@ -7,16 +7,16 @@ public class ThreeBallFigureFactory implements FigureFactory {
 
     private int startPositionX;
     private int startPositionY;
-    private SpriteFactory factory;
+    private SpriteFactory creatorSprites;
 
-    public ThreeBallFigureFactory(int startPositionX, int startPositionY, SpriteFactory factory) {
+    public ThreeBallFigureFactory(int startPositionX, int startPositionY, SpriteFactory creatorSprites) {
         this.startPositionX = startPositionX;
         this.startPositionY = startPositionY;
-        this.factory = factory;
+        this.creatorSprites = creatorSprites;
     }
 
     @Override
     public ThreeBallFigure createFigure() {
-        return new ThreeBallFigure(startPositionX, startPositionY, factory);
+        return new ThreeBallFigure(startPositionX, startPositionY, creatorSprites);
     }
 }

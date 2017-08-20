@@ -1,6 +1,6 @@
 package com.leus.model.service.scores;
 
 @FunctionalInterface
-public interface CounterScore {
+public interface CountingScoreStrategy {
     void countingScore();
 }

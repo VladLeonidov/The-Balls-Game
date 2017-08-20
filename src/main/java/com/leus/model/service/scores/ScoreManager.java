@@ -1,14 +1,18 @@
 package com.leus.model.service.scores;
 
-import com.leus.view.PcGameFrameBuilder;
+import com.leus.model.GameField;
+import com.leus.view.displays.PcDisplay;
 
 import java.awt.*;
 
 public class ScoreManager {
-    private static int POSITION_SCORE_ON_FRAME_X = 15;
-    private static int POSITION_SCORE_ON_FRAME_Y = PcGameFrameBuilder.getHeightGameFrame() + PcGameFrameBuilder.ADD_TO_FRAME_SIZE_IN_HEIGHT - PcGameFrameBuilder.FIELD_SIZE_FOR_SCORE - (PcGameFrameBuilder.FIELD_SIZE_FOR_SCORE - 25);
+    public static final int SIZE_FRAME_FOR_SCORE = 32;
+    private static int POSITION_SCORE_ON_FRAME_X = 10;
+    private static int POSITION_SCORE_ON_FRAME_Y = PcDisplay.getHeightWindow() + GameField.TILE_HEIGHT + (SIZE_FRAME_FOR_SCORE / 2) + 5;
+    private static int factor = 1;
     private static long score = 0;
-    private static Font fontForScore = new Font("Gabriola", Font.CENTER_BASELINE, 24);
+    private static boolean canResetFactor;
+    private static Font fontForScore = new Font("Impact", Font.BOLD, 16);
 
     private ScoreManager() {
     }
@@ -29,6 +33,18 @@ public class ScoreManager {
         return score;
     }
 
+    public static int getFactor() {
+        return factor;
+    }
+
+    public static boolean isCanResetFactor() {
+        return canResetFactor;
+    }
+
+    public static void setIsCanResetFactor(boolean canResetFactor) {
+        ScoreManager.canResetFactor = canResetFactor;
+    }
+
     public static void addScore(long value) {
         if (value <= 0) {
             throw new IllegalArgumentException("Value cannot by 0 or negative: " + value);
@@ -40,8 +56,18 @@ public class ScoreManager {
         score = 0;
     }
 
+    public static void incrementFactor() {
+        if (factor < 12) {
+            factor++;
+        }
+    }
+
+    public static void resetFactor() {
+        factor = 1;
+    }
+
     public static void drawScore(Graphics g) {
         g.setFont(fontForScore);
-        g.drawString("Your scores = " + score, POSITION_SCORE_ON_FRAME_X, POSITION_SCORE_ON_FRAME_Y);
+        g.drawString("Your score = " + score + "    X" + factor, POSITION_SCORE_ON_FRAME_X, POSITION_SCORE_ON_FRAME_Y);
     }
 }

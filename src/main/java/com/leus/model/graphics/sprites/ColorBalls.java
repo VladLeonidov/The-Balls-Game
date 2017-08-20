@@ -1,16 +1,16 @@
 package com.leus.model.graphics.sprites;
 
 import com.leus.paths.PathsToResources;
-import com.leus.utils.ImgLoader;
-import java.awt.Image;
-import java.util.Random;
+import com.leus.utils.ResourceLoader;
+
+import java.awt.*;
 
 public enum ColorBalls {
 
-    BLUE(ImgLoader.getImage(PathsToResources.BLUE_BALL.getPath())),
-    RAD(ImgLoader.getImage(PathsToResources.RAD_BALL.getPath())),
-    GREEN(ImgLoader.getImage(PathsToResources.GREEN_BALL.getPath())),
-    YELLOW(ImgLoader.getImage(PathsToResources.YELLOW_BALL.getPath()));
+    BLUE(ResourceLoader.loadImage(PathsToResources.BLUE_BALL.getPath())),
+    RAD(ResourceLoader.loadImage(PathsToResources.RAD_BALL.getPath())),
+    GREEN(ResourceLoader.loadImage(PathsToResources.GREEN_BALL.getPath())),
+    YELLOW(ResourceLoader.loadImage(PathsToResources.YELLOW_BALL.getPath()));
 
     private Image img;
 
@@ -33,7 +33,7 @@ public enum ColorBalls {
             case 4:
                 return YELLOW;
             default:
-                return getColorBallFromNumber(new Random().nextInt(5) + 1);
+                throw new IllegalArgumentException("No color for this number " + num);
         }
     }
 }

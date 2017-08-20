@@ -5,30 +5,32 @@ import java.awt.Graphics;
 
 public abstract class AbstractSprite {
 
+    public static final int SPEED = GameField.TILE_HEIGHT;
+
     protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
 
-    private int x;
-    private int y;
+    private int coordinateX;
+    private int coordinateY;
 
-    public AbstractSprite(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public AbstractSprite(int coordinateX, int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
     }
 
-    public int getX() {
-        return x;
+    public int getCoordinateX() {
+        return coordinateX;
     }
 
-    public int getY() {
-        return y;
+    public int getCoordinateY() {
+        return coordinateY;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
     }
 
     public abstract boolean isOutField();
@@ -36,19 +38,19 @@ public abstract class AbstractSprite {
     public abstract void paint(Graphics g);
 
     public void moveLeft() {
-        x -= GameField.TILE_WIDTH;
+        coordinateX -= SPEED;
     }
 
     public void moveRight() {
-        x += GameField.TILE_WIDTH;
+        coordinateX += SPEED;
     }
 
     public void moveDown() {
-        y += GameField.TILE_HEIGHT;
+        coordinateY += SPEED;
     }
 
     public void clear() {
-        gameFieldMatrix[y / GameField.TILE_HEIGHT][x / GameField.TILE_WIDTH] = null;
+        gameFieldMatrix[coordinateY / GameField.TILE_HEIGHT][coordinateX / GameField.TILE_WIDTH] = null;
     }
 
 }

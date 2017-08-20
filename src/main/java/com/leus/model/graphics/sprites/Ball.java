@@ -6,8 +6,8 @@ public class Ball extends AbstractSprite {
 
     private ColorBalls color;
 
-    public Ball(int x, int y, ColorBalls color) {
-        super(x, y);
+    public Ball(int coordinateX, int coordinateY, ColorBalls color) {
+        super(coordinateX, coordinateY);
         this.color = color;
     }
 
@@ -16,8 +16,8 @@ public class Ball extends AbstractSprite {
     }
 
     public boolean isOutField() {
-        /*if (gameFieldMatrix[getY() / GameField.TILE_HEIGHT][getX() / GameField.TILE_WIDTH] != null &&
-            gameFieldMatrix[getY() / GameField.TILE_HEIGHT + 1][getX() / GameField.TILE_WIDTH] != null) {
+        /*if (gameFieldMatrix[getCoordinateY() / GameField.TILE_HEIGHT][getCoordinateX() / GameField.TILE_WIDTH] != null &&
+            gameFieldMatrix[getCoordinateY() / GameField.TILE_HEIGHT + 1][getCoordinateX() / GameField.TILE_WIDTH] != null) {
             return true;
         }*/
 
@@ -25,22 +25,34 @@ public class Ball extends AbstractSprite {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(color.getImg(), getX(), getY(), null);
+        g.drawImage(color.getImg(), getCoordinateX(), getCoordinateY(), null);
     }
 
     @Override
     public int hashCode() {
-        return 31 * getX() + 37 * getY();
+        int result = 17;
+        result = 31 * result + getCoordinateX();
+        result = 31 * result + getCoordinateY();
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || this.getClass() != obj.getClass()) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Ball)) {
             return false;
         }
 
         Ball that = (Ball) obj;
 
-        return this.getX() == that.getX() && this.getY() == that.getY();
+        return this.getCoordinateX() == that.getCoordinateX() && this.getCoordinateY() == that.getCoordinateY();
+    }
+
+    @Override
+    public String toString() {
+        return "Ball{x=" + getCoordinateX() + ", y=" + getCoordinateY() + ", color=" + color + '}';
     }
 }

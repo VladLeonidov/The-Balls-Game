@@ -3,18 +3,19 @@ package com.leus.model.graphics.figures;
 import com.leus.model.GameField;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.view.displays.PcDisplay;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public abstract class AbstractFigure {
 
-    AbstractSprite[] spritesInFigure;
+    protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
+    protected AbstractSprite[] spritesInFigure;
 
     public AbstractFigure(AbstractSprite[] spritesInFigure) {
         this.spritesInFigure = spritesInFigure;
     }
-
-    protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
 
     public AbstractSprite[] getSpritesInFigure() {
         return spritesInFigure;
@@ -22,19 +23,47 @@ public abstract class AbstractFigure {
 
     public abstract void rotate();
 
-    public abstract void moveLeft();
+    public boolean isFrozen() {
+        for (AbstractSprite currentSprite : spritesInFigure) {
+            if (currentSprite.getCoordinateY() / GameField.TILE_HEIGHT == PcDisplay.getHeightWindowInTile() || gameFieldMatrix[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT + 1][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] != null) {
+                return true;
+            }
+        }
 
-    public abstract void moveRight();
+        return false;
+    }
 
-    public abstract void moveDown();
+    public void leaveOnTheField() {
+        for (AbstractSprite currentSprite : spritesInFigure) {
+            gameFieldMatrix[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] = currentSprite;
+        }
+    }
 
-    public abstract boolean isFrozen();
+    public void moveLeft() {
+        if (isCanMoveLeft()) {
+            for (AbstractSprite currentSprite : spritesInFigure) {
+                currentSprite.moveLeft();
+            }
+        }
+    }
 
-    public abstract void leaveOnTheField();
+    public void moveRight() {
+        if (isCanMoveRight()) {
+            for (AbstractSprite currentSprite : spritesInFigure) {
+                currentSprite.moveRight();
+            }
+        }
+    }
 
     public void paint(Graphics g) {
-        for (AbstractSprite sprite : spritesInFigure) {
-            sprite.paint(g);
+        for (AbstractSprite currentSprite : spritesInFigure) {
+            currentSprite.paint(g);
+        }
+    }
+
+    public void moveDown() {
+        for (AbstractSprite abstractSprite : spritesInFigure) {
+            abstractSprite.moveDown();
         }
     }
 
@@ -44,5 +73,14 @@ public abstract class AbstractFigure {
         }
     }
 
-    protected abstract void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory factory);
+    @Override
+    public String toString() {
+        return "Figure" + Arrays.toString(spritesInFigure);
+    }
+
+    protected abstract void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites);
+
+    protected abstract boolean isCanMoveRight();
+
+    protected abstract boolean isCanMoveLeft();
 }

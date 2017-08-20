@@ -2,26 +2,28 @@ package com.leus.controllers;
 
 import com.leus.model.GameField;
 import com.leus.model.graphics.figures.AbstractFigure;
+import com.leus.view.displays.PcDisplay;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class BallsKeyController extends KeyAdapter {
 
     private GameField gameField;
-    private JPanel gamePanel;
+    private PcDisplay window;
     private AbstractFigure figure;
 
-    public BallsKeyController(GameField gameField, JPanel gamePanel) {
+    public BallsKeyController(GameField gameField, PcDisplay window) {
         this.gameField = gameField;
-        this.gamePanel = gamePanel;
-        this.gamePanel.setBackground(Color.white);
+        this.window = window;
     }
 
-    public JPanel getGamePanel() {
-        return gamePanel;
+    public GameField getGameField() {
+        return gameField;
+    }
+
+    public PcDisplay getWindow() {
+        return window;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -45,7 +47,7 @@ public class BallsKeyController extends KeyAdapter {
                 keyRight();
             }
 
-            gamePanel.repaint();
+            window.getCanvas().repaint();
         }
     }
 

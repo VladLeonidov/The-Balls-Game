@@ -5,8 +5,11 @@ public enum PathsToResources {
     GREEN_BALL("img/balls/Green.png"),
     RAD_BALL("img/balls/Rad.png"),
     YELLOW_BALL("img/balls/Yellow.png"),
-    START_BUTTON("img/button/ButtonStart.png"),
-    LOGO("img/logo/Logo.png");
+    BACK_GROUND_MENU("img/BackGroundMenu.png"),
+    LOGO("img/Logo.png"),
+    START_BUTTON("img/buttons/StartButton.png"),
+    EXIT_BUTTON("img/buttons/ExitButton.png"),
+    MENU_CURSOR("img/cursors/MenuCursor.png");
 
     private String path;
 

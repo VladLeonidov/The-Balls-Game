@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public abstract class AbstractFigure {
 
-    protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
+    protected static final AbstractSprite[][] GAME_FIELD_MATRIX = GameField.getGameFieldMatrix();
     protected AbstractSprite[] spritesInFigure;
 
     public AbstractFigure(AbstractSprite[] spritesInFigure) {
@@ -25,7 +25,7 @@ public abstract class AbstractFigure {
 
     public boolean isFrozen() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            if (currentSprite.getCoordinateY() / GameField.TILE_HEIGHT == PcDisplay.getHeightWindowInTile() || gameFieldMatrix[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT + 1][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] != null) {
+            if (currentSprite.getCoordinateY() / GameField.TILE_HEIGHT == PcDisplay.getHeightWindowInTile() || GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT + 1][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] != null) {
                 return true;
             }
         }
@@ -35,7 +35,7 @@ public abstract class AbstractFigure {
 
     public void leaveOnTheField() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            gameFieldMatrix[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] = currentSprite;
+            GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] = currentSprite;
         }
     }
 
@@ -80,7 +80,25 @@ public abstract class AbstractFigure {
 
     protected abstract void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites);
 
-    protected abstract boolean isCanMoveRight();
+    protected boolean isCanMoveRight() {
+        for (AbstractSprite currentSprite : spritesInFigure) {
+            if (currentSprite.getCoordinateX() / GameField.TILE_WIDTH == PcDisplay.getWidthWindowInTile() - 1 ||
+                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH + 1] != null) {
+                return false;
+            }
+        }
 
-    protected abstract boolean isCanMoveLeft();
+        return true;
+    }
+
+    protected boolean isCanMoveLeft() {
+        for (AbstractSprite currentSprite : spritesInFigure) {
+            if (currentSprite.getCoordinateX() / GameField.TILE_WIDTH == 0 ||
+                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH - 1] != null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

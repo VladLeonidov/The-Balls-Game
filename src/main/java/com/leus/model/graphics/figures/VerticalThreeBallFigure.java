@@ -5,16 +5,20 @@ import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.utils.CreatorOfSprites;
 
-public class ThreeBallFigure extends AbstractFigure {
+public class VerticalThreeBallFigure extends AbstractFigure {
 
-    public ThreeBallFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
+    public VerticalThreeBallFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
         super(new AbstractSprite[3]);
         initializeSpritesInFigure(startPositionX, startPositionY, factory);
     }
 
     @Override
     public void rotate() {
-
+        int coordYtmp1 = spritesInFigure[0].getCoordinateY();
+        int coordYtmp2 = spritesInFigure[1].getCoordinateY();
+        spritesInFigure[0].setCoordinateY(spritesInFigure[2].getCoordinateY());
+        spritesInFigure[1].setCoordinateY(coordYtmp1);
+        spritesInFigure[2].setCoordinateY(coordYtmp2);
     }
 
     @Override
@@ -22,15 +26,5 @@ public class ThreeBallFigure extends AbstractFigure {
         spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, factory);
         spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX, startPositionY + GameField.TILE_HEIGHT, factory);
         spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX, startPositionY + GameField.TILE_HEIGHT * 2, factory);
-    }
-
-    @Override
-    protected boolean isCanMoveRight() {
-        return true;
-    }
-
-    @Override
-    protected boolean isCanMoveLeft() {
-        return true;
     }
 }

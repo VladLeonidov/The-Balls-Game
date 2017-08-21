@@ -28,48 +28,6 @@ public class TwoBallFigure extends AbstractFigure {
         spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + GameField.TILE_WIDTH, startPositionY, creatorSprites);
     }
 
-    @Override
-    protected boolean isCanMoveLeft() {
-        if ((spritesInFigure[0].getCoordinateX() <= 5) || (spritesInFigure[1].getCoordinateX() <= 5)) {
-            return false;
-        } else {
-            if (isHorizontal()) {
-                AbstractSprite leftAbstractSprite = leftSpriteInFigure();
-                if (gameFieldMatrix[leftAbstractSprite.getCoordinateY() / GameField.TILE_HEIGHT][leftAbstractSprite.getCoordinateX() / GameField.TILE_WIDTH - 1] != null) {
-                    return false;
-                }
-            } else {
-                AbstractSprite topAbstractSprite = topSpriteInFigure();
-                if (gameFieldMatrix[(topAbstractSprite.getCoordinateY() + GameField.TILE_HEIGHT) / GameField.TILE_HEIGHT][topAbstractSprite.getCoordinateX() / GameField.TILE_WIDTH - 1] != null) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    protected boolean isCanMoveRight() {
-        if ((spritesInFigure[0].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH) || (spritesInFigure[1].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH)) {
-            return false;
-        } else {
-            if (isHorizontal()) {
-                AbstractSprite leftAbstractSprite = leftSpriteInFigure();
-                if (gameFieldMatrix[leftAbstractSprite.getCoordinateY() / GameField.TILE_HEIGHT][(leftAbstractSprite.getCoordinateX() + GameField.TILE_WIDTH) / GameField.TILE_WIDTH + 1] != null) {
-                    return false;
-                }
-            } else {
-                AbstractSprite topAbstractSprite = topSpriteInFigure();
-                if (gameFieldMatrix[(topAbstractSprite.getCoordinateY() + GameField.TILE_HEIGHT) / GameField.TILE_HEIGHT][topAbstractSprite.getCoordinateX() / GameField.TILE_WIDTH + 1] != null) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
     private boolean isHorizontal() {
         return spritesInFigure[0].getCoordinateY() == spritesInFigure[1].getCoordinateY() || spritesInFigure[0].getCoordinateX() != spritesInFigure[1].getCoordinateX();
     }
@@ -120,15 +78,15 @@ public class TwoBallFigure extends AbstractFigure {
 
     private boolean isLeftWall() {
         return (spritesInFigure[0].getCoordinateX() <= 5) || (spritesInFigure[1].getCoordinateX() <= 5)
-                || (gameFieldMatrix[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null
-                || gameFieldMatrix[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null);
+                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null
+                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null);
 
     }
 
     private boolean isRightWall() {
         return (spritesInFigure[0].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH) || (spritesInFigure[1].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH)
-                || (gameFieldMatrix[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null
-                || gameFieldMatrix[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null);
+                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null
+                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null);
 
     }
 

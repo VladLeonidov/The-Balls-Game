@@ -4,6 +4,8 @@ import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.cleaners.CleanerBalls;
 import com.leus.model.service.cleaners.CleaningSpritesStrategy;
 
+import javax.swing.*;
+
 public class FieldManager {
 
     private static final CleaningSpritesStrategy DEFAULT_CLEANER = new CleanerBalls();
@@ -22,13 +24,14 @@ public class FieldManager {
         cleaner.clearSprites(gameFieldMatrix);
     }
 
-    public void moveDownSpritesInAir(AbstractSprite[][] gameFieldMatrix) {
+    public void moveDownSpritesInAir(AbstractSprite[][] gameFieldMatrix, JPanel canvas) {
         for (int i = 0; i < gameFieldMatrix.length - 1; i++) {
             for (int j = 0; j < gameFieldMatrix[i].length; j++) {
                 if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i + 1][j] == null) {
                     gameFieldMatrix[i][j].moveDown();
                     gameFieldMatrix[i + 1][j] = gameFieldMatrix[i][j];
                     gameFieldMatrix[i][j] = null;
+                    canvas.repaint();
                 }
             }
         }

@@ -1,12 +1,10 @@
 package com.leus.view.panels;
 
 import com.leus.model.GameField;
+import com.leus.model.GameMenu;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.scores.ScoreManager;
-import com.leus.paths.PathsToResources;
-import com.leus.utils.ResourceLoader;
-import com.leus.view.displays.PcDisplay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,30 +12,36 @@ import java.awt.*;
 public class GamePanel extends JPanel {
 
     private static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
-    private GameField gameField;
-    private AbstractFigure figure;
-    private boolean inMenu = false;
+    private static boolean menuRender = true;
 
-    public GamePanel(GameField gameField) {
+    private GameField gameField;
+    private GameMenu menu;
+    private AbstractFigure figure;
+
+    public GamePanel(GameField gameField, GameMenu menu) {
         this.gameField = gameField;
+        this.menu = menu;
+    }
+
+    public static boolean isMenuRender() {
+        return menuRender;
+    }
+
+    public static void setMenuRender(boolean menuRender) {
+        GamePanel.menuRender = menuRender;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (inMenu) {
-            paintMenu(g);
+        if (menuRender) {
+            menu.paintMenu(g);
         } else {
             figure = gameField.getFigure();
             paintFigure(g);
             paintBallsOnField(g);
             ScoreManager.drawScore(g);
         }
-    }
-
-    private void paintMenu(Graphics g) {
-        Image logo = ResourceLoader.loadImage(PathsToResources.LOGO.getPath());
-        g.drawImage(logo, (PcDisplay.getWidthWindow() - logo.getWidth(null)) / 2, PcDisplay.getHeightWindow() / 2, null);
     }
 
     private void paintFigure(Graphics g) {
@@ -51,12 +55,6 @@ public class GamePanel extends JPanel {
                     elem.paint(g);
                 }
             }
-        }
-    }
-
-    public class StartButton extends JButton {
-        public void startGame() {
-            gameField.startGameProcess(GamePanel.this);
         }
     }
 }

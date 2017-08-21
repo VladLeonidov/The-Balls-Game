@@ -37,6 +37,8 @@ public abstract class AbstractSprite {
 
     public abstract void paint(Graphics g);
 
+    public abstract void clear();
+
     public void moveLeft() {
         coordinateX -= SPEED;
     }
@@ -47,10 +49,6 @@ public abstract class AbstractSprite {
 
     public void moveDown() {
         coordinateY += SPEED;
-    }
-
-    public void clear() {
-        gameFieldMatrix[coordinateY / GameField.TILE_HEIGHT][coordinateX / GameField.TILE_WIDTH] = null;
     }
 
 }

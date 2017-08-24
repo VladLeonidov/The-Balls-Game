@@ -2,6 +2,7 @@ package com.leus.view.panels;
 
 import com.leus.model.GameField;
 import com.leus.model.GameMenu;
+import com.leus.model.ScoreMenu;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.scores.ScoreManager;
@@ -12,30 +13,25 @@ import java.awt.*;
 public class GamePanel extends JPanel {
 
     private static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
-    private static boolean menuRender = true;
 
     private GameField gameField;
-    private GameMenu menu;
+    private GameMenu mainMenu;
+    private ScoreMenu scoreMenu;
     private AbstractFigure figure;
 
-    public GamePanel(GameField gameField, GameMenu menu) {
+    public GamePanel(GameField gameField, GameMenu mainMenu, ScoreMenu scoreMenu) {
         this.gameField = gameField;
-        this.menu = menu;
-    }
-
-    public static boolean isMenuRender() {
-        return menuRender;
-    }
-
-    public static void setMenuRender(boolean menuRender) {
-        GamePanel.menuRender = menuRender;
+        this.mainMenu = mainMenu;
+        this.scoreMenu = scoreMenu;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (menuRender) {
-            menu.paintMenu(g);
+        if (GameMenu.isFocusMenu()) {
+            mainMenu.paintMenu(g);
+        } else if (ScoreMenu.isFocusMenu()) {
+            scoreMenu.paint(g);
         } else {
             figure = gameField.getFigure();
             paintFigure(g);

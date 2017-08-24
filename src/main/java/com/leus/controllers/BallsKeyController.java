@@ -1,6 +1,7 @@
 package com.leus.controllers;
 
 import com.leus.model.GameField;
+import com.leus.model.GameMenu;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.view.displays.PcDisplay;
 
@@ -10,12 +11,19 @@ import java.awt.event.KeyEvent;
 public class BallsKeyController extends KeyAdapter {
 
     private GameField gameField;
+    private GameMenu menu;
     private PcDisplay window;
     private AbstractFigure figure;
+    private int indexFocusButton;
 
-    public BallsKeyController(GameField gameField, PcDisplay window) {
+    public BallsKeyController(GameField gameField, GameMenu menu, PcDisplay window) {
         this.gameField = gameField;
+        this.menu = menu;
         this.window = window;
+    }
+
+    public GameMenu getMenu() {
+        return menu;
     }
 
     public GameField getGameField() {
@@ -29,25 +37,53 @@ public class BallsKeyController extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         figure = gameField.getFigure();
 
-        if (!gameField.isGameOver()) {
+        if (menu.isFocusMenu()) {
+            keyPressedInMenu(e);
+        } else {
+            if (!gameField.isGameOver()) {
+                keyPressedInGameProcess(e);
+            }
+        }
 
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                keyDown();
+        window.getCanvas().repaint();
+    }
+
+    private void keyPressedInMenu(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if (indexFocusButton < menu.getMenuButtons().length - 1) {
+                menu.getCursor().moveDown();
+                menu.getCursor().setFocus(menu.getMenuButtons()[++indexFocusButton]);
             }
 
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                keyUp();
-            }
+        }
 
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                keyLeft();
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (indexFocusButton > 0) {
+                menu.getCursor().moveUp();
+                menu.getCursor().setFocus(menu.getMenuButtons()[--indexFocusButton]);
             }
+        }
 
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                keyRight();
-            }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            menu.getCursor().enter();
+        }
+    }
 
-            window.getCanvas().repaint();
+    private void keyPressedInGameProcess(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            keyDown();
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            keyUp();
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            keyLeft();
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            keyRight();
         }
     }
 

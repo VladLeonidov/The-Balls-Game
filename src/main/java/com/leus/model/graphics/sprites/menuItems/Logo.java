@@ -1,4 +1,4 @@
-package com.leus.model.graphics.sprites.menuItem;
+package com.leus.model.graphics.sprites.menuItems;
 
 import java.awt.*;
 

@@ -16,21 +16,25 @@ public class GameField {
     public static final int TILE_WIDTH = 32;
     public static final int TILE_HEIGHT = 32;
 
-    private static final AbstractSprite[][] GAME_FIELD_MATRIX = new AbstractSprite[PcDisplay.getHeightWindowInTile() + 1][PcDisplay.getWidthWindowInTile()];
-
     private static long delay = 500;
 
+    private static final AbstractSprite[][] GAME_FIELD_MATRIX = new AbstractSprite[PcDisplay.getHeightWindowInTile() + 1][PcDisplay.getWidthWindowInTile()];
     private static final UpSpeedGameStrategy DEFAULT_UP_SPEED_GAME = () -> {
         long currentScore = ScoreManager.getScore();
-        if (currentScore > 1_000 && currentScore < 2_000) {
+        boolean lowScore = currentScore > 1000 && currentScore < 2000;
+        boolean midScore = currentScore > 2000 && currentScore < 3000;
+        boolean hightScore = currentScore > 3000 && currentScore < 6000;
+        boolean veryHightScore = currentScore > 6000 && currentScore < 9000;
+        boolean superScore = currentScore > 9000;
+        if (lowScore) {
             delay = 450;
-        } else if (currentScore > 2_000 && currentScore < 3_000) {
+        } else if (midScore) {
             delay = 375;
-        } else if (currentScore > 3_000 && currentScore < 6_000) {
+        } else if (hightScore) {
             delay = 300;
-        } else if (currentScore > 6_000 && currentScore < 9_000) {
+        } else if (veryHightScore) {
             delay = 200;
-        } else if (currentScore > 9_000 ) {
+        } else if (superScore) {
             delay = 125;
         }
     };

@@ -9,6 +9,7 @@ public enum PathsToResources {
     LOGO("img/Logo.png"),
     START_BUTTON("img/buttons/StartButton.png"),
     EXIT_BUTTON("img/buttons/ExitButton.png"),
+    SCORE_BUTTON("img/buttons/ScoreButton.png"),
     MENU_CURSOR("img/cursors/MenuCursor.png");
 
     private String path;

@@ -8,7 +8,7 @@ import java.awt.*;
 public class ScoreManager {
     public static final int SIZE_FRAME_FOR_SCORE = 32;
     private static int POSITION_SCORE_ON_FRAME_X = 10;
-    private static int POSITION_SCORE_ON_FRAME_Y = PcDisplay.getHeightWindow() + GameField.TILE_HEIGHT + (SIZE_FRAME_FOR_SCORE / 2) + 5;
+    private static int POSITION_SCORE_ON_FRAME_Y = PcDisplay.getHeightGameSpaceWindow() + GameField.TILE_HEIGHT + (SIZE_FRAME_FOR_SCORE / 2) + 5;
     private static int factor = 1;
     private static long score = 0;
     private static boolean canResetFactor;

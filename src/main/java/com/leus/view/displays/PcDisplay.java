@@ -15,7 +15,8 @@ public final class PcDisplay {
     private static int widthWindowInTile = 8;
     private static int heightWindowInTile = 16;
     private static int widthWindow = GameField.TILE_WIDTH * widthWindowInTile;
-    private static int heightWindow = GameField.TILE_HEIGHT * heightWindowInTile;
+    private static int heightGameSpaceWindow = GameField.TILE_HEIGHT * heightWindowInTile;
+    private static int heightWindow = heightGameSpaceWindow + GameField.TILE_HEIGHT + ScoreManager.SIZE_FRAME_FOR_SCORE;
 
     private JPanel canvas;
     private JFrame window;
@@ -31,6 +32,10 @@ public final class PcDisplay {
         }
 
         return display;
+    }
+
+    public static int getHeightGameSpaceWindow() {
+        return heightGameSpaceWindow;
     }
 
     public static int getWidthWindowInTile() {
@@ -77,7 +82,7 @@ public final class PcDisplay {
         this.window = new JFrame(title);
         this.canvas = canvas;
 
-        canvas.setPreferredSize(new Dimension(widthWindow, heightWindow + GameField.TILE_HEIGHT + ScoreManager.SIZE_FRAME_FOR_SCORE));
+        canvas.setPreferredSize(new Dimension(widthWindow, heightWindow));
         canvas.setBackground(Color.white);
 
         window.getContentPane().add(canvas);

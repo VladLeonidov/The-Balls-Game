@@ -1,6 +1,6 @@
 package com.leus.model.graphics.figures;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.utils.CreatorOfSprites;
 
@@ -22,7 +22,7 @@ public class HorizontalThreeBallFigure extends VerticalThreeBallFigure {
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
         spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, factory);
-        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + GameField.TILE_WIDTH, startPositionY, factory);
-        spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX + GameField.TILE_WIDTH * 2, startPositionY, factory);
+        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, factory);
+        spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH * 2, startPositionY, factory);
     }
 }

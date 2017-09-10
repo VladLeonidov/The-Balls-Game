@@ -1,6 +1,6 @@
 package com.leus.model.graphics.sprites;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 
 import java.awt.*;
 
@@ -18,10 +18,10 @@ public class Ball extends AbstractSprite {
     }
 
     public boolean isOutField() {
-        /*if (GAME_FIELD_MATRIX[getCoordinateY() / GameField.TILE_HEIGHT][getCoordinateX() / GameField.TILE_WIDTH] != null &&
-            GAME_FIELD_MATRIX[getCoordinateY() / GameField.TILE_HEIGHT + 1][getCoordinateX() / GameField.TILE_WIDTH] != null) {
+        if (gameFieldMatrix[getCoordinateY() / Game.TILE_HEIGHT][getCoordinateX() / Game.TILE_WIDTH] != null &&
+                gameFieldMatrix[getCoordinateY() / Game.TILE_HEIGHT + 1][getCoordinateX() / Game.TILE_WIDTH] != null) {
             return true;
-        }*/
+        }
 
         return false;
     }
@@ -31,7 +31,7 @@ public class Ball extends AbstractSprite {
     }
 
     public void clear() {
-        gameFieldMatrix[getCoordinateY() / GameField.TILE_HEIGHT][getCoordinateX() / GameField.TILE_WIDTH] = null;
+        gameFieldMatrix[getCoordinateY() / Game.TILE_HEIGHT][getCoordinateX() / Game.TILE_WIDTH] = null;
 
     }
 

@@ -4,7 +4,7 @@ import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.graphics.sprites.Ball;
 import com.leus.model.service.scores.CountingScoreStrategy;
 import com.leus.model.service.scores.ScoreManager;
-import com.leus.view.displays.PcDisplay;
+import com.leus.view.displays.Display;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +12,8 @@ import java.util.Set;
 public class CleanerBalls implements CleaningSpritesStrategy {
 
     private static final int countForClearBalls = 4;
-    private final Set<Ball> ballsReadyToClear = new HashSet<>((PcDisplay.getHeightWindowInTile() + 1) * PcDisplay.getWidthWindowInTile());
-    private final Set<Ball> chainsBalls = new HashSet<>((PcDisplay.getHeightWindowInTile() + 1) * PcDisplay.getWidthWindowInTile());
+    private final Set<Ball> ballsReadyToClear = new HashSet<>((Display.getHeightWindowInTile() + 1) * Display.getWidthWindowInTile());
+    private final Set<Ball> chainsBalls = new HashSet<>((Display.getHeightWindowInTile() + 1) * Display.getWidthWindowInTile());
     private AbstractSprite[][] gameFieldMatrix;
     private CountingScoreStrategy counter;
 
@@ -32,14 +32,6 @@ public class CleanerBalls implements CleaningSpritesStrategy {
 
     public CleanerBalls(CountingScoreStrategy counter) {
         this.counter = counter;
-    }
-
-    public Set<Ball> getBallsReadyToClear() {
-        return ballsReadyToClear;
-    }
-
-    public Set<Ball> getChainsBalls() {
-        return chainsBalls;
     }
 
     public void clearSprites(AbstractSprite[][] gameFieldMatrix) {

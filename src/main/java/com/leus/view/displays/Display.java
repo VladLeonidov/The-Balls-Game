@@ -1,6 +1,6 @@
 package com.leus.view.displays;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 import com.leus.model.service.scores.ScoreManager;
 
 import javax.swing.*;
@@ -8,31 +8,18 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 
-public final class PcDisplay {
-
-    private static PcDisplay display;
+public final class Display {
 
     private static int widthWindowInTile = 8;
     private static int heightWindowInTile = 16;
-    private static int widthWindow = GameField.TILE_WIDTH * widthWindowInTile;
-    private static int heightGameSpaceWindow = GameField.TILE_HEIGHT * heightWindowInTile;
-    private static int heightWindow = heightGameSpaceWindow + GameField.TILE_HEIGHT + ScoreManager.SIZE_FRAME_FOR_SCORE;
+    private static int widthWindow = Game.TILE_WIDTH * widthWindowInTile;
+    private static int heightGameSpaceWindow = Game.TILE_HEIGHT * heightWindowInTile;
+    private static int heightWindow = heightGameSpaceWindow + Game.TILE_HEIGHT + ScoreManager.SIZE_FRAME_FOR_SCORE;
 
     private JPanel canvas;
     private JFrame window;
 
     private boolean isCreated;
-
-    private PcDisplay() {
-    }
-
-    public static PcDisplay getDisplay() {
-        if (display == null) {
-            display = new PcDisplay();
-        }
-
-        return display;
-    }
 
     public static int getHeightGameSpaceWindow() {
         return heightGameSpaceWindow;
@@ -97,6 +84,7 @@ public final class PcDisplay {
 
     public void destroy() {
         if (isCreated) {
+            isCreated = false;
             window.dispose();
         } else {
             throw new IllegalStateException("Window has not been created!");

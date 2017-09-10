@@ -1,13 +1,13 @@
 package com.leus.model.graphics.sprites;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 import java.awt.Graphics;
 
 public abstract class AbstractSprite {
 
-    public static final int SPEED = GameField.TILE_HEIGHT;
+    public static final int SPEED = Game.TILE_HEIGHT;
 
-    protected static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
+    protected static AbstractSprite[][] gameFieldMatrix = Game.getGameFieldMatrix();
 
     private int coordinateX;
     private int coordinateY;

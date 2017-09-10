@@ -1,10 +1,7 @@
 package com.leus.view.panels;
 
-import com.leus.model.GameField;
-import com.leus.model.GameMenu;
-import com.leus.model.ScoreMenu;
-import com.leus.model.graphics.figures.AbstractFigure;
-import com.leus.model.graphics.sprites.AbstractSprite;
+import com.leus.model.Game;
+import com.leus.model.menus.AbstractMenu;
 import com.leus.model.service.scores.ScoreManager;
 
 import javax.swing.*;
@@ -12,43 +9,26 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private static AbstractSprite[][] gameFieldMatrix = GameField.getGameFieldMatrix();
+    private Game game;
+    private AbstractMenu[] menus;
 
-    private GameField gameField;
-    private GameMenu mainMenu;
-    private ScoreMenu scoreMenu;
-    private AbstractFigure figure;
-
-    public GamePanel(GameField gameField, GameMenu mainMenu, ScoreMenu scoreMenu) {
-        this.gameField = gameField;
-        this.mainMenu = mainMenu;
-        this.scoreMenu = scoreMenu;
+    public GamePanel(Game game, AbstractMenu... menus) {
+        this.game = game;
+        this.menus = menus;
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        if (GameMenu.isFocusMenu()) {
-            mainMenu.paintMenu(g);
-        } else if (ScoreMenu.isFocusMenu()) {
-            scoreMenu.paint(g);
-        } else {
-            figure = gameField.getFigure();
-            paintFigure(g);
-            paintBallsOnField(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (game.isActive()) {
+            System.out.println("Painting game...");
+            game.paint(g);
             ScoreManager.drawScore(g);
-        }
-    }
-
-    private void paintFigure(Graphics g) {
-        figure.paint(g);
-    }
-
-    private void paintBallsOnField(Graphics g) {
-        for (AbstractSprite[] line : gameFieldMatrix) {
-            for (AbstractSprite elem : line) {
-                if (elem != null) {
-                    elem.paint(g);
+            //repaint();
+        } else {
+            for (AbstractMenu menu : menus) {
+                if (menu.isActive()) {
+                    menu.paint(g);
                 }
             }
         }

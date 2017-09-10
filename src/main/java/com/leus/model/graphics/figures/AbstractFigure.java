@@ -1,16 +1,16 @@
 package com.leus.model.graphics.figures;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.view.displays.PcDisplay;
+import com.leus.view.displays.Display;
 
 import java.awt.*;
 import java.util.Arrays;
 
 public abstract class AbstractFigure {
 
-    protected static final AbstractSprite[][] GAME_FIELD_MATRIX = GameField.getGameFieldMatrix();
+    protected static final AbstractSprite[][] GAME_FIELD_MATRIX = Game.getGameFieldMatrix();
     protected AbstractSprite[] spritesInFigure;
 
     public AbstractFigure(AbstractSprite[] spritesInFigure) {
@@ -25,7 +25,7 @@ public abstract class AbstractFigure {
 
     public boolean isFrozen() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            if (currentSprite.getCoordinateY() / GameField.TILE_HEIGHT == PcDisplay.getHeightWindowInTile() || GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT + 1][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] != null) {
+            if (currentSprite.getCoordinateY() / Game.TILE_HEIGHT == Display.getHeightWindowInTile() || GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT + 1][currentSprite.getCoordinateX() / Game.TILE_WIDTH] != null) {
                 return true;
             }
         }
@@ -35,7 +35,7 @@ public abstract class AbstractFigure {
 
     public void leaveOnTheField() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH] = currentSprite;
+            GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT][currentSprite.getCoordinateX() / Game.TILE_WIDTH] = currentSprite;
         }
     }
 
@@ -82,8 +82,8 @@ public abstract class AbstractFigure {
 
     protected boolean isCanMoveRight() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            if (currentSprite.getCoordinateX() / GameField.TILE_WIDTH == PcDisplay.getWidthWindowInTile() - 1 ||
-                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH + 1] != null) {
+            if (currentSprite.getCoordinateX() / Game.TILE_WIDTH == Display.getWidthWindowInTile() - 1 ||
+                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT][currentSprite.getCoordinateX() / Game.TILE_WIDTH + 1] != null) {
                 return false;
             }
         }
@@ -93,8 +93,8 @@ public abstract class AbstractFigure {
 
     protected boolean isCanMoveLeft() {
         for (AbstractSprite currentSprite : spritesInFigure) {
-            if (currentSprite.getCoordinateX() / GameField.TILE_WIDTH == 0 ||
-                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / GameField.TILE_HEIGHT][currentSprite.getCoordinateX() / GameField.TILE_WIDTH - 1] != null) {
+            if (currentSprite.getCoordinateX() / Game.TILE_WIDTH == 0 ||
+                    GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT][currentSprite.getCoordinateX() / Game.TILE_WIDTH - 1] != null) {
                 return false;
             }
         }

@@ -2,6 +2,7 @@ package com.leus.utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public final class ResourceLoader {
 
@@ -22,5 +23,13 @@ public final class ResourceLoader {
         }
 
         return loadImageIcon(path).getImage();
+    }
+
+    public static InputStream loadFile(String path) {
+        if (path == null || path.length() == 0) {
+            throw new IllegalArgumentException("Not correct path: " + path);
+        }
+
+        return ResourceLoader.class.getClassLoader().getResourceAsStream(path);
     }
 }

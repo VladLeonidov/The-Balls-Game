@@ -1,10 +1,10 @@
 package com.leus.model.graphics.figures;
 
-import com.leus.model.GameField;
+import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.utils.CreatorOfSprites;
-import com.leus.view.displays.PcDisplay;
+import com.leus.view.displays.Display;
 
 public class TwoBallFigure extends AbstractFigure {
 
@@ -25,7 +25,7 @@ public class TwoBallFigure extends AbstractFigure {
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites) {
         spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, creatorSprites);
-        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + GameField.TILE_WIDTH, startPositionY, creatorSprites);
+        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, creatorSprites);
     }
 
     private boolean isHorizontal() {
@@ -36,18 +36,18 @@ public class TwoBallFigure extends AbstractFigure {
         if (isHorizontal()) {
             if (leftSpriteInFigure().getCoordinateX() < spritesInFigure[1].getCoordinateX()) {
                 spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX());
-                spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY() + GameField.TILE_HEIGHT);
+                spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY() + Game.TILE_HEIGHT);
             } else {
                 spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX());
-                spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY() - GameField.TILE_HEIGHT);
+                spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY() - Game.TILE_HEIGHT);
             }
         } else {
             if (topSpriteInFigure().getCoordinateY() < spritesInFigure[1].getCoordinateY()) {
                 spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
-                spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() - GameField.TILE_WIDTH);
+                spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() - Game.TILE_WIDTH);
             } else {
                 spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
-                spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() + GameField.TILE_WIDTH);
+                spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() + Game.TILE_WIDTH);
             }
         }
     }
@@ -59,18 +59,18 @@ public class TwoBallFigure extends AbstractFigure {
             if (isLeftWall()) {
                 if (topSpriteInFigure().getCoordinateY() < spritesInFigure[1].getCoordinateY()) {
                     spritesInFigure[0].setCoordinateY(spritesInFigure[1].getCoordinateY());
-                    spritesInFigure[0].setCoordinateX(spritesInFigure[1].getCoordinateX() + GameField.TILE_WIDTH);
+                    spritesInFigure[0].setCoordinateX(spritesInFigure[1].getCoordinateX() + Game.TILE_WIDTH);
                 } else {
                     spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
-                    spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() + GameField.TILE_WIDTH);
+                    spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() + Game.TILE_WIDTH);
                 }
             } else if (isRightWall()) {
                 if (topSpriteInFigure().getCoordinateY() < spritesInFigure[1].getCoordinateY()) {
                     spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
-                    spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() - GameField.TILE_WIDTH);
+                    spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() - Game.TILE_WIDTH);
                 } else {
                     spritesInFigure[0].setCoordinateY(spritesInFigure[1].getCoordinateY());
-                    spritesInFigure[0].setCoordinateX(spritesInFigure[1].getCoordinateX() - GameField.TILE_WIDTH);
+                    spritesInFigure[0].setCoordinateX(spritesInFigure[1].getCoordinateX() - Game.TILE_WIDTH);
                 }
             }
         }
@@ -78,15 +78,15 @@ public class TwoBallFigure extends AbstractFigure {
 
     private boolean isLeftWall() {
         return (spritesInFigure[0].getCoordinateX() <= 5) || (spritesInFigure[1].getCoordinateX() <= 5)
-                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null
-                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT - 1] != null);
+                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / Game.TILE_HEIGHT - 1] != null
+                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / Game.TILE_HEIGHT - 1] != null);
 
     }
 
     private boolean isRightWall() {
-        return (spritesInFigure[0].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH) || (spritesInFigure[1].getCoordinateX() >= PcDisplay.getWidthWindow() - GameField.TILE_WIDTH)
-                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null
-                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / GameField.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / GameField.TILE_HEIGHT + 1] != null);
+        return (spritesInFigure[0].getCoordinateX() >= Display.getWidthWindow() - Game.TILE_WIDTH) || (spritesInFigure[1].getCoordinateX() >= Display.getWidthWindow() - Game.TILE_WIDTH)
+                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / Game.TILE_HEIGHT + 1] != null
+                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / Game.TILE_HEIGHT + 1] != null);
 
     }
 

@@ -1,6 +1,6 @@
 package com.leus.model.menus;
 
-import com.leus.model.listeners.ActiveListener;
+import com.leus.model.listeners.DeactivateListener;
 import com.leus.model.listeners.ButtonListener;
 import com.leus.model.menuItems.Button;
 import com.leus.model.menuItems.Cursor;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractMenu implements ActiveListener {
-    private final List<ActiveListener> listeners = new ArrayList<>();
+public abstract class AbstractMenu implements DeactivateListener {
+    private final List<DeactivateListener> listeners = new ArrayList<>();
     private final Image backGround;
     private final Cursor cursor;
     private final Button[] buttons;
@@ -43,11 +43,11 @@ public abstract class AbstractMenu implements ActiveListener {
         return cursor;
     }
 
-    public void addListener(ActiveListener listener) {
+    public void addListener(DeactivateListener listener) {
         listeners.add(listener);
     }
 
-    public void removeListener(ActiveListener listener) {
+    public void removeListener(DeactivateListener listener) {
         listeners.remove(listener);
     }
 
@@ -59,11 +59,11 @@ public abstract class AbstractMenu implements ActiveListener {
     public String toString() {
         return "Menu{" + "cursor=" + cursor +
                 ", buttons=" + Arrays.toString(buttons) +
-                ", active=" + active + '}';
+                ", deactivate=" + active + '}';
     }
 
     @Override
-    public void active() {
+    public void deactivate() {
         active = false;
         cursor.setActive(false);
         System.out.println(this + " deactivate");
@@ -74,9 +74,9 @@ public abstract class AbstractMenu implements ActiveListener {
         public void onEvent() {
             active = true;
             cursor.setActive(true);
-            System.out.println(AbstractMenu.this.toString() + " active");
-            for (ActiveListener listener : listeners) {
-                listener.active();
+            System.out.println(AbstractMenu.this.toString() + " deactivate");
+            for (DeactivateListener listener : listeners) {
+                listener.deactivate();
             }
         }
     }

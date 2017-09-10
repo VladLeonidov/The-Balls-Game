@@ -85,7 +85,7 @@ public class Cursor extends MenuItem {
     public String toString() {
         return "Cursor{x=" + getCoordinateX() + ", y=" + getCoordinateY() +
                 ", width=" + getWidth() + ", height=" + getHeight() +
-                ", speed=" + speed + ", active=" + active +
+                ", speed=" + speed + ", deactivate=" + active +
                 ", focus=" + currentListener + "}";
     }
 

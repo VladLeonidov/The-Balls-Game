@@ -80,16 +80,16 @@ public class Runner {
         restartButton.addListener(game.new ButtonListenerImpl());
 
         mainMenu.addListener(scoreMenu);
-        mainMenu.addListener(game.new ActiveListenerImpl());
+        mainMenu.addListener(game.new DeactivateListenerImpl());
         mainMenu.addListener(gameOver);
         scoreMenu.addListener(mainMenu);
-        scoreMenu.addListener(game.new ActiveListenerImpl());
+        scoreMenu.addListener(game.new DeactivateListenerImpl());
         scoreMenu.addListener(gameOver);
         game.addListener(mainMenu);
         game.addListener(scoreMenu);
         game.addListener(gameOver);
         game.addListener(gameOver.new GameOverListenerImpl());
-        gameOver.addListener(game.new ActiveListenerImpl());
+        gameOver.addListener(game.new DeactivateListenerImpl());
         gameOver.addListener(mainMenu);
         gameOver.addListener(scoreMenu);
 

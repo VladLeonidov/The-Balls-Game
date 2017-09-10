@@ -3,7 +3,7 @@ package com.leus.model;
 import com.leus.model.factories.figureFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.model.listeners.ActiveListener;
+import com.leus.model.listeners.DeactivateListener;
 import com.leus.model.listeners.ButtonListener;
 import com.leus.model.listeners.GameOverListener;
 import com.leus.model.listeners.KeyControllerListener;
@@ -47,7 +47,7 @@ public class Game {
         }
     };
 
-    private List<ActiveListener> listeners = new ArrayList<>();
+    private List<DeactivateListener> listeners = new ArrayList<>();
     private List<GameOverListener> gameOverListeners = new ArrayList<>();
     private FigureManager figureManager = new FigureManager();
     private UpSpeedGameStrategy strategySpeedGame = DEFAULT_UP_SPEED_GAME;
@@ -135,7 +135,7 @@ public class Game {
     @Override
     public String toString() {
         return "Game{" + "figure=" + figure +
-                ", active=" + active + '}';
+                ", deactivate=" + active + '}';
     }
 
     public void paint(Graphics g) {
@@ -149,11 +149,11 @@ public class Game {
         }
     }
 
-    public void addListener(ActiveListener listener) {
+    public void addListener(DeactivateListener listener) {
         listeners.add(listener);
     }
 
-    public void removeListener(ActiveListener listener) {
+    public void removeListener(DeactivateListener listener) {
         listeners.remove(listener);
     }
 
@@ -242,8 +242,8 @@ public class Game {
     public class ButtonListenerImpl implements ButtonListener {
         @Override
         public void onEvent() {
-            for (ActiveListener listener : listeners) {
-                listener.active();
+            for (DeactivateListener listener : listeners) {
+                listener.deactivate();
             }
 
             active = true;
@@ -256,9 +256,9 @@ public class Game {
         }
     }
 
-    public class ActiveListenerImpl implements ActiveListener {
+    public class DeactivateListenerImpl implements DeactivateListener {
         @Override
-        public void active() {
+        public void deactivate() {
             active = false;
         }
     }

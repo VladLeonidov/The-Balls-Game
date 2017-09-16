@@ -5,28 +5,17 @@ import com.leus.view.displays.Display;
 
 import java.awt.*;
 
-public class ScoreManager {
+public final class ScoreManager {
     public static final int SIZE_FRAME_FOR_SCORE = 32;
-    private static int positionScoreOnFrameX = 10;
-    private static int positionScoreOnFrameY = Display.getHeightGameSpaceWindow() + Game.TILE_HEIGHT + (SIZE_FRAME_FOR_SCORE / 2) + 5;
+    public static final int DEFAULT_POSITION_SCORE_X = 10;
+    public static final int DEFAULT_POSITION_SCORE_Y = Display.getHeightGameSpaceWindow() + Game.TILE_HEIGHT + (SIZE_FRAME_FOR_SCORE / 2) + 5;
+    public static final Font DEFAULT_FONT_FOR_SCORE = new Font("Impact", Font.BOLD, 16);
+
     private static int factor = 1;
     private static long score = 0;
     private static boolean canResetFactor;
-    private static Font fontForScore = new Font("Impact", Font.BOLD, 16);
 
     private ScoreManager() {
-    }
-
-    public static void setPositionScoreOnFrameX(int positionScoreOnFrameX) {
-        ScoreManager.positionScoreOnFrameX = positionScoreOnFrameX;
-    }
-
-    public static void setPositionScoreOnFrameY(int positionScoreOnFrameY) {
-        ScoreManager.positionScoreOnFrameY = positionScoreOnFrameY;
-    }
-
-    public static void setFontForScore(Font fontForScore) {
-        ScoreManager.fontForScore = fontForScore;
     }
 
     public static long getScore() {
@@ -66,8 +55,21 @@ public class ScoreManager {
         factor = 1;
     }
 
-    public static void drawScore(Graphics g) {
-        g.setFont(fontForScore);
-        g.drawString("Your score = " + score + "    X" + factor, positionScoreOnFrameX, positionScoreOnFrameY);
+    public static void drawScore(Graphics g, int positionX, int positionY, Font font, String factor) {
+        if (font == null) {
+            g.setFont(DEFAULT_FONT_FOR_SCORE);
+        } else {
+            g.setFont(font);
+        }
+
+        if (factor == null || factor.equals("")) {
+            g.drawString("Your score = " + score, positionX, positionY);
+        } else {
+            g.drawString("Your score = " + score + "   " + factor, positionX, positionY);
+        }
+    }
+
+    public static String getFactorAsString() {
+        return "X" + factor;
     }
 }

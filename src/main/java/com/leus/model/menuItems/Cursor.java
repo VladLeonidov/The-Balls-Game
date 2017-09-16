@@ -94,17 +94,17 @@ public class Cursor extends MenuItem {
         public void onEvent(KeyEvent e) {
             if (active) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    System.out.println(Cursor.this.toString() + " moved");
+                    //System.out.println(Cursor.this.toString() + " moved");
                     moveUp();
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    System.out.println(Cursor.this.toString() + " moved");
+                    //System.out.println(Cursor.this.toString() + " moved");
                     moveDown();
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    System.out.println(Cursor.this.toString() + " Pushed");
+                    //System.out.println(Cursor.this.toString() + " Pushed");
                     push();
                 }
             }

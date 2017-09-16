@@ -8,8 +8,8 @@ import com.leus.view.displays.Display;
 import java.awt.*;
 
 public class MainMenu extends AbstractMenu {
-    private static final String VERSION = "1.35 Pre-Alpha";
-    private static final String AUTHOR = "Created by Leus";
+    private static String version = "0.91 Alpha";
+    private static String author = "Created by Leus";
     private Logo mainLogo;
 
     public MainMenu(Image backGround, Logo mainLogo, Cursor cursor, Button... buttons) {
@@ -17,6 +17,14 @@ public class MainMenu extends AbstractMenu {
         this.mainLogo = mainLogo;
         setActive(true);
         cursor.setActive(true);
+    }
+
+    public static void setVersion(String version) {
+        MainMenu.version = version;
+    }
+
+    public static void setAuthor(String author) {
+        MainMenu.author = author;
     }
 
     public void paint(Graphics g) {
@@ -27,8 +35,8 @@ public class MainMenu extends AbstractMenu {
             elem.paint(g);
         }
         g.setColor(Color.BLACK);
-        g.drawString(VERSION, 15, Display.getHeightWindow() - 15);
-        g.drawString(AUTHOR, Display.getWidthWindow() - 100, Display.getHeightWindow() - 15);
+        g.drawString(version, 15, Display.getHeightWindow() - 15);
+        g.drawString(author, Display.getWidthWindow() - 100, Display.getHeightWindow() - 15);
     }
 
     public void clear() {

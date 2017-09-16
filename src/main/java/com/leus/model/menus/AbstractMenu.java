@@ -66,18 +66,18 @@ public abstract class AbstractMenu implements DeactivateListener {
     public void deactivate() {
         active = false;
         cursor.setActive(false);
-        System.out.println(this + " deactivate");
+        //System.out.println(this + " deactivate");
     }
 
     public class ButtonListenerImpl implements ButtonListener {
         @Override
         public void onEvent() {
-            active = true;
-            cursor.setActive(true);
-            System.out.println(AbstractMenu.this.toString() + " deactivate");
             for (DeactivateListener listener : listeners) {
                 listener.deactivate();
             }
+            active = true;
+            cursor.setActive(true);
+            //System.out.println(AbstractMenu.this.toString() + " deactivate");
         }
     }
 }

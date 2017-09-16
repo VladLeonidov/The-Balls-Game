@@ -3,8 +3,8 @@ package com.leus.model;
 import com.leus.model.factories.figureFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.model.listeners.DeactivateListener;
 import com.leus.model.listeners.ButtonListener;
+import com.leus.model.listeners.DeactivateListener;
 import com.leus.model.listeners.GameOverListener;
 import com.leus.model.listeners.KeyControllerListener;
 import com.leus.model.service.FieldManager;
@@ -24,9 +24,9 @@ public class Game {
     public static final int TILE_WIDTH = 32;
     public static final int TILE_HEIGHT = 32;
 
-    private static long delay = 500;
+    private static int delay = 500;
 
-    private static final AbstractSprite[][] GAME_FIELD_MATRIX = new AbstractSprite[Display.getHeightWindowInTile() + 1][Display.getWidthWindowInTile()];
+    private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[Display.getHeightWindowInTile() + 1][Display.getWidthWindowInTile()];
     private static final UpSpeedGameStrategy DEFAULT_UP_SPEED_GAME = () -> {
         long currentScore = ScoreManager.getScore();
         boolean lowScore = currentScore > 1000 && currentScore < 2000;
@@ -54,12 +54,7 @@ public class Game {
     private AbstractFigure figure;
     private FieldManager fieldManager;
     private AbstractSprite[] spritesInFigure;
-    private JPanel canvas;
-
-    public void setCanvas(JPanel canvas) {
-        this.canvas = canvas;
-    }
-
+    private Timer timer = new Timer(delay, e -> start());
     private boolean active;
     private boolean gameOver;
 
@@ -79,7 +74,15 @@ public class Game {
     }
 
     public static AbstractSprite[][] getGameFieldMatrix() {
-        return Arrays.copyOf(GAME_FIELD_MATRIX, GAME_FIELD_MATRIX.length);
+        return Arrays.copyOf(gameFieldMatrix, gameFieldMatrix.length);
+    }
+
+    public static void setSizeGameFieldMatrix(int widthFieldInTile, int heightFieldInTile) {
+        if (widthFieldInTile <= 0 || heightFieldInTile <= 0) {
+            throw new IllegalArgumentException("Width or height field In tile can't by 0 or negative" + widthFieldInTile + ", " + heightFieldInTile);
+        }
+
+        gameFieldMatrix = new AbstractSprite[heightFieldInTile + 1][widthFieldInTile];
     }
 
     public boolean isActive() {
@@ -96,26 +99,16 @@ public class Game {
 
     public void start() {
 
-        while (!isGameOver()) {
-
-            canvas.repaint();
-            System.out.println("repaint");
-
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        if (!isGameOver()) {
             if (figure.isFrozen()) {
                 figure.leaveOnTheField();
 
-                fieldManager.moveDownSpritesInAir(GAME_FIELD_MATRIX);
-                fieldManager.clearSpriteFromField(GAME_FIELD_MATRIX);
+                fieldManager.moveDownSpritesInAir(gameFieldMatrix);
+                fieldManager.clearSpriteFromField(gameFieldMatrix);
 
-                while (fieldManager.isSpritesInAir(GAME_FIELD_MATRIX)) {
-                    fieldManager.moveDownSpritesInAir(GAME_FIELD_MATRIX);
-                    fieldManager.clearSpriteFromField(GAME_FIELD_MATRIX);
+                while (fieldManager.isSpritesInAir(gameFieldMatrix)) {
+                    fieldManager.moveDownSpritesInAir(gameFieldMatrix);
+                    fieldManager.clearSpriteFromField(gameFieldMatrix);
                 }
 
                 if (ScoreManager.isCanResetFactor()) {
@@ -129,7 +122,17 @@ public class Game {
             } else {
                 figure.moveDown();
             }
+
+            timer.setDelay(delay);
         }
+    }
+
+    public void restart() {
+        delay = 500;
+        gameOver = false;
+        clearField();
+        ScoreManager.resetScore();
+        start();
     }
 
     @Override
@@ -140,13 +143,15 @@ public class Game {
 
     public void paint(Graphics g) {
         figure.paint(g);
-        for (AbstractSprite[] line : GAME_FIELD_MATRIX) {
+        for (AbstractSprite[] line : gameFieldMatrix) {
             for (AbstractSprite elem : line) {
                 if (elem != null) {
                     elem.paint(g);
                 }
             }
         }
+
+        ScoreManager.drawScore(g, ScoreManager.DEFAULT_POSITION_SCORE_X, ScoreManager.DEFAULT_POSITION_SCORE_Y, ScoreManager.DEFAULT_FONT_FOR_SCORE, ScoreManager.getFactorAsString());
     }
 
     public void addListener(DeactivateListener listener) {
@@ -170,6 +175,7 @@ public class Game {
             if (elem.isOutField()) {
                 active = false;
                 gameOver = true;
+                timer.stop();
                 for (GameOverListener listener : gameOverListeners) {
                     listener.onEvent();
                 }
@@ -180,11 +186,14 @@ public class Game {
         return false;
     }
 
-    public void restart() {
-        Arrays.fill(GAME_FIELD_MATRIX, null);
-        delay = 500;
-        ScoreManager.resetScore();
-        start();
+    private void clearField() {
+        for (AbstractSprite[] line : gameFieldMatrix) {
+            for (AbstractSprite elem : line) {
+                if (elem != null) {
+                    elem.clear();
+                }
+            }
+        }
     }
 
     public class GameKeyListener implements KeyControllerListener {
@@ -247,12 +256,13 @@ public class Game {
             }
 
             active = true;
-            System.out.println(Game.this.toString());
             if (!gameOver) {
-                start();
+                timer.start();
             } else {
                 restart();
+                timer.restart();
             }
+            //System.out.println(Game.this.toString());
         }
     }
 
@@ -262,4 +272,5 @@ public class Game {
             active = false;
         }
     }
+
 }

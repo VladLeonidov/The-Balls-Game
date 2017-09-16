@@ -4,9 +4,8 @@ import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.utils.CreatorOfSprites;
-import com.leus.view.displays.Display;
 
-public class TwoBallFigure extends AbstractFigure {
+public final class TwoBallFigure extends AbstractFigure {
 
     public TwoBallFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
         super(new AbstractSprite[2]);
@@ -15,9 +14,9 @@ public class TwoBallFigure extends AbstractFigure {
 
     @Override
     public void rotate() {
-        if (!isLeftWall() && !isRightWall()) {
+        if (!isLeftWall() && !isRightWall() && isCanRotateOnTopFrame()) {
             rotateWithoutWall();
-        } else {
+        } else if (isCanRotateOnTopFrame()) {
             rotateAtWall();
         }
     }
@@ -25,11 +24,19 @@ public class TwoBallFigure extends AbstractFigure {
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites) {
         spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, creatorSprites);
-        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, creatorSprites);
+        if ((int) (Math.random() * 10) % 2 == 0) {
+            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, creatorSprites);
+        } else {
+            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_WIDTH, creatorSprites);
+        }
     }
 
     private boolean isHorizontal() {
-        return spritesInFigure[0].getCoordinateY() == spritesInFigure[1].getCoordinateY() || spritesInFigure[0].getCoordinateX() != spritesInFigure[1].getCoordinateX();
+        return spritesInFigure[0].getCoordinateY() == spritesInFigure[1].getCoordinateY() && spritesInFigure[0].getCoordinateX() != spritesInFigure[1].getCoordinateX();
+    }
+
+    private boolean isCanRotateOnTopFrame() {
+        return spritesInFigure[0].getCoordinateY() != 0;
     }
 
     private void rotateWithoutWall() {
@@ -56,7 +63,7 @@ public class TwoBallFigure extends AbstractFigure {
         if (isHorizontal()) {
             rotateWithoutWall();
         } else {
-            if (isLeftWall()) {
+            if (isLeftWall() && !isRightWall()) {
                 if (topSpriteInFigure().getCoordinateY() < spritesInFigure[1].getCoordinateY()) {
                     spritesInFigure[0].setCoordinateY(spritesInFigure[1].getCoordinateY());
                     spritesInFigure[0].setCoordinateX(spritesInFigure[1].getCoordinateX() + Game.TILE_WIDTH);
@@ -64,7 +71,7 @@ public class TwoBallFigure extends AbstractFigure {
                     spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
                     spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() + Game.TILE_WIDTH);
                 }
-            } else if (isRightWall()) {
+            } else if (isRightWall() && !isLeftWall()) {
                 if (topSpriteInFigure().getCoordinateY() < spritesInFigure[1].getCoordinateY()) {
                     spritesInFigure[1].setCoordinateY(spritesInFigure[0].getCoordinateY());
                     spritesInFigure[1].setCoordinateX(spritesInFigure[0].getCoordinateX() - Game.TILE_WIDTH);
@@ -74,20 +81,6 @@ public class TwoBallFigure extends AbstractFigure {
                 }
             }
         }
-    }
-
-    private boolean isLeftWall() {
-        return (spritesInFigure[0].getCoordinateX() <= 5) || (spritesInFigure[1].getCoordinateX() <= 5)
-                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / Game.TILE_HEIGHT - 1] != null
-                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / Game.TILE_HEIGHT - 1] != null);
-
-    }
-
-    private boolean isRightWall() {
-        return (spritesInFigure[0].getCoordinateX() >= Display.getWidthWindow() - Game.TILE_WIDTH) || (spritesInFigure[1].getCoordinateX() >= Display.getWidthWindow() - Game.TILE_WIDTH)
-                || (GAME_FIELD_MATRIX[spritesInFigure[0].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[0].getCoordinateX() / Game.TILE_HEIGHT + 1] != null
-                || GAME_FIELD_MATRIX[spritesInFigure[1].getCoordinateY() / Game.TILE_HEIGHT][spritesInFigure[1].getCoordinateX() / Game.TILE_HEIGHT + 1] != null);
-
     }
 
     private AbstractSprite leftSpriteInFigure() {

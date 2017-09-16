@@ -15,9 +15,6 @@ public class RecordsUtil {
     }
 
     public static String[] getRecords() {
-        for (String record : RECORDS) {
-            System.out.println(record);
-        }
         return Arrays.copyOf(RECORDS, RECORDS.length);
     }
 
@@ -43,7 +40,7 @@ public class RecordsUtil {
         return false;
     }
 
-    private static int isNewRecord(long bestScore) {
+    public static int isNewRecord(long bestScore) {
         for (int i = 0; i < RECORDS.length; i++) {
             if (bestScore > RECORDS_IN_NUMBERS[i]) {
                 return i;

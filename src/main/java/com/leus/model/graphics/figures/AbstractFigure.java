@@ -40,7 +40,7 @@ public abstract class AbstractFigure {
     }
 
     public void moveLeft() {
-        if (isCanMoveLeft()) {
+        if (!isLeftWall()) {
             for (AbstractSprite currentSprite : spritesInFigure) {
                 currentSprite.moveLeft();
             }
@@ -48,7 +48,7 @@ public abstract class AbstractFigure {
     }
 
     public void moveRight() {
-        if (isCanMoveRight()) {
+        if (!isRightWall()) {
             for (AbstractSprite currentSprite : spritesInFigure) {
                 currentSprite.moveRight();
             }
@@ -80,25 +80,25 @@ public abstract class AbstractFigure {
 
     protected abstract void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites);
 
-    protected boolean isCanMoveRight() {
+    protected boolean isRightWall() {
         for (AbstractSprite currentSprite : spritesInFigure) {
             if (currentSprite.getCoordinateX() / Game.TILE_WIDTH == Display.getWidthWindowInTile() - 1 ||
                     GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT][currentSprite.getCoordinateX() / Game.TILE_WIDTH + 1] != null) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
-    protected boolean isCanMoveLeft() {
+    protected boolean isLeftWall() {
         for (AbstractSprite currentSprite : spritesInFigure) {
             if (currentSprite.getCoordinateX() / Game.TILE_WIDTH == 0 ||
                     GAME_FIELD_MATRIX[currentSprite.getCoordinateY() / Game.TILE_HEIGHT][currentSprite.getCoordinateX() / Game.TILE_WIDTH - 1] != null) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

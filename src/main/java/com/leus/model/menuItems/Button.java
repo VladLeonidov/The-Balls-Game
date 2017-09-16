@@ -26,7 +26,7 @@ public class Button extends MenuItem {
 
     public void push() {
         for (ButtonListener listener : listeners) {
-            System.out.println(this + " pushed");
+            //System.out.println(this + " pushed");
             listener.onEvent();
         }
     }

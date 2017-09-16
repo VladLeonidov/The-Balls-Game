@@ -18,7 +18,6 @@ public final class Display {
 
     private JPanel canvas;
     private JFrame window;
-
     private boolean isCreated;
 
     public static int getHeightGameSpaceWindow() {
@@ -46,6 +45,9 @@ public final class Display {
     }
 
     public JPanel getCanvas() {
+        if (!isCreated) {
+            throw new IllegalStateException("Window has not been created!");
+        }
         return canvas;
     }
 
@@ -57,25 +59,24 @@ public final class Display {
         window.addMouseListener(mouseController);
     }
 
-    public void create(JPanel canvas, int widthInTile, int heightInTile, String title) {
+    public void create(JPanel canvas, String title) {
 
         if (isCreated) {
             throw new IllegalStateException("Window was created!");
         }
 
-        widthWindowInTile = widthInTile;
-        heightWindowInTile = heightInTile;
-
         this.window = new JFrame(title);
         this.canvas = canvas;
 
         canvas.setPreferredSize(new Dimension(widthWindow, heightWindow));
+        canvas.setLayout(null);
         canvas.setBackground(Color.white);
 
         window.getContentPane().add(canvas);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.pack();
+        window.setSize(window.getPreferredSize());
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 

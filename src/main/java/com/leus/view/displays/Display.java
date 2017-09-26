@@ -51,6 +51,10 @@ public final class Display {
         return canvas;
     }
 
+    public void addComponent(Component component) {
+        canvas.add(component);
+    }
+
     public void addKeyController(KeyAdapter keyController) {
         window.addKeyListener(keyController);
     }
@@ -69,7 +73,7 @@ public final class Display {
         this.canvas = canvas;
 
         canvas.setPreferredSize(new Dimension(widthWindow, heightWindow));
-        canvas.setLayout(null);
+        canvas.setLayout(new GridLayout(widthWindowInTile, heightWindowInTile));
         canvas.setBackground(Color.white);
 
         window.getContentPane().add(canvas);

@@ -10,24 +10,36 @@ public final class ResourceLoader {
     }
 
     public static ImageIcon loadImageIcon(String path) {
-        if (path == null || path.length() == 0) {
-            throw new IllegalArgumentException("Not correct path: " + path);
+        if (path == null) {
+            throw new NullPointerException("Path can't be null " + path);
+        }
+
+        if (path.equals("")) {
+            throw new IllegalArgumentException("Path can't be is empty " + path);
         }
 
         return new ImageIcon(ResourceLoader.class.getClassLoader().getResource(path));
     }
 
     public static Image loadImage(String path) {
-        if (path == null || path.length() == 0) {
-            throw new IllegalArgumentException("Not correct path: " + path);
+        if (path == null) {
+            throw new NullPointerException("Path can't be null " + path);
+        }
+
+        if (path.equals("")) {
+            throw new IllegalArgumentException("Path can't be is empty " + path);
         }
 
         return loadImageIcon(path).getImage();
     }
 
     public static InputStream loadFile(String path) {
-        if (path == null || path.length() == 0) {
-            throw new IllegalArgumentException("Not correct path: " + path);
+        if (path == null) {
+            throw new NullPointerException("Path can't be null " + path);
+        }
+
+        if (path.equals("")) {
+            throw new IllegalArgumentException("Path can't be is empty " + path);
         }
 
         return ResourceLoader.class.getClassLoader().getResourceAsStream(path);

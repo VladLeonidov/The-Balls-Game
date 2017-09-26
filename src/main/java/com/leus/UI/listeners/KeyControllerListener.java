@@ -1,4 +1,4 @@
-package com.leus.model.listeners;
+package com.leus.UI.listeners;
 
 import java.awt.event.KeyEvent;
 

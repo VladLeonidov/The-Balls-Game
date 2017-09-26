@@ -1,7 +1,7 @@
 package com.leus.view.panels;
 
 import com.leus.model.Game;
-import com.leus.model.menus.AbstractMenu;
+import com.leus.UI.menus.AbstractMenu;
 
 import javax.swing.*;
 import java.awt.*;

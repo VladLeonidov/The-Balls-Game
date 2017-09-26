@@ -80,11 +80,15 @@ public class CleanerBalls implements CleaningSpritesStrategy {
 
     private void findChainsBalls(Ball prevBall, int line, int column) {
         if (isBoundOfGameFieldMatrix(column, line) || isNotBallOrDifferentColor(prevBall, column, line)) {
-            if (!chainsBalls.contains(prevBall)) chainsBalls.add(prevBall);
+            if (!chainsBalls.contains(prevBall)) {
+                chainsBalls.add(prevBall);
+            }
         } else {
             Ball currentBall = (Ball) gameFieldMatrix[line][column];
 
-            if (!chainsBalls.contains(prevBall)) chainsBalls.add(prevBall);
+            if (!chainsBalls.contains(prevBall)) {
+                chainsBalls.add(prevBall);
+            }
 
             if (!chainsBalls.contains(currentBall)) {
                 findChainsBalls(currentBall, line, column + 1);

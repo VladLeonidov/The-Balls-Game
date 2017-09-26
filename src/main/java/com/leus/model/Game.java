@@ -3,10 +3,10 @@ package com.leus.model;
 import com.leus.model.factories.figureFactories.FigureFactory;
 import com.leus.model.graphics.figures.AbstractFigure;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.model.listeners.ButtonListener;
-import com.leus.model.listeners.DeactivateListener;
-import com.leus.model.listeners.GameOverListener;
-import com.leus.model.listeners.KeyControllerListener;
+import com.leus.UI.listeners.ButtonListener;
+import com.leus.UI.listeners.DeactivateListener;
+import com.leus.UI.listeners.GameOverListener;
+import com.leus.UI.listeners.KeyControllerListener;
 import com.leus.model.service.FieldManager;
 import com.leus.model.service.FigureManager;
 import com.leus.model.service.scores.ScoreManager;
@@ -54,16 +54,16 @@ public class Game {
     private AbstractFigure figure;
     private FieldManager fieldManager;
     private AbstractSprite[] spritesInFigure;
-    private Timer timer = new Timer(delay, e -> start());
+    private Timer timer = new Timer(delay, e -> startHelper());
     private boolean active;
     private boolean gameOver;
 
     public Game(FieldManager fieldManager, FigureFactory... figureFactories) {
-        if (fieldManager == null || figureFactories == null) {
-            throw new NullPointerException("Field Manager or Figure Factories is null: " + fieldManager + ", " + Arrays.toString(figureFactories));
+        if (fieldManager == null ) {
+            throw new NullPointerException("Field Manager can't be null");
         }
 
-        if (figureFactories.length == 0) {
+        if (figureFactories == null || figureFactories.length == 0) {
             throw new IllegalArgumentException("No FigureFactories");
         }
 
@@ -79,7 +79,7 @@ public class Game {
 
     public static void setSizeGameFieldMatrix(int widthFieldInTile, int heightFieldInTile) {
         if (widthFieldInTile <= 0 || heightFieldInTile <= 0) {
-            throw new IllegalArgumentException("Width or height field In tile can't by 0 or negative" + widthFieldInTile + ", " + heightFieldInTile);
+            throw new IllegalArgumentException("Width or height field In tile can't be 0 or negative" + widthFieldInTile + ", " + heightFieldInTile);
         }
 
         gameFieldMatrix = new AbstractSprite[heightFieldInTile + 1][widthFieldInTile];
@@ -98,6 +98,15 @@ public class Game {
     }
 
     public void start() {
+        timer.start();
+    }
+
+    public void restart() {
+        restartHelper();
+        timer.restart();
+    }
+
+    private void startHelper() {
 
         if (!isGameOver()) {
             if (figure.isFrozen()) {
@@ -127,18 +136,17 @@ public class Game {
         }
     }
 
-    public void restart() {
+    private void restartHelper() {
         delay = 500;
         gameOver = false;
         clearField();
         ScoreManager.resetScore();
-        start();
     }
 
     @Override
     public String toString() {
         return "Game{" + "figure=" + figure +
-                ", deactivate=" + active + '}';
+                ", active=" + active + '}';
     }
 
     public void paint(Graphics g) {
@@ -257,12 +265,10 @@ public class Game {
 
             active = true;
             if (!gameOver) {
-                timer.start();
+                start();
             } else {
                 restart();
-                timer.restart();
             }
-            //System.out.println(Game.this.toString());
         }
     }
 

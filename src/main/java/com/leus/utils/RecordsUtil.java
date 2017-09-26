@@ -1,76 +1,91 @@
 package com.leus.utils;
 
+import com.leus.model.service.scores.Record;
+import com.leus.paths.PathsToResources;
+
 import java.io.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RecordsUtil {
-    private static final String[] RECORDS = new String[10];
-    private static final long[] RECORDS_IN_NUMBERS = new long[RECORDS.length];
-    private static final String[] NAMES_OF_RECORDS = new String[RECORDS.length];
-    private static final InputStream RECORDS_FILE = ResourceLoader.loadFile("Records.rl");
+public final class RecordsUtil {
+    private static File recordsFile = new File(GameDirUtil.getGameDir().getPath(), "/Records.rl");
 
-    static {
-        loadRecords();
-        parseRecords();
+    private RecordsUtil() {
     }
 
-    public static String[] getRecords() {
-        return Arrays.copyOf(RECORDS, RECORDS.length);
+    public static File getRecordsFile() {
+        return recordsFile;
     }
 
-    /*public static void saveRecords() throws IOException {
-        MakeRecords();
-        try(BufferedWriter out = new BufferedWriter(new FileWriter(RECORDS_FILE))) {
-            for (String currentLineScore : RECORDS) {
-                out.write(currentLineScore);
+    public static void setRecordsFile(File recordsFile) {
+        RecordsUtil.recordsFile = recordsFile;
+    }
+
+    public static void saveRecords(List<Record> recordsList) throws IOException {
+        try(BufferedWriter out = new BufferedWriter(new FileWriter(recordsFile))) {
+            for (Record currentRecord : recordsList) {
+                out.write(currentRecord.toString());
+                out.newLine();
+            }
+
+            out.flush();
+        }
+    }
+
+    public static List<Record> loadRecords() throws IOException {
+        GameDirUtil.createGameDir();
+        if (createGameRecordsFile()) {
+            copyRecordsFileToUserFromResources();
+            return loadRecordsHelper();
+        } else {
+            return loadRecordsHelper();
+        }
+    }
+
+    private static List<Record> loadRecordsHelper() throws IOException {
+        List<Record> result = new ArrayList<>(10);
+        try(BufferedReader in = new BufferedReader(new FileReader(recordsFile))) {
+            while (in.ready()) {
+                String record = in.readLine();
+                if (!record.equals("")) {
+                    result.add(parseRecord(record));
+                }
+            }
+
+            if (result.size() < 10) {
+                copyRecordsFileToUserFromResources();
+                return loadRecordsHelper();
+            }
+        }
+
+        return result;
+    }
+
+    private static void copyRecordsFileToUserFromResources() throws IOException {
+        try(BufferedReader in = new BufferedReader(new InputStreamReader(ResourceLoader.loadFile(PathsToResources.RECORDS_FILE.getPath())));
+            BufferedWriter out = new BufferedWriter(new FileWriter(recordsFile))) {
+            while (in.ready()) {
+                out.write(in.readLine());
                 out.newLine();
             }
             out.flush();
         }
-    }*/
+    }
 
-    public static boolean setRecord(String nameRecord, long bestScore) {
-        int indexRecord = isNewRecord(bestScore);
-        if (indexRecord != -1) {
-            NAMES_OF_RECORDS[indexRecord] = nameRecord;
-            RECORDS_IN_NUMBERS[indexRecord] = bestScore;
-            return true;
+    private static Record parseRecord(String record) {
+        String[] tmp = record.split("=");
+        return new Record(tmp[0].trim(), Long.valueOf(tmp[1].trim()));
+    }
+
+    private static boolean createGameRecordsFile() throws IOException {
+        if (!isRecordsFileInUser()) {
+            return recordsFile.createNewFile();
         }
 
         return false;
     }
 
-    public static int isNewRecord(long bestScore) {
-        for (int i = 0; i < RECORDS.length; i++) {
-            if (bestScore > RECORDS_IN_NUMBERS[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    private static void loadRecords() {
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(RECORDS_FILE))) {
-            int i = 0;
-            while (in.ready()) {
-                RECORDS[i++] = in.readLine();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void parseRecords() {
-        for (int i = 0; i < RECORDS.length; i++) {
-            RECORDS_IN_NUMBERS[i] = Long.valueOf(RECORDS[i].split("=")[1].trim());
-            NAMES_OF_RECORDS[i] = RECORDS[i].split("=")[0].trim();
-        }
-    }
-
-    private static void MakeRecords() {
-        for (int i = 0; i < RECORDS.length; i++) {
-            RECORDS[i] = NAMES_OF_RECORDS[i] + " = " + RECORDS_IN_NUMBERS[i];
-        }
+    private static boolean isRecordsFileInUser() {
+        return recordsFile.exists();
     }
 }

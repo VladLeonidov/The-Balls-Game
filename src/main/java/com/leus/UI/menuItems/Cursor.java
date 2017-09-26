@@ -1,7 +1,7 @@
-package com.leus.model.menuItems;
+package com.leus.UI.menuItems;
 
-import com.leus.model.listeners.CursorListener;
-import com.leus.model.listeners.KeyControllerListener;
+import com.leus.UI.listeners.CursorListener;
+import com.leus.UI.listeners.KeyControllerListener;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -51,7 +51,6 @@ public class Cursor extends MenuItem {
             setCoordinateY(getCoordinateY() - speed);
             currentListener = listeners.get(--indexListeners);
         }
-
     }
 
     private void moveDown() {
@@ -85,26 +84,50 @@ public class Cursor extends MenuItem {
     public String toString() {
         return "Cursor{x=" + getCoordinateX() + ", y=" + getCoordinateY() +
                 ", width=" + getWidth() + ", height=" + getHeight() +
-                ", speed=" + speed + ", deactivate=" + active +
+                ", speed=" + speed + ", active=" + active +
                 ", focus=" + currentListener + "}";
     }
 
-    public class CursorKeyListener implements KeyControllerListener {
+    @Override
+    public int hashCode() {
+        int result = getCoordinateX();
+        result = 31 * result + getCoordinateX();
+        result = 31 * result + getCoordinateY();
+        result = 31 * result + getHeight();
+        result = 31 * result + getWidth();
+        result = 31 * result + speed;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Cursor)) {
+            return false;
+        }
+
+        Cursor that = (Cursor) obj;
+
+        return  this.getWidth() == that.getWidth() && this.getHeight() ==  that.getHeight() &&
+                this.speed == that.speed && listeners.equals(that.listeners);
+    }
+
+    public class KeyControllerListenerImpl implements KeyControllerListener {
         @Override
         public void onEvent(KeyEvent e) {
             if (active) {
                 if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    //System.out.println(Cursor.this.toString() + " moved");
                     moveUp();
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    //System.out.println(Cursor.this.toString() + " moved");
                     moveDown();
                 }
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    //System.out.println(Cursor.this.toString() + " Pushed");
                     push();
                 }
             }
@@ -113,6 +136,21 @@ public class Cursor extends MenuItem {
         @Override
         public boolean isActive() {
             return active;
+        }
+
+        @Override
+        public int hashCode() {
+            return Cursor.this.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return Cursor.this.equals(obj);
+        }
+
+        @Override
+        public String toString() {
+            return Cursor.this.toString();
         }
     }
 }

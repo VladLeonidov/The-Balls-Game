@@ -6,16 +6,16 @@ import com.leus.model.factories.figureFactories.CruciateFigureFactory;
 import com.leus.model.factories.figureFactories.ThreeBallFigureFactory;
 import com.leus.model.factories.figureFactories.TwoBallFigureFactory;
 import com.leus.model.factories.spriteFactories.RandBallFactory;
-import com.leus.model.menuItems.Button;
-import com.leus.model.menuItems.Cursor;
-import com.leus.model.menuItems.Logo;
-import com.leus.model.menus.AbstractMenu;
-import com.leus.model.menus.GameOverMenu;
-import com.leus.model.menus.MainMenu;
-import com.leus.model.menus.ScoreMenu;
+import com.leus.UI.menuItems.Button;
+import com.leus.UI.menuItems.Cursor;
+import com.leus.UI.menuItems.Logo;
+import com.leus.UI.menus.AbstractMenu;
+import com.leus.UI.menus.GameOverMenu;
+import com.leus.UI.menus.MainMenu;
+import com.leus.UI.menus.ScoreMenu;
 import com.leus.model.service.FieldManager;
+import com.leus.model.service.scores.RecordTable;
 import com.leus.paths.PathsToResources;
-import com.leus.utils.RecordsUtil;
 import com.leus.utils.ResourceLoader;
 import com.leus.view.displays.Display;
 import com.leus.view.panels.GamePanel;
@@ -43,7 +43,7 @@ public class Runner {
                 System.exit(0);
             }
         };
-        Button exitButtonGameOverMenu = new Button(ResourceLoader.loadImage(PathsToResources.EXIT_BUTTON.getPath()), 60, 375, 150, 75) {
+        Button exitButtonGameOverMenu = new Button(ResourceLoader.loadImage(PathsToResources.EXIT_BUTTON.getPath()), 60, 450, 150, 75) {
             @Override
             public void push() {
                 display.destroy();
@@ -53,6 +53,13 @@ public class Runner {
         Button scoreButton = new Button(ResourceLoader.loadImage(PathsToResources.SCORE_BUTTON.getPath()), 60, 375, 150, 75);
         Button restartButton = new Button(ResourceLoader.loadImage(PathsToResources.RESTART_BUTTON.getPath()), 60, 300, 150, 75);
         Button returnButton = new Button(ResourceLoader.loadImage(PathsToResources.RETURN_BUTTON.getPath()), Display.getWidthWindow() - 125, Display.getHeightWindow() - 50, 125, 60);
+
+        startButton.setName("Start");
+        exitButtonMainMenu.setName("Exit");
+        exitButtonGameOverMenu.setName("Exit");
+        scoreButton.setName("Score");
+        restartButton.setName("Restart");
+        returnButton.setName("Return");
 
         Cursor mainCursor = new Cursor(ResourceLoader.loadImage(PathsToResources.MENU_CURSOR.getPath()), 30, 325, 32, 32, 75);
         mainCursor.addListener(startButton.new CursorListenerImpl());
@@ -64,17 +71,31 @@ public class Runner {
 
         Cursor gameOverCursor = new Cursor(ResourceLoader.loadImage(PathsToResources.MENU_CURSOR.getPath()), 20, 325, 32, 32, 75);
         gameOverCursor.addListener(restartButton.new CursorListenerImpl());
+        gameOverCursor.addListener(scoreButton.new CursorListenerImpl());
         gameOverCursor.addListener(exitButtonGameOverMenu.new CursorListenerImpl());
 
         KeyController keyController = new KeyController(display);
-        keyController.addListener(mainCursor.new CursorKeyListener());
-        keyController.addListener(scoreCursor.new CursorKeyListener());
-        keyController.addListener(gameOverCursor.new CursorKeyListener());
+        keyController.addListener(mainCursor.new KeyControllerListenerImpl());
+        keyController.addListener(scoreCursor.new KeyControllerListenerImpl());
+        keyController.addListener(gameOverCursor.new KeyControllerListenerImpl());
         keyController.addListener(game.new GameKeyListener());
 
-        MainMenu mainMenu = new MainMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), mainLogo, mainCursor, startButton, scoreButton, exitButtonMainMenu);
-        ScoreMenu scoreMenu = new ScoreMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), RecordsUtil.getRecords(), scoreCursor, 15, 15, 45, returnButton);
-        GameOverMenu gameOverMenu = new GameOverMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), gameOverLogo, gameOverCursor, restartButton, exitButtonGameOverMenu);
+        MainMenu mainMenu = new MainMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), mainCursor);
+        ScoreMenu scoreMenu = new ScoreMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), scoreCursor,
+                RecordTable.getInstance());
+        GameOverMenu gameOverMenu = new GameOverMenu(ResourceLoader.loadImage(PathsToResources.BACK_GROUND_MENU.getPath()), gameOverCursor);
+
+        mainMenu.addMenuItem(mainLogo);
+        mainMenu.addMenuItem(startButton);
+        mainMenu.addMenuItem(scoreButton);
+        mainMenu.addMenuItem(exitButtonMainMenu);
+
+        scoreMenu.addMenuItem(returnButton);
+
+        gameOverMenu.addMenuItem(gameOverLogo);
+        gameOverMenu.addMenuItem(restartButton);
+        gameOverMenu.addMenuItem(scoreButton);
+        gameOverMenu.addMenuItem(exitButtonGameOverMenu);
 
         startButton.addListener(game.new ButtonListenerImpl());
         scoreButton.addListener(scoreMenu.new ButtonListenerImpl());
@@ -98,10 +119,10 @@ public class Runner {
         gameOverMenu.addListener(mainMenu);
         gameOverMenu.addListener(scoreMenu);
 
-        initializePcDisplay(display, game, keyController, mainMenu, scoreMenu, gameOverMenu);
+        initializeDisplay(display, game, keyController, mainMenu, scoreMenu, gameOverMenu);
     }
 
-    private static void initializePcDisplay(Display display, Game game, KeyController keyController, AbstractMenu... menus) {
+    private static void initializeDisplay(Display display, Game game, KeyController keyController, AbstractMenu... menus) {
         display.create(new GamePanel(game, menus), "Balls");
         display.addKeyController(keyController);
     }

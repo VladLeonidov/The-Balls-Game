@@ -1,4 +1,4 @@
-package com.leus.model.menuItems;
+package com.leus.UI.menuItems;
 
 import java.awt.*;
 
@@ -6,8 +6,8 @@ public abstract class MenuItem {
 
     private int coordinateX;
     private int coordinateY;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
 
     public MenuItem(int coordinateX, int coordinateY, int width, int height) {
         this.coordinateX = coordinateX;
@@ -40,8 +40,21 @@ public abstract class MenuItem {
         return height;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public abstract void paint(Graphics g);
 
     public abstract void clear();
 
+    @Override
+    public abstract int hashCode();
+
+    @Override
+    public abstract boolean equals(Object obj);
 }

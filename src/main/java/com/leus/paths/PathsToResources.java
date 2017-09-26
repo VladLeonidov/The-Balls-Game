@@ -13,7 +13,8 @@ public enum PathsToResources {
     EXIT_BUTTON("img/buttons/ExitButton.png"),
     SCORE_BUTTON("img/buttons/ScoreButton.png"),
     RETURN_BUTTON("img/buttons/ReturnButton.png"),
-    MENU_CURSOR("img/cursors/MenuCursor.png");
+    MENU_CURSOR("img/cursors/MenuCursor.png"),
+    RECORDS_FILE("Records.rl");
 
     private String path;
 

@@ -1,6 +1,6 @@
 package com.leus.controllers;
 
-import com.leus.model.listeners.KeyControllerListener;
+import com.leus.UI.listeners.KeyControllerListener;
 import com.leus.view.displays.Display;
 
 import java.awt.event.KeyAdapter;

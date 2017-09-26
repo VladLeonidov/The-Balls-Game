@@ -6,7 +6,7 @@ import com.leus.view.displays.Display;
 import java.awt.*;
 
 public class MainMenu extends AbstractMenu {
-    private static String version = "0.95 Alpha";
+    private static String version = "0.97 Alpha";
     private static String author = "Created by Leus";
 
     public MainMenu(Image backGround) {

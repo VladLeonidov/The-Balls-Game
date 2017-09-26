@@ -1,16 +1,16 @@
 package com.leus.model;
 
-import com.leus.model.factories.figureFactories.FigureFactory;
-import com.leus.model.graphics.figures.AbstractFigure;
-import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.UI.listeners.ButtonListener;
 import com.leus.UI.listeners.DeactivateListener;
 import com.leus.UI.listeners.GameOverListener;
 import com.leus.UI.listeners.KeyControllerListener;
+import com.leus.model.factories.figureFactories.FigureFactory;
+import com.leus.model.graphics.figures.AbstractFigure;
+import com.leus.model.graphics.sprites.AbstractSprite;
 import com.leus.model.service.FieldManager;
 import com.leus.model.service.FigureManager;
 import com.leus.model.service.scores.ScoreManager;
-import com.leus.view.displays.Display;
+import com.leus.utils.SettingsInitializer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,12 +21,15 @@ import java.util.List;
 
 public class Game {
 
-    public static final int TILE_WIDTH = 32;
-    public static final int TILE_HEIGHT = 32;
+    public static final int TILE_WIDTH = Integer.valueOf(SettingsInitializer.getPropertyValue("WidthTile"));
+    public static final int TILE_HEIGHT = Integer.valueOf(SettingsInitializer.getPropertyValue("HeightTile"));
 
     private static int delay = 500;
 
-    private static AbstractSprite[][] gameFieldMatrix = new AbstractSprite[Display.getHeightWindowInTile() + 1][Display.getWidthWindowInTile()];
+    private static AbstractSprite[][] gameFieldMatrix =
+            new AbstractSprite[Integer.valueOf(SettingsInitializer.getPropertyValue("HeightWindowInTile")) + 1]
+                              [Integer.valueOf(SettingsInitializer.getPropertyValue("WidthWindowInTile"))];
+
     private static final UpSpeedGameStrategy DEFAULT_UP_SPEED_GAME = () -> {
         long currentScore = ScoreManager.getScore();
         boolean lowScore = currentScore > 1000 && currentScore < 2000;

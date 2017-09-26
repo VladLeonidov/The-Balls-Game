@@ -2,6 +2,7 @@ package com.leus.view.displays;
 
 import com.leus.model.Game;
 import com.leus.model.service.scores.ScoreManager;
+import com.leus.utils.SettingsInitializer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +11,8 @@ import java.awt.event.MouseAdapter;
 
 public final class Display {
 
-    private static int widthWindowInTile = 8;
-    private static int heightWindowInTile = 16;
+    private static int widthWindowInTile = Integer.valueOf(SettingsInitializer.getPropertyValue("WidthWindowInTile"));
+    private static int heightWindowInTile = Integer.valueOf(SettingsInitializer.getPropertyValue("HeightWindowInTile"));
     private static int widthWindow = Game.TILE_WIDTH * widthWindowInTile;
     private static int heightGameSpaceWindow = Game.TILE_HEIGHT * heightWindowInTile;
     private static int heightWindow = heightGameSpaceWindow + Game.TILE_HEIGHT + ScoreManager.SIZE_FRAME_FOR_SCORE;
@@ -41,6 +42,9 @@ public final class Display {
     }
 
     public JFrame getWindow() {
+        if (!isCreated) {
+            throw new IllegalStateException("Window has not been created!");
+        }
         return window;
     }
 

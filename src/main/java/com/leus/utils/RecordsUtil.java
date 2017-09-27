@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class RecordsUtil {
-    private static File recordsFile = new File(GameDirUtil.getGameDir().getPath(), "/Records.rl");
+    private static File recordsFile = new File(GameDirUtil.getGameDirPath(), "/Records.rl");
 
     private RecordsUtil() {
     }

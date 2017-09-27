@@ -3,7 +3,6 @@ package com.leus.model.graphics.figures;
 import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.utils.CreatorOfSprites;
 import com.leus.view.displays.Display;
 
 public final class ThreeBallFigure extends AbstractFigure {
@@ -24,13 +23,13 @@ public final class ThreeBallFigure extends AbstractFigure {
 
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory factory) {
-        spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, factory);
+        spritesInFigure[0] = AbstractSprite.createSprite(startPositionX, startPositionY, factory);
         if ((int) (Math.random() * 10) % 2 == 0) {
-            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, factory);
-            spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH * 2, startPositionY, factory);
+            spritesInFigure[1] = AbstractSprite.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, factory);
+            spritesInFigure[2] = AbstractSprite.createSprite(startPositionX + Game.TILE_WIDTH * 2, startPositionY, factory);
         } else {
-            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT, factory);
-            spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT * 2, factory);
+            spritesInFigure[1] = AbstractSprite.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT, factory);
+            spritesInFigure[2] = AbstractSprite.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT * 2, factory);
         }
     }
 

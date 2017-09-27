@@ -33,7 +33,6 @@ public class Button extends MenuItem {
         for (ButtonListener listener : listeners) {
             listener.onEvent();
         }
-        System.out.println(this.toString());
     }
 
     public void paint(Graphics g) {

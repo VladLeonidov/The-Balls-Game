@@ -3,7 +3,6 @@ package com.leus.model.graphics.figures;
 import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.utils.CreatorOfSprites;
 
 public final class CruciateFigure extends AbstractFigure {
 
@@ -31,11 +30,11 @@ public final class CruciateFigure extends AbstractFigure {
 
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites) {
-        spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, creatorSprites);
-        spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT, creatorSprites);
-        spritesInFigure[2] = CreatorOfSprites.createSprite(startPositionX - Game.TILE_WIDTH, startPositionY + Game.TILE_HEIGHT, creatorSprites);
-        spritesInFigure[3] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY + Game.TILE_HEIGHT, creatorSprites);
-        spritesInFigure[4] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT * 2, creatorSprites);
+        spritesInFigure[0] = AbstractSprite.createSprite(startPositionX, startPositionY, creatorSprites);
+        spritesInFigure[1] = AbstractSprite.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT, creatorSprites);
+        spritesInFigure[2] = AbstractSprite.createSprite(startPositionX - Game.TILE_WIDTH, startPositionY + Game.TILE_HEIGHT, creatorSprites);
+        spritesInFigure[3] = AbstractSprite.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY + Game.TILE_HEIGHT, creatorSprites);
+        spritesInFigure[4] = AbstractSprite.createSprite(startPositionX, startPositionY + Game.TILE_HEIGHT * 2, creatorSprites);
     }
 
     private AbstractSprite topSpriteInFigure() {

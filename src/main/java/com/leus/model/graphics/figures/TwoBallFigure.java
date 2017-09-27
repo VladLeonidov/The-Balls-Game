@@ -3,7 +3,6 @@ package com.leus.model.graphics.figures;
 import com.leus.model.Game;
 import com.leus.model.factories.spriteFactories.SpriteFactory;
 import com.leus.model.graphics.sprites.AbstractSprite;
-import com.leus.utils.CreatorOfSprites;
 
 public final class TwoBallFigure extends AbstractFigure {
 
@@ -23,11 +22,11 @@ public final class TwoBallFigure extends AbstractFigure {
 
     @Override
     protected void initializeSpritesInFigure(int startPositionX, int startPositionY, SpriteFactory creatorSprites) {
-        spritesInFigure[0] = CreatorOfSprites.createSprite(startPositionX, startPositionY, creatorSprites);
+        spritesInFigure[0] = AbstractSprite.createSprite(startPositionX, startPositionY, creatorSprites);
         if ((int) (Math.random() * 10) % 2 == 0) {
-            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, creatorSprites);
+            spritesInFigure[1] = AbstractSprite.createSprite(startPositionX + Game.TILE_WIDTH, startPositionY, creatorSprites);
         } else {
-            spritesInFigure[1] = CreatorOfSprites.createSprite(startPositionX, startPositionY + Game.TILE_WIDTH, creatorSprites);
+            spritesInFigure[1] = AbstractSprite.createSprite(startPositionX, startPositionY + Game.TILE_WIDTH, creatorSprites);
         }
     }
 

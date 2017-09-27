@@ -50,7 +50,7 @@ public class Game {
         }
     };
 
-    private List<DeactivateListener> listeners = new ArrayList<>();
+    private List<DeactivateListener> deactivateListeners = new ArrayList<>();
     private List<GameOverListener> gameOverListeners = new ArrayList<>();
     private FigureManager figureManager = new FigureManager();
     private UpSpeedGameStrategy strategySpeedGame = DEFAULT_UP_SPEED_GAME;
@@ -166,11 +166,11 @@ public class Game {
     }
 
     public void addListener(DeactivateListener listener) {
-        listeners.add(listener);
+        deactivateListeners.add(listener);
     }
 
     public void removeListener(DeactivateListener listener) {
-        listeners.remove(listener);
+        deactivateListeners.remove(listener);
     }
 
     public void addListener(GameOverListener listener) {
@@ -262,7 +262,7 @@ public class Game {
     public class ButtonListenerImpl implements ButtonListener {
         @Override
         public void onEvent() {
-            for (DeactivateListener listener : listeners) {
+            for (DeactivateListener listener : deactivateListeners) {
                 listener.deactivate();
             }
 

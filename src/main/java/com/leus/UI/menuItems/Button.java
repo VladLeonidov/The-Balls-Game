@@ -1,38 +1,24 @@
 package com.leus.UI.menuItems;
 
-import com.leus.UI.listeners.ButtonListener;
-import com.leus.UI.listeners.CursorListener;
-
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Button extends MenuItem {
-    private List<ButtonListener> listeners = new ArrayList<>();
+    private ButtonListener listener;
     private final Image buttonImg;
     private String name;
 
-    public Button(Image buttonImg, int coordinateX, int coordinateY, int width, int height) {
+    public Button(Image buttonImg, ButtonListener listener, int coordinateX, int coordinateY, int width, int height) {
         super(coordinateX, coordinateY, width, height);
         this.buttonImg = buttonImg;
+        this.listener = listener;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void addListener(ButtonListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(ButtonListener listener) {
-        listeners.remove(listener);
-    }
-
     public void push() {
-        for (ButtonListener listener : listeners) {
-            listener.onEvent();
-        }
+        listener.onEvent();
     }
 
     public void paint(Graphics g) {

@@ -1,10 +1,10 @@
 package com.leus.UI.menus;
 
-import com.leus.UI.listeners.ButtonListener;
-import com.leus.UI.listeners.DeactivateListener;
+import com.leus.UI.menuItems.ButtonListener;
+import com.leus.game.DeactivateListener;
 import com.leus.UI.menuItems.Cursor;
 import com.leus.UI.menuItems.MenuItem;
-import com.leus.view.displays.Display;
+import com.leus.display.Display;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public abstract class AbstractMenu implements DeactivateListener {
 
     public void paint(Graphics g) {
         if (backGround != null) {
-            g.drawImage(backGround, 0, 0, Display.getWidthWindow(), Display.getHeightWindow(), null);
+            g.drawImage(backGround, 0, 0, Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW, null);
         }
 
         for (MenuItem item : menuItems) {

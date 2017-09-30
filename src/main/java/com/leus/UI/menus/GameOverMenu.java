@@ -1,11 +1,11 @@
 package com.leus.UI.menus;
 
 import com.leus.UI.menuItems.Cursor;
-import com.leus.UI.listeners.GameOverListener;
-import com.leus.model.service.scores.Record;
-import com.leus.model.service.scores.RecordTable;
-import com.leus.model.service.scores.ScoreManager;
-import com.leus.view.displays.Display;
+import com.leus.game.GameOverListener;
+import com.leus.game.service.scores.Record;
+import com.leus.game.service.scores.RecordTable;
+import com.leus.game.service.scores.ScoreManager;
+import com.leus.display.Display;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.awt.*;
 public class GameOverMenu extends AbstractMenu {
 
     private int scorePositionX = ScoreManager.DEFAULT_POSITION_SCORE_X;
-    private int scorePositionY = Display.getHeightWindow() - 25;
+    private int scorePositionY = Display.HEIGHT_WINDOW - 25;
     private Font fontForScore = new Font("Impact", Font.BOLD, 26);
 
     public GameOverMenu(Image backGround) {

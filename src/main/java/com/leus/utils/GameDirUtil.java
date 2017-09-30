@@ -14,7 +14,7 @@ public final class GameDirUtil {
 
     /**
      * This method return the path to the game directory.
-     * @return the path to the game directory as String.
+     * @return The path to the game directory as String
      */
     public static String getGameDirPath() {
         return gameDir.getPath();
@@ -22,7 +22,7 @@ public final class GameDirUtil {
 
     /**
      * This method checks the game directory in users.
-     * @return true if the game directory there is in users and false if it there isn't.
+     * @return True if the game directory there is in users and false if it there isn't
      */
     public static boolean isGameDirInUser() {
         return gameDir.exists();
@@ -30,7 +30,7 @@ public final class GameDirUtil {
 
     /**
      * This method creates the game directory in users, if it there isn't yet.
-     * @return true if the game directory was created and false if it there is already.
+     * @return True if the game directory was created and false if it there is already
      */
     public static boolean createGameDir() {
         if (!isGameDirInUser()) {

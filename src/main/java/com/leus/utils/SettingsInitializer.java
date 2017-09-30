@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * This class loads the Settings.properties and provides access to the property value of the property key.
+ * This class loads the Settings.properties file and provides access to the property value of the property key.
  * @see #getPropertyValue(String)
  */
 public class SettingsInitializer {
@@ -24,8 +24,8 @@ public class SettingsInitializer {
 
     /**
      * This method returns property value on the specified key.
-     * @param propertyKey property key in file.
-     * @return property value from file.
+     * @param propertyKey Property key in file
+     * @return Property value from file
      */
     public static String getPropertyValue(String propertyKey) {
         return settings.getProperty(propertyKey);

@@ -1,7 +1,6 @@
 package com.leus.UI.menuItems;
 
-import com.leus.UI.listeners.CursorListener;
-import com.leus.UI.listeners.KeyControllerListener;
+import com.leus.controllers.KeyControllerListener;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

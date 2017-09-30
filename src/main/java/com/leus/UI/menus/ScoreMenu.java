@@ -1,7 +1,7 @@
 package com.leus.UI.menus;
 
 import com.leus.UI.menuItems.Cursor;
-import com.leus.model.service.scores.RecordTable;
+import com.leus.game.service.scores.RecordTable;
 
 import java.awt.*;
 

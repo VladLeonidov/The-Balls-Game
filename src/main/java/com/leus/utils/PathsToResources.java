@@ -1,8 +1,5 @@
 package com.leus.utils;
 
-/**
- * Class-helper containing paths to files from resources.
- */
 public enum PathsToResources {
     BLUE_BALL("img/balls/Blue.png"),
     GREEN_BALL("img/balls/Green.png"),
@@ -21,10 +18,6 @@ public enum PathsToResources {
 
     private String path;
 
-    /**
-     * Getter returning a relative path to file from resources.
-     * @return the relative path to file
-     */
     public String getPath() {
         return path;
     }

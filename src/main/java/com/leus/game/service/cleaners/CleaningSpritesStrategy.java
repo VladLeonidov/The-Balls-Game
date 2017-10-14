@@ -4,5 +4,5 @@ import com.leus.game.graphics.sprites.AbstractSprite;
 
 @FunctionalInterface
 public interface CleaningSpritesStrategy {
-    void clearSprites(AbstractSprite[][] gameFieldMatrix);
+    void clearChainsSprites(AbstractSprite[][] gameFieldMatrix);
 }

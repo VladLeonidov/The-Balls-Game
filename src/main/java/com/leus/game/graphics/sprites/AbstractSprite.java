@@ -35,13 +35,6 @@ public abstract class AbstractSprite {
         this.coordinateY = coordinateY;
     }
 
-    /** This method is a static {@literal factory-method.} It creates sprites depending on the transferred factory.
-     * @param x the position of the sprite on the x coordinate
-     * @param y the position of the sprite on the y coordinate
-     * @param factory implementation {@link SpriteFactory}. Factory can't be null
-     * @return concrete sprite depending on the transferred factory
-     * @throws NullPointerException if factory is null.
-     */
     public static AbstractSprite createSprite(int x, int y, SpriteFactory factory) {
         if (factory == null) {
             throw new NullPointerException("Factory can't be null");

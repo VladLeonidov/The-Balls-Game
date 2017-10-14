@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UIElements>
+    <Buttons>
+        <StartButton src="img/buttons/StartButton.png">
+            <CoordinateX>60</CoordinateX>
+            <CoordinateY>300</CoordinateY>
+            <Width>150</Width>
+            <Height>75</Height>
+        </StartButton>
+        <ScoreButton src="img/buttons/ScoreButton.png">
+            <CoordinateX>60</CoordinateX>
+            <CoordinateY>375</CoordinateY>
+            <Width>150</Width>
+            <Height>75</Height>
+        </ScoreButton>
+        <ReturnButton src="img/buttons/ReturnButton.png">
+            <CoordinateX>Display.WIDTH_WINDOW - 125</CoordinateX>
+            <CoordinateY>Display.HEIGHT_WINDOW - 50</CoordinateY>
+            <Width>125</Width>
+            <Height>60</Height>
+        </ReturnButton>
+        <RestartButton src="img/buttons/RestartButton.png">
+            <CoordinateX>60</CoordinateX>
+            <CoordinateY>300</CoordinateY>
+            <Width>150</Width>
+            <Height>75</Height>
+        </RestartButton>
+        <ExitButtonFromMainMenu src="img/buttons/ExitButton.png">
+            <CoordinateX>60</CoordinateX>
+            <CoordinateY>450</CoordinateY>
+            <Width>150</Width>
+            <Height>75</Height>
+        </ExitButtonFromMainMenu>
+        <ExitButtonFromGameOverMenu src="img/buttons/ExitButton.png">
+            <CoordinateX>60</CoordinateX>
+            <CoordinateY>450</CoordinateY>
+            <Width>150</Width>
+            <Height>75</Height>
+        </ExitButtonFromGameOverMenu>
+    </Buttons>
+    <Cursors>
+        <MainCursor src="img/cursors/MenuCursor.png">
+            <CoordinateX>30</CoordinateX>
+            <CoordinateY>325</CoordinateY>
+            <Width>32</Width>
+            <Height>32</Height>
+            <Speed>75</Speed>
+        </MainCursor>
+        <ScoreCursor src="img/cursors/MenuCursor.png">
+            <CoordinateX>Display.WIDTH_WINDOW - 160</CoordinateX>
+            <CoordinateY>Display.HEIGHT_WINDOW - 35</CoordinateY>
+            <Width>32</Width>
+            <Height>32</Height>
+            <Speed>0</Speed>
+        </ScoreCursor>
+        <GameOverCursor src="img/cursors/MenuCursor.png">
+            <CoordinateX>20</CoordinateX>
+            <CoordinateY>325</CoordinateY>
+            <Width>32</Width>
+            <Height>32</Height>
+            <Speed>75</Speed>
+        </GameOverCursor>
+    </Cursors>
+    <MenusLogo>
+        <MainLogo src="img/Logo.png">
+            <CoordinateX>-60</CoordinateX>
+            <CoordinateY>100</CoordinateY>
+            <Width>400</Width>
+            <Height>300</Height>
+        </MainLogo>
+        <GameOverLogo src="img/GameOver.png">
+            <CoordinateX>-60</CoordinateX>
+            <CoordinateY>350</CoordinateY>
+            <Width>400</Width>
+            <Height>300</Height>
+        </GameOverLogo>
+    </MenusLogo>
+</UIElements>

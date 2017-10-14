@@ -6,25 +6,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class-util is designed for load/save records file to/from game directory in users.
- * @see GameDirUtil
- * @see com.leus.game.service.scores.RecordTable
- */
 public final class RecordsUtil {
     private static File recordsFile = new File(GameDirUtil.getGameDirPath(), "/Records.rl");
 
     private RecordsUtil() {
     }
 
-    /**
-     * This method saves a records list to file in user.
-     * @param recordsList List with records
-     * @throws IOException If has problems with a saving records file.
-     * @see com.leus.game.service.scores.RecordTable
-     */
     public static void saveRecords(List<Record> recordsList) throws IOException {
-        try(BufferedWriter out = new BufferedWriter(new FileWriter(recordsFile))) {
+        try(BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(recordsFile), "UTF-8"))) {
             for (Record currentRecord : recordsList) {
                 out.write(currentRecord.toString());
                 out.newLine();
@@ -34,14 +23,6 @@ public final class RecordsUtil {
         }
     }
 
-    /**
-     * This method loads records from the file in user to the records list,
-     * if a game directory in the user is missing, the method creates it,
-     * if the records file in user is missing, the method creates it
-     * and copies a file from resources to the records file in user.
-     * @return List of records
-     * @throws IOException If has problems with reading a records file.
-     */
     public static List<Record> loadRecords() throws IOException {
         GameDirUtil.createGameDir();
         if (createGameRecordsFile()) {
@@ -54,7 +35,7 @@ public final class RecordsUtil {
 
     private static List<Record> loadRecordsHelper() throws IOException {
         List<Record> result = new ArrayList<>(10);
-        try(BufferedReader in = new BufferedReader(new FileReader(recordsFile))) {
+        try(BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(recordsFile), "UTF-8"))) {
             while (in.ready()) {
                 String record = in.readLine();
                 if (!record.equals("")) {

@@ -115,6 +115,7 @@ public class Cursor extends MenuItem {
     }
 
     public class KeyControllerListenerImpl implements KeyControllerListener {
+
         @Override
         public void onEvent(KeyEvent e) {
             if (active) {

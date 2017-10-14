@@ -12,7 +12,6 @@ import java.awt.*;
 
 public class GameOverMenu extends AbstractMenu {
 
-    private int scorePositionX = ScoreManager.DEFAULT_POSITION_SCORE_X;
     private int scorePositionY = Display.HEIGHT_WINDOW - 25;
     private Font fontForScore = new Font("Impact", Font.BOLD, 26);
 
@@ -35,7 +34,10 @@ public class GameOverMenu extends AbstractMenu {
 
     private void paintingScore(Graphics g) {
         g.setColor(Color.BLACK);
-        ScoreManager.drawScore(g, scorePositionX, scorePositionY, fontForScore, null);
+        ScoreManager.setPositionScoreX(ScoreManager.DEFAULT_POSITION_SCORE_X);
+        ScoreManager.setPositionScoreY(scorePositionY);
+        ScoreManager.setFontForScore(fontForScore);
+        ScoreManager.drawScore(g, null);
     }
 
     public class GameOverListenerImpl implements GameOverListener {

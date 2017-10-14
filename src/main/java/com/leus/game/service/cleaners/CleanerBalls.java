@@ -17,7 +17,6 @@ public class CleanerBalls implements CleaningSpritesStrategy {
     private final Set<Ball> chainsBalls = new HashSet<>((Display.HEIGHT_WINDOW_IN_TILES + 1) * Display.WIDTH_WINDOW_IN_TILES);
     private AbstractSprite[][] gameFieldMatrix;
     private CountingScoreStrategy counter;
-    private boolean cleanedChainBalls;
 
     public CleanerBalls() {
         counter = () -> {
@@ -36,11 +35,7 @@ public class CleanerBalls implements CleaningSpritesStrategy {
         this.counter = counter;
     }
 
-    public boolean isCleanedChainBalls() {
-        return cleanedChainBalls;
-    }
-
-    public void clearSprites(AbstractSprite[][] gameFieldMatrix) {
+    public void clearChainsSprites(AbstractSprite[][] gameFieldMatrix) {
         this.gameFieldMatrix = gameFieldMatrix;
         findBallsReadyToClear();
         clearBalls();
@@ -63,7 +58,6 @@ public class CleanerBalls implements CleaningSpritesStrategy {
                         counter.countingScore();
                         chainsBalls.clear();
                         ScoreFactor.incrementFactor();
-                        cleanedChainBalls = true;
                     } else {
                         chainsBalls.clear();
                     }

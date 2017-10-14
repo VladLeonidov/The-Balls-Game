@@ -16,6 +16,7 @@ import com.leus.game.factories.figureFactories.ThreeBallFigureFactory;
 import com.leus.game.factories.figureFactories.TwoBallFigureFactory;
 import com.leus.game.factories.spriteFactories.RandBallFactory;
 import com.leus.game.service.FieldManager;
+import com.leus.game.service.FigureManager;
 import com.leus.game.service.scores.RecordTable;
 import com.leus.utils.PathsToResources;
 import com.leus.utils.ResourceLoader;
@@ -27,10 +28,12 @@ public class Runner {
 
         Display display = new Display();
 
-        Game game = new Game(new FieldManager(),
-                new TwoBallFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()),
-                new ThreeBallFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()),
-                new CruciateFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()));
+        FigureManager figureManager = new FigureManager();
+        figureManager.addFigureFactory(new TwoBallFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()));
+        figureManager.addFigureFactory(new ThreeBallFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()));
+        figureManager.addFigureFactory(new CruciateFigureFactory(figureStartPositionX, figureStartPositionY, new RandBallFactory()));
+
+        Game game = new Game(new FieldManager(), figureManager);
 
         Logo mainLogo = new Logo(ResourceLoader.loadImage(PathsToResources.LOGO.getPath()), -60, 100, 400, 300);
         Logo gameOverLogo = new Logo(ResourceLoader.loadImage(PathsToResources.GAME_OVER.getPath()), -60, 60, 400, 350);
@@ -67,7 +70,7 @@ public class Runner {
         keyController.addListener(mainCursor.new KeyControllerListenerImpl());
         keyController.addListener(scoreCursor.new KeyControllerListenerImpl());
         keyController.addListener(gameOverCursor.new KeyControllerListenerImpl());
-        keyController.addListener(game.new GameKeyListener());
+        keyController.addListener(game.new KeyListenerImpl());
 
         mainMenu.addMenuItem(mainLogo);
         mainMenu.addMenuItem(startButton);
@@ -99,10 +102,10 @@ public class Runner {
         scoreMenu.addListener(game.new DeactivateListenerImpl());
         scoreMenu.addListener(gameOverMenu);
 
-        game.addListener(mainMenu);
-        game.addListener(scoreMenu);
-        game.addListener(gameOverMenu);
-        game.addListener(gameOverMenu.new GameOverListenerImpl());
+        game.addDeactivateListener(mainMenu);
+        game.addDeactivateListener(scoreMenu);
+        game.addDeactivateListener(gameOverMenu);
+        game.addGameOverListener(gameOverMenu.new GameOverListenerImpl());
 
         gameOverMenu.addListener(game.new DeactivateListenerImpl());
         gameOverMenu.addListener(mainMenu);

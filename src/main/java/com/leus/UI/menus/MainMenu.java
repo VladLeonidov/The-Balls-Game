@@ -6,8 +6,8 @@ import com.leus.display.Display;
 import java.awt.*;
 
 public class MainMenu extends AbstractMenu {
-    private static String version = "0.97 Alpha";
-    private static String author = "Created by Leus";
+    private static String gameVersion = "0.99 Alpha";
+    private static String authorOfGame = "Created by Leus";
 
     public MainMenu(Image backGround) {
         super(backGround);
@@ -20,18 +20,18 @@ public class MainMenu extends AbstractMenu {
         getCursor().setActive(true);
     }
 
-    public static void setVersion(String version) {
-        MainMenu.version = version;
+    public static void setGameVersion(String gameVersion) {
+        MainMenu.gameVersion = gameVersion;
     }
 
-    public static void setAuthor(String author) {
-        MainMenu.author = author;
+    public static void setAuthorOfGame(String authorOfGame) {
+        MainMenu.authorOfGame = authorOfGame;
     }
 
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.BLACK);
-        g.drawString(version, 15, Display.HEIGHT_WINDOW - 15);
-        g.drawString(author, Display.WIDTH_WINDOW - 100, Display.HEIGHT_WINDOW - 15);
+        g.drawString(gameVersion, 15, Display.HEIGHT_WINDOW - 15);
+        g.drawString(authorOfGame, Display.WIDTH_WINDOW - 100, Display.HEIGHT_WINDOW - 15);
     }
 }

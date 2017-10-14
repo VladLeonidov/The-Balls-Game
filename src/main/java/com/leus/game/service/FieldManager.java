@@ -17,30 +17,26 @@ public class FieldManager {
         this.cleaner = cleaner;
     }
 
-    public void clearSpriteFromField(AbstractSprite[][] gameFieldMatrix) {
-        cleaner.clearSprites(gameFieldMatrix);
+    public void clearChainsSpritesFromField(AbstractSprite[][] field) {
+        cleaner.clearChainsSprites(field);
     }
 
-    public boolean isCleanedChainBalls() {
-        return cleaner.isCleanedChainBalls();
-    }
-
-    public void moveDownSpritesInAir(AbstractSprite[][] gameFieldMatrix) {
-        for (int i = 0; i < gameFieldMatrix.length - 1; i++) {
-            for (int j = 0; j < gameFieldMatrix[i].length; j++) {
-                if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i + 1][j] == null) {
-                    gameFieldMatrix[i][j].moveDown();
-                    gameFieldMatrix[i + 1][j] = gameFieldMatrix[i][j];
-                    gameFieldMatrix[i][j] = null;
+    public void moveDownSpritesInAir(AbstractSprite[][] field) {
+        for (int i = 0; i < field.length - 1; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j] != null && field[i + 1][j] == null) {
+                    field[i][j].moveDown();
+                    field[i + 1][j] = field[i][j];
+                    field[i][j] = null;
                 }
             }
         }
     }
 
-    public boolean isSpritesInAir(AbstractSprite[][] gameFieldMatrix) {
-        for (int i = 0; i < gameFieldMatrix.length - 1; i++) {
-            for (int j = 0; j < gameFieldMatrix[i].length; j++) {
-                if (gameFieldMatrix[i][j] != null && gameFieldMatrix[i + 1][j] == null) {
+    public boolean isSpritesInAir(AbstractSprite[][] field) {
+        for (int i = 0; i < field.length - 1; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j] != null && field[i + 1][j] == null) {
                     return true;
                 }
             }

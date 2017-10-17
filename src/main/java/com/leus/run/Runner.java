@@ -1,25 +1,25 @@
 package com.leus.run;
 
-import com.leus.UI.menuItems.Button;
-import com.leus.UI.menuItems.Cursor;
-import com.leus.UI.menuItems.Logo;
-import com.leus.UI.menus.AbstractMenu;
-import com.leus.UI.menus.GameOverMenu;
-import com.leus.UI.menus.MainMenu;
-import com.leus.UI.menus.ScoreMenu;
-import com.leus.controllers.KeyController;
-import com.leus.display.Display;
-import com.leus.display.panels.GamePanel;
-import com.leus.game.Game;
-import com.leus.game.factories.figureFactories.CruciateFigureFactory;
-import com.leus.game.factories.figureFactories.ThreeBallFigureFactory;
-import com.leus.game.factories.figureFactories.TwoBallFigureFactory;
-import com.leus.game.factories.spriteFactories.RandBallFactory;
-import com.leus.game.service.FieldManager;
-import com.leus.game.service.FigureManager;
-import com.leus.game.service.scores.RecordTable;
-import com.leus.utils.PathsToResources;
-import com.leus.utils.ResourceLoader;
+import com.leus.UI.menuItem.Button;
+import com.leus.UI.menuItem.Cursor;
+import com.leus.UI.menuItem.Logo;
+import com.leus.UI.menu.AbstractMenu;
+import com.leus.UI.menu.GameOverMenu;
+import com.leus.UI.menu.MainMenu;
+import com.leus.UI.menu.ScoreMenu;
+import com.leus.controller.KeyController;
+import com.leus.view.Display;
+import com.leus.view.GamePanel;
+import com.leus.business.Game;
+import com.leus.business.graphics.figure.factory.CruciateFigureFactory;
+import com.leus.business.graphics.figure.factory.ThreeBallFigureFactory;
+import com.leus.business.graphics.figure.factory.TwoBallFigureFactory;
+import com.leus.business.graphics.sprite.factory.RandBallFactory;
+import com.leus.business.service.FieldManager;
+import com.leus.business.service.FigureManager;
+import com.leus.business.service.score.RecordTable;
+import com.leus.util.PathsToResources;
+import com.leus.util.ResourceLoader;
 
 public class Runner {
     public static void main(String[] args) {

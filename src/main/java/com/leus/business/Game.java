@@ -22,7 +22,7 @@ public class Game {
     public static final int TILE_WIDTH = Integer.valueOf(SettingsInitializer.getPropertyValue("WidthTile"));
     public static final int TILE_HEIGHT = Integer.valueOf(SettingsInitializer.getPropertyValue("HeightTile"));
 
-    private static int delay = 500;
+    private static volatile int delay = 500;
 
     private static final AbstractSprite[][] GAME_FIELD_MATRIX =
             new AbstractSprite[Integer.valueOf(SettingsInitializer.getPropertyValue("HeightWindowInTile")) + 1]
@@ -76,7 +76,7 @@ public class Game {
 
     public static void setDelay(int delay) {
         if (delay < 0) {
-            throw new IllegalArgumentException("Delay cant't be negative");
+            throw new IllegalArgumentException("Delay can't be negative");
         }
 
         Game.delay = delay;
@@ -84,6 +84,10 @@ public class Game {
 
     public static AbstractSprite[][] getGameFieldMatrix() {
         return Arrays.copyOf(GAME_FIELD_MATRIX, GAME_FIELD_MATRIX.length);
+    }
+
+    public FieldManager getFieldManager() {
+        return fieldManager;
     }
 
     public boolean isActive() {
@@ -148,6 +152,7 @@ public class Game {
     }
 
     private void startHelper() {
+
         if (!isGameOver()) {
             if (figure.isFrozen()) {
                 figure.leaveOnTheField();
@@ -186,17 +191,22 @@ public class Game {
         ScoreFactor.setCollapsed();
     }
 
-    //TODO: rename method and debug it
     private void moveDownAndClearSprite() {
-        if (fieldManager.isSpritesInSpace(GAME_FIELD_MATRIX)) {
-            fieldManager.moveDownSpritesInSpace(GAME_FIELD_MATRIX);
+        boolean isInAir = true;
+        while (isInAir) {
+            moveDownSpritesInAir();
+            fieldManager.clearChainsSpritesFromField(GAME_FIELD_MATRIX);
+            isInAir = fieldManager.isSpritesInSpace(GAME_FIELD_MATRIX);
+        }
+    }
+
+    private void moveDownSpritesInAir() {
+        if (!fieldManager.isSpritesInSpace(GAME_FIELD_MATRIX)) {
+            return;
         }
 
-        fieldManager.clearChainsSpritesFromField(GAME_FIELD_MATRIX);
-
-        if (fieldManager.isSpritesInSpace(GAME_FIELD_MATRIX)) {
-            moveDownAndClearSprite();
-        }
+        fieldManager.moveDownSpritesInSpace(GAME_FIELD_MATRIX);
+        moveDownSpritesInAir();
     }
 
     private boolean isGameOver() {

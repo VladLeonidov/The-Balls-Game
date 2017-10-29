@@ -13,8 +13,9 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game, AbstractMenu... menus) {
         if (game == null) {
-            throw new NullPointerException("The game can't be null");
+            throw new NullPointerException("Game can't be null");
         }
+
         this.game = game;
         this.menus = menus;
     }
@@ -32,7 +33,6 @@ public class GamePanel extends JPanel {
                         menu.paint(g);
                     }
                 }
-                repaint();
             }
         }
     }
